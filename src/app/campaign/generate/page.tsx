@@ -13,6 +13,9 @@ export default function GenerateContent() {
   const [items, setItems] = useState<Item[]>([]);
   const [isGenerating, setIsGenerating] = useState<'city' | 'npc' | 'item' | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [collapsedNPCs, setCollapsedNPCs] = useState<{ [id: string]: boolean }>({});
+  const [collapsedCities, setCollapsedCities] = useState<{ [id: string]: boolean }>({});
+  const [collapsedItems, setCollapsedItems] = useState<{ [id: string]: boolean }>({});
 
   useEffect(() => {
     const stored = localStorage.getItem('campaignSettings');
@@ -91,8 +94,36 @@ export default function GenerateContent() {
           </div>
         </section>
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Generate</h2>
-          <div className="flex gap-4 mb-4">
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">Cities</h2>
+          {cities.length === 0 ? <div className="text-gray-900">No cities generated yet.</div> : (
+            <ul className="space-y-4">
+              {cities.map(city => {
+                const isCollapsed = collapsedCities[city.id] ?? false;
+                return (
+                  <li key={city.id} className="bg-white rounded shadow p-4 text-gray-900">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-bold text-lg">{city.name} ({city.size})</span>
+                      <button
+                        className="text-blue-600 hover:underline text-sm"
+                        onClick={() => setCollapsedCities(prev => ({ ...prev, [city.id]: !isCollapsed }))}
+                      >
+                        {isCollapsed ? 'Show more' : 'Show less'}
+                      </button>
+                    </div>
+                    {!isCollapsed && <>
+                      <div><strong>Population:</strong> {city.population}</div>
+                      <div><strong>Government:</strong> {city.government}</div>
+                      <div><strong>Economy:</strong> {city.economy}</div>
+                      <div><strong>Notable Locations:</strong> {Array.isArray(city.notableLocations) ? city.notableLocations.join(', ') : city.notableLocations}</div>
+                      <div><strong>Description:</strong> {city.description}</div>
+                      <div><strong>History:</strong> {city.history}</div>
+                    </>}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+          <div className="flex justify-start mt-4">
             <button
               className={`bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ${isGenerating === 'city' ? 'opacity-50 cursor-not-allowed' : ''}`}
               onClick={() => generateContent('city')}
@@ -100,6 +131,104 @@ export default function GenerateContent() {
             >
               {isGenerating === 'city' ? 'Generating...' : 'Generate City'}
             </button>
+          </div>
+        </section>
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">NPCs</h2>
+          {npcs.length === 0 ? <div className="text-gray-900">No NPCs generated yet.</div> : (
+            <ul className="space-y-4">
+              {npcs.map(npc => {
+                const isCollapsed = collapsedNPCs[npc.id] ?? false;
+                // Normalize fields from AI response
+                const description = npc.description || (npc as any).physical_description || 'N/A';
+                const background = npc.background || (npc as any).background_story || 'N/A';
+                const personality = npc.personality || (npc as any).personality_description || 'N/A';
+                const goals = Array.isArray(npc.goals) ? npc.goals.join(', ') : npc.goals || 'N/A';
+                // Robustly normalize relationships
+                function flattenAndParseRelationships(input: any): any[] {
+                  if (!input) return [];
+                  let arr = Array.isArray(input) ? input : [input];
+                  // Flatten one level if nested arrays
+                  arr = arr.flat();
+                  // Parse JSON strings if present
+                  return arr.map((rel) => {
+                    if (typeof rel === 'string') {
+                      try {
+                        const parsed = JSON.parse(rel);
+                        return parsed;
+                      } catch {
+                        return rel;
+                      }
+                    }
+                    return rel;
+                  });
+                }
+                let relationships: React.ReactNode;
+                const rels = flattenAndParseRelationships(npc.relationships);
+                if (rels.length === 1 && typeof rels[0] === 'object' && !Array.isArray(rels[0]) && rels[0] !== null) {
+                  // Handle grouped relationships (e.g., { Allies: [...], Enemies: [...] })
+                  const relObj = rels[0];
+                  relationships = Object.entries(relObj).map(([group, arr], groupIdx) => (
+                    <div key={groupIdx} className="ml-6 mb-2">
+                      <strong>{group}:</strong>
+                      <ul className="ml-8 list-disc">
+                        {Array.isArray(arr) && arr.map((rel: any, idx: number) => (
+                          <li key={idx}>
+                            {rel.name}
+                            {rel.faction ? ` (${rel.faction})` : ''}
+                            {': '}{rel.relationship}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ));
+                } else if (rels.length > 0 && rels.some(r => typeof r === 'object')) {
+                  relationships = rels.map((rel: any, idx: number) => {
+                    if (typeof rel === 'string') return <span key={idx}>{rel}</span>;
+                    if (rel.name && rel.relationship) {
+                      return (
+                        <span key={rel.name + idx}>
+                          {rel.name}
+                          {rel.faction ? ` (${rel.faction})` : ''}
+                          {': '}{rel.relationship}
+                        </span>
+                      );
+                    }
+                    if (rel.name && rel.description) return <span key={idx}>{rel.name}: {rel.description}</span>;
+                    if (rel.character_name && rel.relationship) return <span key={idx}>{rel.character_name}: {rel.relationship}</span>;
+                    if (rel.faction && rel.relationship) return <span key={idx}>{rel.faction}: {rel.relationship}</span>;
+                    return <span key={idx}>{JSON.stringify(rel)}</span>;
+                  }).reduce((prev: React.ReactNode[], curr: React.ReactNode, idx: number) =>
+                    prev.length === 0 ? [curr] : [...prev, <br key={idx} />, curr], [] as React.ReactNode[]);
+                } else if (rels.length > 0) {
+                  relationships = rels.join(', ');
+                } else {
+                  relationships = 'N/A';
+                }
+                return (
+                  <li key={npc.id} className="bg-white rounded shadow p-4 text-gray-900">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-bold text-lg">{npc.name} ({npc.race}{npc.class ? `, ${npc.class}` : ''})</span>
+                      <button
+                        className="text-blue-600 hover:underline text-sm"
+                        onClick={() => setCollapsedNPCs(prev => ({ ...prev, [npc.id]: !isCollapsed }))}
+                      >
+                        {isCollapsed ? 'Show more' : 'Show less'}
+                      </button>
+                    </div>
+                    {!isCollapsed && <>
+                      <div><strong>Alignment:</strong> {npc.alignment}</div>
+                      <div><strong>Description:</strong> {description}</div>
+                      <div><strong>Background:</strong> {background}</div>
+                      <div><strong>Personality:</strong> {personality}</div>
+                      <div><strong>Goals:</strong> {goals}</div>
+                    </>}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+          <div className="flex justify-start mt-4">
             <button
               className={`bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 ${isGenerating === 'npc' ? 'opacity-50 cursor-not-allowed' : ''}`}
               onClick={() => generateContent('npc')}
@@ -107,6 +236,36 @@ export default function GenerateContent() {
             >
               {isGenerating === 'npc' ? 'Generating...' : 'Generate NPC'}
             </button>
+          </div>
+        </section>
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">Items</h2>
+          {items.length === 0 ? <div className="text-gray-900">No items generated yet.</div> : (
+            <ul className="space-y-4">
+              {items.map(item => {
+                const isCollapsed = collapsedItems[item.id] ?? false;
+                return (
+                  <li key={item.id} className="bg-white rounded shadow p-4 text-gray-900">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-bold text-lg">{item.name} ({item.type}, {item.rarity})</span>
+                      <button
+                        className="text-blue-600 hover:underline text-sm"
+                        onClick={() => setCollapsedItems(prev => ({ ...prev, [item.id]: !isCollapsed }))}
+                      >
+                        {isCollapsed ? 'Show more' : 'Show less'}
+                      </button>
+                    </div>
+                    {!isCollapsed && <>
+                      <div><strong>Description:</strong> {item.description}</div>
+                      <div><strong>Properties:</strong> {Array.isArray(item.properties) ? item.properties.join(', ') : item.properties}</div>
+                      {item.history && <div><strong>History:</strong> {item.history}</div>}
+                    </>}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+          <div className="flex justify-start mt-4">
             <button
               className={`bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 ${isGenerating === 'item' ? 'opacity-50 cursor-not-allowed' : ''}`}
               onClick={() => generateContent('item')}
@@ -115,89 +274,6 @@ export default function GenerateContent() {
               {isGenerating === 'item' ? 'Generating...' : 'Generate Item'}
             </button>
           </div>
-        </section>
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Cities</h2>
-          {cities.length === 0 ? <div className="text-gray-900">No cities generated yet.</div> : (
-            <ul className="space-y-4">
-              {cities.map(city => (
-                <li key={city.id} className="bg-white rounded shadow p-4 text-gray-900">
-                  <div className="font-bold text-lg">{city.name} ({city.size})</div>
-                  <div><strong>Population:</strong> {city.population}</div>
-                  <div><strong>Government:</strong> {city.government}</div>
-                  <div><strong>Economy:</strong> {city.economy}</div>
-                  <div><strong>Notable Locations:</strong> {Array.isArray(city.notableLocations) ? city.notableLocations.join(', ') : city.notableLocations}</div>
-                  <div><strong>Description:</strong> {city.description}</div>
-                  <div><strong>History:</strong> {city.history}</div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">NPCs</h2>
-          {npcs.length === 0 ? <div className="text-gray-900">No NPCs generated yet.</div> : (
-            <ul className="space-y-4">
-              {npcs.map(npc => {
-                // Normalize fields from AI response
-                const description = npc.description || (npc as any).physical_description || 'N/A';
-                const background = npc.background || (npc as any).background_story || 'N/A';
-                const personality = npc.personality || (npc as any).personality_description || 'N/A';
-                const goals = Array.isArray(npc.goals) ? npc.goals.join(', ') : npc.goals || 'N/A';
-                // Normalize relationships
-                let relationships: string;
-                if (Array.isArray(npc.relationships)) {
-                  relationships = npc.relationships
-                    .map((rel: any) => {
-                      if (typeof rel === 'string') return rel;
-                      if (rel.name && rel.description) return `${rel.name}: ${rel.description}`;
-                      if (rel.character_name && rel.relationship) return `${rel.character_name}: ${rel.relationship}`;
-                      if (rel.faction && rel.relationship) return `${rel.faction}: ${rel.relationship}`;
-                      return JSON.stringify(rel);
-                    })
-                    .join(', ');
-                } else if (typeof npc.relationships === 'object' && npc.relationships !== null) {
-                  relationships = Object.values(npc.relationships)
-                    .map((rel: any) => {
-                      if (typeof rel === 'string') return rel;
-                      if (rel.name && rel.description) return `${rel.name}: ${rel.description}`;
-                      if (rel.character_name && rel.relationship) return `${rel.character_name}: ${rel.relationship}`;
-                      if (rel.faction && rel.relationship) return `${rel.faction}: ${rel.relationship}`;
-                      return JSON.stringify(rel);
-                    })
-                    .join(', ');
-                } else {
-                  relationships = npc.relationships || 'N/A';
-                }
-                return (
-                  <li key={npc.id} className="bg-white rounded shadow p-4 text-gray-900">
-                    <div className="font-bold text-lg">{npc.name} ({npc.race}{npc.class ? `, ${npc.class}` : ''})</div>
-                    <div><strong>Alignment:</strong> {npc.alignment}</div>
-                    <div><strong>Description:</strong> {description}</div>
-                    <div><strong>Background:</strong> {background}</div>
-                    <div><strong>Personality:</strong> {personality}</div>
-                    <div><strong>Goals:</strong> {goals}</div>
-                    <div><strong>Relationships:</strong> {relationships}</div>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </section>
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Items</h2>
-          {items.length === 0 ? <div className="text-gray-900">No items generated yet.</div> : (
-            <ul className="space-y-4">
-              {items.map(item => (
-                <li key={item.id} className="bg-white rounded shadow p-4 text-gray-900">
-                  <div className="font-bold text-lg">{item.name} ({item.type}, {item.rarity})</div>
-                  <div><strong>Description:</strong> {item.description}</div>
-                  <div><strong>Properties:</strong> {Array.isArray(item.properties) ? item.properties.join(', ') : item.properties}</div>
-                  {item.history && <div><strong>History:</strong> {item.history}</div>}
-                </li>
-              ))}
-            </ul>
-          )}
         </section>
       </div>
     </Layout>

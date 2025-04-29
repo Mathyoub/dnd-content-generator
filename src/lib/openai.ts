@@ -7,46 +7,55 @@ const openai = new OpenAI({
 
 const generatePrompt = (type: 'city' | 'npc' | 'item', settings: CampaignSetting) => {
   const basePrompt = `Generate a ${type} for a D&D campaign with the following settings:
-Theme: ${settings.theme}${settings.customTheme ? ` (${settings.customTheme})` : ''}
-Tone: ${settings.tone}${settings.customTone ? ` (${settings.customTone})` : ''}
+Theme: ${settings.theme}${settings.theme ? '' : ''}
+Tone: ${Array.isArray(settings.tone) ? settings.tone.join(', ') : settings.tone}
 Homebrew Allowed: ${settings.homebrewAllowed ? 'Yes' : 'No'}
-${settings.description ? `Description: ${settings.description}` : ''}
+Magic Commonality: ${settings.magicCommonality || ''}
+Geographical Scale: ${settings.geographicalScale || ''}
+Civilization State: ${settings.civilizationState || ''}
+Common Landscapes: ${Array.isArray(settings.commonLandscapes) ? settings.commonLandscapes.join(', ') : ''}
+Technology Level: ${settings.technologyLevel || ''}
+Role of Religion: ${settings.roleOfReligion || ''}
+Religious Figures Perception: ${settings.religiousFiguresPerception || ''}
+Major Conflicts or Threats: ${settings.majorConflictsThreats || ''}
 
-Please generate a detailed ${type} that fits these settings.`;
+Respond ONLY with a JSON object in the following format. The example is for structure only—generate a new, unique, and creative ${type} each time, with a different name and details. Do not copy the example or repeat previous outputs. If a field is unknown, leave it as an empty string or array.`;
 
   switch (type) {
     case 'city':
       return `${basePrompt}
-The city should have:
-- A name
-- A size (village, town, city, or metropolis)
-- A population estimate
-- A form of government
-- An economy description
-- Notable locations
-- A general description
-- A brief history`;
+{
+  "name": "City Name",
+  "size": "Size (village, town, city, or metropolis)",
+  "population": "Population estimate",
+  "government": "Form of government",
+  "economy": "Economy description",
+  "notableLocations": ["Notable Location 1", "Notable Location 2"],
+  "description": "General description here.",
+  "history": "Brief history here."
+}`;
     case 'npc':
       return `${basePrompt}
-The NPC should have:
-- A name
-- A race
-- A class (optional)
-- An alignment
-- A physical description
-- A background story
-- A personality description
-- Goals
-- Relationships with other characters or factions`;
+{
+  "name": "NPC Name",
+  "race": "Race",
+  "class": "Class",
+  "alignment": "Alignment",
+  "description": "Physical description here.",
+  "background": "Background story here.",
+  "personality": "Personality description here.",
+  "goals": ["Goal 1", "Goal 2"]
+}`;
     case 'item':
       return `${basePrompt}
-The item should have:
-- A name
-- A type
-- A rarity (common, uncommon, rare, very-rare, or legendary)
-- A description
-- Magical properties or abilities
-- A history (optional)`;
+{
+  "name": "Item Name",
+  "type": "Type",
+  "rarity": "Rarity (common, uncommon, rare, very-rare, or legendary)",
+  "description": "Description here.",
+  "properties": ["Property 1", "Property 2"],
+  "history": "History here."
+}`;
   }
 };
 
@@ -73,6 +82,7 @@ export async function generateCity(settings: CampaignSetting): Promise<City> {
     ],
     model: 'gpt-3.5-turbo',
     response_format: { type: 'json_object' },
+    temperature: 0.9,
   });
 
   // Log the raw response for debugging
@@ -90,6 +100,7 @@ export async function generateNPC(settings: CampaignSetting): Promise<NPC> {
     ],
     model: 'gpt-3.5-turbo',
     response_format: { type: 'json_object' },
+    temperature: 0.9,
   });
 
   // Log the raw response for debugging
@@ -107,6 +118,7 @@ export async function generateItem(settings: CampaignSetting): Promise<Item> {
     ],
     model: 'gpt-3.5-turbo',
     response_format: { type: 'json_object' },
+    temperature: 0.9,
   });
 
   // Log the raw response for debugging
