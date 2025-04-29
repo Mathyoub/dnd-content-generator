@@ -11,7 +11,8 @@ export type RoleOfReligion = 'Powerful and Intervening' | 'Local and Personal' |
 export type ReligiousFiguresPerception = 'Revered' | 'Feared' | 'Neutral' | 'In Conflict with Other Beliefs' | 'Outlawed';
 
 export type CampaignSetting = {
-  campaignName: string;
+  id?: string;
+  name: string;
   theme: CampaignTheme;
   tone: CampaignTone[];
   homebrewAllowed: boolean;

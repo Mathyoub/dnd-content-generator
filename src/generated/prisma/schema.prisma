@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Campaign {
+  id                         String   @id @default(uuid())
+  name                       String
+  theme                      String
+  tone                       Json
+  homebrewAllowed            Boolean
+  magicCommonality           String?
+  geographicalScale          String?
+  civilizationState          String?
+  commonLandscapes           Json
+  technologyLevel            String?
+  roleOfReligion             String?
+  religiousFiguresPerception String?
+  majorConflictsThreats      String?
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
+  npcs                       NPC[]
+  cities                     City[]
+  items                      Item[]
+}
+
+model NPC {
+  id          String   @id @default(uuid())
+  campaign    Campaign @relation(fields: [campaignId], references: [id])
+  campaignId  String
+  name        String
+  race        String
+  class       String?
+  alignment   String
+  description String
+  background  String
+  personality String
+  goals       Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model City {
+  id               String   @id @default(uuid())
+  campaign         Campaign @relation(fields: [campaignId], references: [id])
+  campaignId       String
+  name             String
+  size             String
+  population       String
+  government       String
+  economy          String
+  notableLocations Json
+  description      String
+  history          String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Item {
+  id          String   @id @default(uuid())
+  campaign    Campaign @relation(fields: [campaignId], references: [id])
+  campaignId  String
+  name        String
+  type        String
+  rarity      String
+  description String
+  properties  Json
+  history     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

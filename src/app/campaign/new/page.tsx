@@ -75,7 +75,7 @@ const religiousFiguresPerceptionOptions: ReligiousFiguresPerception[] = [
 export default function NewCampaign() {
   const router = useRouter();
   const [settings, setSettings] = useState<CampaignSetting>({
-    campaignName: '',
+    name: '',
     theme: 'fantasy',
     tone: [],
     homebrewAllowed: false,
@@ -89,23 +89,44 @@ export default function NewCampaign() {
     majorConflictsThreats: '',
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [saving, setSaving] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!settings.campaignName.trim()) newErrors.campaignName = 'Campaign name is required.';
+    if (!settings.name.trim()) newErrors.name = 'Campaign name is required.';
     if (!settings.theme) newErrors.theme = 'Theme is required.';
     if (!settings.tone || settings.tone.length === 0) newErrors.tone = 'At least one tone is required.';
     // homebrewAllowed is always present (checkbox)
     return newErrors;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setApiError(null);
     const validationErrors = validate();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
-    localStorage.setItem('campaignSettings', JSON.stringify(settings));
-    router.push('/campaign/generate');
+    setSaving(true);
+    try {
+      const response = await fetch('/api/campaign', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(settings),
+      });
+      if (!response.ok) {
+        const err = await response.json();
+        setApiError(err.error || 'Failed to save campaign');
+        setSaving(false);
+        return;
+      }
+      const campaign = await response.json();
+      localStorage.setItem('campaignSettings', JSON.stringify(campaign));
+      router.push('/campaign/generate');
+    } catch (err) {
+      setApiError('Failed to save campaign');
+      setSaving(false);
+    }
   };
 
   const handleToneChange = (tone: CampaignTone) => {
@@ -131,19 +152,20 @@ export default function NewCampaign() {
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Create New Campaign</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
+          {apiError && <div className="text-red-500 text-sm mb-2">{apiError}</div>}
           <div>
-            <label htmlFor="campaignName" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
               Campaign Name <span className="text-red-500">*</span>
             </label>
             <input
-              id="campaignName"
+              id="name"
               type="text"
-              value={settings.campaignName}
-              onChange={(e) => setSettings({ ...settings, campaignName: e.target.value })}
+              value={settings.name}
+              onChange={(e) => setSettings({ ...settings, name: e.target.value })}
               required
               className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-900 bg-white"
             />
-            {errors.campaignName && <div className="text-red-500 text-sm mt-1">{errors.campaignName}</div>}
+            {errors.name && <div className="text-red-500 text-sm mt-1">{errors.name}</div>}
           </div>
 
           <div>
@@ -335,9 +357,10 @@ export default function NewCampaign() {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+              disabled={saving}
             >
-              Create Campaign
+              {saving ? 'Saving...' : 'Create Campaign'}
             </button>
           </div>
         </form>

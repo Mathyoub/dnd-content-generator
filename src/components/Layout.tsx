@@ -22,6 +22,11 @@ export default function Layout({ children }: LayoutProps) {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/campaign/list" className="text-gray-600 hover:text-gray-900">
+                    Your Campaigns
+                  </Link>
+                </li>
+                <li>
                   <Link href="/about" className="text-gray-600 hover:text-gray-900">
                     About
                   </Link>
