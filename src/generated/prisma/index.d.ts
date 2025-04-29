@@ -2609,7 +2609,7 @@ export namespace Prisma {
 
   export type NPCGroupByOutputType = {
     id: string
-    campaignId: string
+    campaignId: string | null
     name: string
     race: string
     class: string | null
@@ -2652,7 +2652,7 @@ export namespace Prisma {
     goals?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | NPC$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["nPC"]>
 
   export type NPCSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2668,7 +2668,7 @@ export namespace Prisma {
     goals?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | NPC$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["nPC"]>
 
   export type NPCSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2684,7 +2684,7 @@ export namespace Prisma {
     goals?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | NPC$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["nPC"]>
 
   export type NPCSelectScalar = {
@@ -2704,23 +2704,23 @@ export namespace Prisma {
 
   export type NPCOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "campaignId" | "name" | "race" | "class" | "alignment" | "description" | "background" | "personality" | "goals" | "createdAt" | "updatedAt", ExtArgs["result"]["nPC"]>
   export type NPCInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | NPC$campaignArgs<ExtArgs>
   }
   export type NPCIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | NPC$campaignArgs<ExtArgs>
   }
   export type NPCIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | NPC$campaignArgs<ExtArgs>
   }
 
   export type $NPCPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "NPC"
     objects: {
-      campaign: Prisma.$CampaignPayload<ExtArgs>
+      campaign: Prisma.$CampaignPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      campaignId: string
+      campaignId: string | null
       name: string
       race: string
       class: string | null
@@ -3125,7 +3125,7 @@ export namespace Prisma {
    */
   export interface Prisma__NPCClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    campaign<T extends CampaignDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CampaignDefaultArgs<ExtArgs>>): Prisma__CampaignClient<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    campaign<T extends NPC$campaignArgs<ExtArgs> = {}>(args?: Subset<T, NPC$campaignArgs<ExtArgs>>): Prisma__CampaignClient<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3561,6 +3561,25 @@ export namespace Prisma {
   }
 
   /**
+   * NPC.campaign
+   */
+  export type NPC$campaignArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Campaign
+     */
+    select?: CampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Campaign
+     */
+    omit?: CampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignInclude<ExtArgs> | null
+    where?: CampaignWhereInput
+  }
+
+  /**
    * NPC without action
    */
   export type NPCDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3752,7 +3771,7 @@ export namespace Prisma {
 
   export type CityGroupByOutputType = {
     id: string
-    campaignId: string
+    campaignId: string | null
     name: string
     size: string
     population: string
@@ -3795,7 +3814,7 @@ export namespace Prisma {
     history?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | City$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["city"]>
 
   export type CitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3811,7 +3830,7 @@ export namespace Prisma {
     history?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | City$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["city"]>
 
   export type CitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3827,7 +3846,7 @@ export namespace Prisma {
     history?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | City$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["city"]>
 
   export type CitySelectScalar = {
@@ -3847,23 +3866,23 @@ export namespace Prisma {
 
   export type CityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "campaignId" | "name" | "size" | "population" | "government" | "economy" | "notableLocations" | "description" | "history" | "createdAt" | "updatedAt", ExtArgs["result"]["city"]>
   export type CityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | City$campaignArgs<ExtArgs>
   }
   export type CityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | City$campaignArgs<ExtArgs>
   }
   export type CityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | City$campaignArgs<ExtArgs>
   }
 
   export type $CityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "City"
     objects: {
-      campaign: Prisma.$CampaignPayload<ExtArgs>
+      campaign: Prisma.$CampaignPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      campaignId: string
+      campaignId: string | null
       name: string
       size: string
       population: string
@@ -4268,7 +4287,7 @@ export namespace Prisma {
    */
   export interface Prisma__CityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    campaign<T extends CampaignDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CampaignDefaultArgs<ExtArgs>>): Prisma__CampaignClient<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    campaign<T extends City$campaignArgs<ExtArgs> = {}>(args?: Subset<T, City$campaignArgs<ExtArgs>>): Prisma__CampaignClient<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4704,6 +4723,25 @@ export namespace Prisma {
   }
 
   /**
+   * City.campaign
+   */
+  export type City$campaignArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Campaign
+     */
+    select?: CampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Campaign
+     */
+    omit?: CampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignInclude<ExtArgs> | null
+    where?: CampaignWhereInput
+  }
+
+  /**
    * City without action
    */
   export type CityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4883,7 +4921,7 @@ export namespace Prisma {
 
   export type ItemGroupByOutputType = {
     id: string
-    campaignId: string
+    campaignId: string | null
     name: string
     type: string
     rarity: string
@@ -4922,7 +4960,7 @@ export namespace Prisma {
     history?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | Item$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["item"]>
 
   export type ItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4936,7 +4974,7 @@ export namespace Prisma {
     history?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | Item$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["item"]>
 
   export type ItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4950,7 +4988,7 @@ export namespace Prisma {
     history?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | Item$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["item"]>
 
   export type ItemSelectScalar = {
@@ -4968,23 +5006,23 @@ export namespace Prisma {
 
   export type ItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "campaignId" | "name" | "type" | "rarity" | "description" | "properties" | "history" | "createdAt" | "updatedAt", ExtArgs["result"]["item"]>
   export type ItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | Item$campaignArgs<ExtArgs>
   }
   export type ItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | Item$campaignArgs<ExtArgs>
   }
   export type ItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    campaign?: boolean | Item$campaignArgs<ExtArgs>
   }
 
   export type $ItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Item"
     objects: {
-      campaign: Prisma.$CampaignPayload<ExtArgs>
+      campaign: Prisma.$CampaignPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      campaignId: string
+      campaignId: string | null
       name: string
       type: string
       rarity: string
@@ -5387,7 +5425,7 @@ export namespace Prisma {
    */
   export interface Prisma__ItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    campaign<T extends CampaignDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CampaignDefaultArgs<ExtArgs>>): Prisma__CampaignClient<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    campaign<T extends Item$campaignArgs<ExtArgs> = {}>(args?: Subset<T, Item$campaignArgs<ExtArgs>>): Prisma__CampaignClient<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5821,6 +5859,25 @@ export namespace Prisma {
   }
 
   /**
+   * Item.campaign
+   */
+  export type Item$campaignArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Campaign
+     */
+    select?: CampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Campaign
+     */
+    omit?: CampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignInclude<ExtArgs> | null
+    where?: CampaignWhereInput
+  }
+
+  /**
    * Item without action
    */
   export type ItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6129,7 +6186,7 @@ export namespace Prisma {
     OR?: NPCWhereInput[]
     NOT?: NPCWhereInput | NPCWhereInput[]
     id?: StringFilter<"NPC"> | string
-    campaignId?: StringFilter<"NPC"> | string
+    campaignId?: StringNullableFilter<"NPC"> | string | null
     name?: StringFilter<"NPC"> | string
     race?: StringFilter<"NPC"> | string
     class?: StringNullableFilter<"NPC"> | string | null
@@ -6140,12 +6197,12 @@ export namespace Prisma {
     goals?: JsonFilter<"NPC">
     createdAt?: DateTimeFilter<"NPC"> | Date | string
     updatedAt?: DateTimeFilter<"NPC"> | Date | string
-    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+    campaign?: XOR<CampaignNullableScalarRelationFilter, CampaignWhereInput> | null
   }
 
   export type NPCOrderByWithRelationInput = {
     id?: SortOrder
-    campaignId?: SortOrder
+    campaignId?: SortOrderInput | SortOrder
     name?: SortOrder
     race?: SortOrder
     class?: SortOrderInput | SortOrder
@@ -6164,7 +6221,7 @@ export namespace Prisma {
     AND?: NPCWhereInput | NPCWhereInput[]
     OR?: NPCWhereInput[]
     NOT?: NPCWhereInput | NPCWhereInput[]
-    campaignId?: StringFilter<"NPC"> | string
+    campaignId?: StringNullableFilter<"NPC"> | string | null
     name?: StringFilter<"NPC"> | string
     race?: StringFilter<"NPC"> | string
     class?: StringNullableFilter<"NPC"> | string | null
@@ -6175,12 +6232,12 @@ export namespace Prisma {
     goals?: JsonFilter<"NPC">
     createdAt?: DateTimeFilter<"NPC"> | Date | string
     updatedAt?: DateTimeFilter<"NPC"> | Date | string
-    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+    campaign?: XOR<CampaignNullableScalarRelationFilter, CampaignWhereInput> | null
   }, "id">
 
   export type NPCOrderByWithAggregationInput = {
     id?: SortOrder
-    campaignId?: SortOrder
+    campaignId?: SortOrderInput | SortOrder
     name?: SortOrder
     race?: SortOrder
     class?: SortOrderInput | SortOrder
@@ -6201,7 +6258,7 @@ export namespace Prisma {
     OR?: NPCScalarWhereWithAggregatesInput[]
     NOT?: NPCScalarWhereWithAggregatesInput | NPCScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"NPC"> | string
-    campaignId?: StringWithAggregatesFilter<"NPC"> | string
+    campaignId?: StringNullableWithAggregatesFilter<"NPC"> | string | null
     name?: StringWithAggregatesFilter<"NPC"> | string
     race?: StringWithAggregatesFilter<"NPC"> | string
     class?: StringNullableWithAggregatesFilter<"NPC"> | string | null
@@ -6219,7 +6276,7 @@ export namespace Prisma {
     OR?: CityWhereInput[]
     NOT?: CityWhereInput | CityWhereInput[]
     id?: StringFilter<"City"> | string
-    campaignId?: StringFilter<"City"> | string
+    campaignId?: StringNullableFilter<"City"> | string | null
     name?: StringFilter<"City"> | string
     size?: StringFilter<"City"> | string
     population?: StringFilter<"City"> | string
@@ -6230,12 +6287,12 @@ export namespace Prisma {
     history?: StringFilter<"City"> | string
     createdAt?: DateTimeFilter<"City"> | Date | string
     updatedAt?: DateTimeFilter<"City"> | Date | string
-    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+    campaign?: XOR<CampaignNullableScalarRelationFilter, CampaignWhereInput> | null
   }
 
   export type CityOrderByWithRelationInput = {
     id?: SortOrder
-    campaignId?: SortOrder
+    campaignId?: SortOrderInput | SortOrder
     name?: SortOrder
     size?: SortOrder
     population?: SortOrder
@@ -6254,7 +6311,7 @@ export namespace Prisma {
     AND?: CityWhereInput | CityWhereInput[]
     OR?: CityWhereInput[]
     NOT?: CityWhereInput | CityWhereInput[]
-    campaignId?: StringFilter<"City"> | string
+    campaignId?: StringNullableFilter<"City"> | string | null
     name?: StringFilter<"City"> | string
     size?: StringFilter<"City"> | string
     population?: StringFilter<"City"> | string
@@ -6265,12 +6322,12 @@ export namespace Prisma {
     history?: StringFilter<"City"> | string
     createdAt?: DateTimeFilter<"City"> | Date | string
     updatedAt?: DateTimeFilter<"City"> | Date | string
-    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+    campaign?: XOR<CampaignNullableScalarRelationFilter, CampaignWhereInput> | null
   }, "id">
 
   export type CityOrderByWithAggregationInput = {
     id?: SortOrder
-    campaignId?: SortOrder
+    campaignId?: SortOrderInput | SortOrder
     name?: SortOrder
     size?: SortOrder
     population?: SortOrder
@@ -6291,7 +6348,7 @@ export namespace Prisma {
     OR?: CityScalarWhereWithAggregatesInput[]
     NOT?: CityScalarWhereWithAggregatesInput | CityScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"City"> | string
-    campaignId?: StringWithAggregatesFilter<"City"> | string
+    campaignId?: StringNullableWithAggregatesFilter<"City"> | string | null
     name?: StringWithAggregatesFilter<"City"> | string
     size?: StringWithAggregatesFilter<"City"> | string
     population?: StringWithAggregatesFilter<"City"> | string
@@ -6309,7 +6366,7 @@ export namespace Prisma {
     OR?: ItemWhereInput[]
     NOT?: ItemWhereInput | ItemWhereInput[]
     id?: StringFilter<"Item"> | string
-    campaignId?: StringFilter<"Item"> | string
+    campaignId?: StringNullableFilter<"Item"> | string | null
     name?: StringFilter<"Item"> | string
     type?: StringFilter<"Item"> | string
     rarity?: StringFilter<"Item"> | string
@@ -6318,12 +6375,12 @@ export namespace Prisma {
     history?: StringNullableFilter<"Item"> | string | null
     createdAt?: DateTimeFilter<"Item"> | Date | string
     updatedAt?: DateTimeFilter<"Item"> | Date | string
-    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+    campaign?: XOR<CampaignNullableScalarRelationFilter, CampaignWhereInput> | null
   }
 
   export type ItemOrderByWithRelationInput = {
     id?: SortOrder
-    campaignId?: SortOrder
+    campaignId?: SortOrderInput | SortOrder
     name?: SortOrder
     type?: SortOrder
     rarity?: SortOrder
@@ -6340,7 +6397,7 @@ export namespace Prisma {
     AND?: ItemWhereInput | ItemWhereInput[]
     OR?: ItemWhereInput[]
     NOT?: ItemWhereInput | ItemWhereInput[]
-    campaignId?: StringFilter<"Item"> | string
+    campaignId?: StringNullableFilter<"Item"> | string | null
     name?: StringFilter<"Item"> | string
     type?: StringFilter<"Item"> | string
     rarity?: StringFilter<"Item"> | string
@@ -6349,12 +6406,12 @@ export namespace Prisma {
     history?: StringNullableFilter<"Item"> | string | null
     createdAt?: DateTimeFilter<"Item"> | Date | string
     updatedAt?: DateTimeFilter<"Item"> | Date | string
-    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+    campaign?: XOR<CampaignNullableScalarRelationFilter, CampaignWhereInput> | null
   }, "id">
 
   export type ItemOrderByWithAggregationInput = {
     id?: SortOrder
-    campaignId?: SortOrder
+    campaignId?: SortOrderInput | SortOrder
     name?: SortOrder
     type?: SortOrder
     rarity?: SortOrder
@@ -6373,7 +6430,7 @@ export namespace Prisma {
     OR?: ItemScalarWhereWithAggregatesInput[]
     NOT?: ItemScalarWhereWithAggregatesInput | ItemScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Item"> | string
-    campaignId?: StringWithAggregatesFilter<"Item"> | string
+    campaignId?: StringNullableWithAggregatesFilter<"Item"> | string | null
     name?: StringWithAggregatesFilter<"Item"> | string
     type?: StringWithAggregatesFilter<"Item"> | string
     rarity?: StringWithAggregatesFilter<"Item"> | string
@@ -6534,12 +6591,12 @@ export namespace Prisma {
     goals: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    campaign: CampaignCreateNestedOneWithoutNpcsInput
+    campaign?: CampaignCreateNestedOneWithoutNpcsInput
   }
 
   export type NPCUncheckedCreateInput = {
     id?: string
-    campaignId: string
+    campaignId?: string | null
     name: string
     race: string
     class?: string | null
@@ -6564,12 +6621,12 @@ export namespace Prisma {
     goals?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    campaign?: CampaignUpdateOneRequiredWithoutNpcsNestedInput
+    campaign?: CampaignUpdateOneWithoutNpcsNestedInput
   }
 
   export type NPCUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    campaignId?: StringFieldUpdateOperationsInput | string
+    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     race?: StringFieldUpdateOperationsInput | string
     class?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6584,7 +6641,7 @@ export namespace Prisma {
 
   export type NPCCreateManyInput = {
     id?: string
-    campaignId: string
+    campaignId?: string | null
     name: string
     race: string
     class?: string | null
@@ -6613,7 +6670,7 @@ export namespace Prisma {
 
   export type NPCUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    campaignId?: StringFieldUpdateOperationsInput | string
+    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     race?: StringFieldUpdateOperationsInput | string
     class?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6638,12 +6695,12 @@ export namespace Prisma {
     history: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    campaign: CampaignCreateNestedOneWithoutCitiesInput
+    campaign?: CampaignCreateNestedOneWithoutCitiesInput
   }
 
   export type CityUncheckedCreateInput = {
     id?: string
-    campaignId: string
+    campaignId?: string | null
     name: string
     size: string
     population: string
@@ -6668,12 +6725,12 @@ export namespace Prisma {
     history?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    campaign?: CampaignUpdateOneRequiredWithoutCitiesNestedInput
+    campaign?: CampaignUpdateOneWithoutCitiesNestedInput
   }
 
   export type CityUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    campaignId?: StringFieldUpdateOperationsInput | string
+    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     population?: StringFieldUpdateOperationsInput | string
@@ -6688,7 +6745,7 @@ export namespace Prisma {
 
   export type CityCreateManyInput = {
     id?: string
-    campaignId: string
+    campaignId?: string | null
     name: string
     size: string
     population: string
@@ -6717,7 +6774,7 @@ export namespace Prisma {
 
   export type CityUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    campaignId?: StringFieldUpdateOperationsInput | string
+    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     population?: StringFieldUpdateOperationsInput | string
@@ -6740,12 +6797,12 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    campaign: CampaignCreateNestedOneWithoutItemsInput
+    campaign?: CampaignCreateNestedOneWithoutItemsInput
   }
 
   export type ItemUncheckedCreateInput = {
     id?: string
-    campaignId: string
+    campaignId?: string | null
     name: string
     type: string
     rarity: string
@@ -6766,12 +6823,12 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    campaign?: CampaignUpdateOneRequiredWithoutItemsNestedInput
+    campaign?: CampaignUpdateOneWithoutItemsNestedInput
   }
 
   export type ItemUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    campaignId?: StringFieldUpdateOperationsInput | string
+    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     rarity?: StringFieldUpdateOperationsInput | string
@@ -6784,7 +6841,7 @@ export namespace Prisma {
 
   export type ItemCreateManyInput = {
     id?: string
-    campaignId: string
+    campaignId?: string | null
     name: string
     type: string
     rarity: string
@@ -6809,7 +6866,7 @@ export namespace Prisma {
 
   export type ItemUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    campaignId?: StringFieldUpdateOperationsInput | string
+    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     rarity?: StringFieldUpdateOperationsInput | string
@@ -7044,9 +7101,9 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type CampaignScalarRelationFilter = {
-    is?: CampaignWhereInput
-    isNot?: CampaignWhereInput
+  export type CampaignNullableScalarRelationFilter = {
+    is?: CampaignWhereInput | null
+    isNot?: CampaignWhereInput | null
   }
 
   export type NPCCountOrderByAggregateInput = {
@@ -7320,10 +7377,12 @@ export namespace Prisma {
     connect?: CampaignWhereUniqueInput
   }
 
-  export type CampaignUpdateOneRequiredWithoutNpcsNestedInput = {
+  export type CampaignUpdateOneWithoutNpcsNestedInput = {
     create?: XOR<CampaignCreateWithoutNpcsInput, CampaignUncheckedCreateWithoutNpcsInput>
     connectOrCreate?: CampaignCreateOrConnectWithoutNpcsInput
     upsert?: CampaignUpsertWithoutNpcsInput
+    disconnect?: CampaignWhereInput | boolean
+    delete?: CampaignWhereInput | boolean
     connect?: CampaignWhereUniqueInput
     update?: XOR<XOR<CampaignUpdateToOneWithWhereWithoutNpcsInput, CampaignUpdateWithoutNpcsInput>, CampaignUncheckedUpdateWithoutNpcsInput>
   }
@@ -7334,10 +7393,12 @@ export namespace Prisma {
     connect?: CampaignWhereUniqueInput
   }
 
-  export type CampaignUpdateOneRequiredWithoutCitiesNestedInput = {
+  export type CampaignUpdateOneWithoutCitiesNestedInput = {
     create?: XOR<CampaignCreateWithoutCitiesInput, CampaignUncheckedCreateWithoutCitiesInput>
     connectOrCreate?: CampaignCreateOrConnectWithoutCitiesInput
     upsert?: CampaignUpsertWithoutCitiesInput
+    disconnect?: CampaignWhereInput | boolean
+    delete?: CampaignWhereInput | boolean
     connect?: CampaignWhereUniqueInput
     update?: XOR<XOR<CampaignUpdateToOneWithWhereWithoutCitiesInput, CampaignUpdateWithoutCitiesInput>, CampaignUncheckedUpdateWithoutCitiesInput>
   }
@@ -7348,10 +7409,12 @@ export namespace Prisma {
     connect?: CampaignWhereUniqueInput
   }
 
-  export type CampaignUpdateOneRequiredWithoutItemsNestedInput = {
+  export type CampaignUpdateOneWithoutItemsNestedInput = {
     create?: XOR<CampaignCreateWithoutItemsInput, CampaignUncheckedCreateWithoutItemsInput>
     connectOrCreate?: CampaignCreateOrConnectWithoutItemsInput
     upsert?: CampaignUpsertWithoutItemsInput
+    disconnect?: CampaignWhereInput | boolean
+    delete?: CampaignWhereInput | boolean
     connect?: CampaignWhereUniqueInput
     update?: XOR<XOR<CampaignUpdateToOneWithWhereWithoutItemsInput, CampaignUpdateWithoutItemsInput>, CampaignUncheckedUpdateWithoutItemsInput>
   }
@@ -7624,7 +7687,7 @@ export namespace Prisma {
     OR?: NPCScalarWhereInput[]
     NOT?: NPCScalarWhereInput | NPCScalarWhereInput[]
     id?: StringFilter<"NPC"> | string
-    campaignId?: StringFilter<"NPC"> | string
+    campaignId?: StringNullableFilter<"NPC"> | string | null
     name?: StringFilter<"NPC"> | string
     race?: StringFilter<"NPC"> | string
     class?: StringNullableFilter<"NPC"> | string | null
@@ -7658,7 +7721,7 @@ export namespace Prisma {
     OR?: CityScalarWhereInput[]
     NOT?: CityScalarWhereInput | CityScalarWhereInput[]
     id?: StringFilter<"City"> | string
-    campaignId?: StringFilter<"City"> | string
+    campaignId?: StringNullableFilter<"City"> | string | null
     name?: StringFilter<"City"> | string
     size?: StringFilter<"City"> | string
     population?: StringFilter<"City"> | string
@@ -7692,7 +7755,7 @@ export namespace Prisma {
     OR?: ItemScalarWhereInput[]
     NOT?: ItemScalarWhereInput | ItemScalarWhereInput[]
     id?: StringFilter<"Item"> | string
-    campaignId?: StringFilter<"Item"> | string
+    campaignId?: StringNullableFilter<"Item"> | string | null
     name?: StringFilter<"Item"> | string
     type?: StringFilter<"Item"> | string
     rarity?: StringFilter<"Item"> | string

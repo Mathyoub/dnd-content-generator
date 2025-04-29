@@ -34,8 +34,8 @@ model Campaign {
 
 model NPC {
   id          String   @id @default(uuid())
-  campaign    Campaign @relation(fields: [campaignId], references: [id])
-  campaignId  String
+  campaign    Campaign? @relation(fields: [campaignId], references: [id])
+  campaignId  String?
   name        String
   race        String
   class       String?
@@ -49,25 +49,25 @@ model NPC {
 }
 
 model City {
-  id          String   @id @default(uuid())
-  campaign    Campaign @relation(fields: [campaignId], references: [id])
-  campaignId  String
-  name        String
-  size        String
-  population  String
-  government  String
-  economy     String
+  id               String   @id @default(uuid())
+  campaign         Campaign? @relation(fields: [campaignId], references: [id])
+  campaignId       String?
+  name             String
+  size             String
+  population       String
+  government       String
+  economy          String
   notableLocations Json
-  description String
-  history     String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  description      String
+  history          String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 model Item {
   id          String   @id @default(uuid())
-  campaign    Campaign @relation(fields: [campaignId], references: [id])
-  campaignId  String
+  campaign    Campaign? @relation(fields: [campaignId], references: [id])
+  campaignId  String?
   name        String
   type        String
   rarity      String

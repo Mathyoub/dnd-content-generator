@@ -33,10 +33,18 @@ export default function CampaignList() {
 
   return (
     <Layout>
-      <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Your Campaigns</h1>
-        {loading && <div>Loading campaigns...</div>}
-        {error && <div className="text-red-500">{error}</div>}
+      <div className="max-w-4xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Your Campaigns</h1>
+          <button
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            onClick={() => router.push('/campaign/new')}
+          >
+            Create New Campaign
+          </button>
+        </div>
+        {loading && <div className="text-gray-700">Loading campaigns...</div>}
+        {error && <div className="text-red-500 mb-4">{error}</div>}
         {!loading && !error && (
           <ul className="space-y-4">
             {campaigns.length === 0 && <li>No campaigns found.</li>}

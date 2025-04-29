@@ -32,13 +32,64 @@ export default function GenerateContent() {
     }
   }, [router]);
 
+  // Load campaign content from database
+  useEffect(() => {
+    if (!campaignId) return;
+
+    const loadCampaignContent = async () => {
+      try {
+        // Load cities
+        const citiesResponse = await fetch(`/api/campaign/${campaignId}/city`);
+        if (citiesResponse.ok) {
+          const citiesData = await citiesResponse.json();
+          setCities(citiesData);
+          // Initialize collapsed state for cities
+          setCollapsedCities(citiesData.reduce((acc: { [id: string]: boolean }, city: City) => {
+            acc[city.id] = true;
+            return acc;
+          }, {}));
+        }
+
+        // Load NPCs
+        const npcsResponse = await fetch(`/api/campaign/${campaignId}/npc`);
+        if (npcsResponse.ok) {
+          const npcsData = await npcsResponse.json();
+          setNPCs(npcsData);
+          // Initialize collapsed state for NPCs
+          setCollapsedNPCs(npcsData.reduce((acc: { [id: string]: boolean }, npc: NPC) => {
+            acc[npc.id] = true;
+            return acc;
+          }, {}));
+        }
+
+        // Load items
+        const itemsResponse = await fetch(`/api/campaign/${campaignId}/item`);
+        if (itemsResponse.ok) {
+          const itemsData = await itemsResponse.json();
+          setItems(itemsData);
+          // Initialize collapsed state for items
+          setCollapsedItems(itemsData.reduce((acc: { [id: string]: boolean }, item: Item) => {
+            acc[item.id] = true;
+            return acc;
+          }, {}));
+        }
+      } catch (error) {
+        console.error('Error loading campaign content:', error);
+        setError('Failed to load campaign content');
+      }
+    };
+
+    loadCampaignContent();
+  }, [campaignId]);
+
   const generateContent = async (type: 'city' | 'npc' | 'item') => {
     if (!settings) return;
     setIsGenerating(type);
     setError(null);
 
     try {
-      const response = await fetch(`/api/generate/${type}`, {
+      // First generate the content
+      const generateResponse = await fetch(`/api/generate/${type}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,25 +97,40 @@ export default function GenerateContent() {
         body: JSON.stringify(settings),
       });
 
-      if (!response.ok) {
+      if (!generateResponse.ok) {
         throw new Error(`Failed to generate ${type}`);
       }
 
-      const data = await response.json();
+      const generatedData = await generateResponse.json();
+
+      // Then save it to the database
+      const saveResponse = await fetch(`/api/campaign/${campaignId}/${type}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(generatedData),
+      });
+
+      if (!saveResponse.ok) {
+        throw new Error(`Failed to save ${type}`);
+      }
+
+      const savedData = await saveResponse.json();
 
       switch (type) {
         case 'city':
-          setCities([...cities, data]);
+          setCities([...cities, savedData]);
           break;
         case 'npc':
-          setNPCs([...npcs, data]);
+          setNPCs([...npcs, savedData]);
           break;
         case 'item':
-          setItems([...items, data]);
+          setItems([...items, savedData]);
           break;
       }
     } catch (err) {
-      setError(`Failed to generate ${type}. Please try again.`);
+      setError(`Failed to generate or save ${type}. Please try again.`);
       console.error(err);
     } finally {
       setIsGenerating(null);
@@ -107,12 +173,6 @@ export default function GenerateContent() {
               onClick={() => router.push(`/campaign/edit/${campaignId}`)}
             >
               Edit
-            </button>
-            <button
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-              onClick={() => setShowDeleteCampaignModal(true)}
-            >
-              Delete
             </button>
           </div>
           <div className="bg-white rounded shadow p-4 text-gray-900">
@@ -391,6 +451,14 @@ export default function GenerateContent() {
             </div>
           </div>
         )}
+        <div className="flex justify-end mt-8">
+          <button
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+            onClick={() => setShowDeleteCampaignModal(true)}
+          >
+            Delete Campaign
+          </button>
+        </div>
       </div>
     </Layout>
   );

@@ -39,17 +39,24 @@ export type NPC = {
   relationships: string[];
 };
 
-export type City = {
+export interface City {
   id: string;
+  campaignId?: string;
   name: string;
-  size: 'village' | 'town' | 'city' | 'metropolis';
+  size: string;
   population: string;
   government: string;
   economy: string;
-  notableLocations: string[];
+  notableLocations: any;
   description: string;
   history: string;
-};
+  createdAt: string;
+  updatedAt: string;
+  campaign?: {
+    id: string;
+    name: string;
+  };
+}
 
 export type Item = {
   id: string;

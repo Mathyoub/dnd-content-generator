@@ -73,22 +73,63 @@ const parseResponse = (type: 'city' | 'npc' | 'item', response: string): City | 
   }
 };
 
-export async function generateCity(settings: CampaignSetting): Promise<City> {
-  const prompt = generatePrompt('city', settings);
-  const completion = await openai.chat.completions.create({
+export async function generateCity(settings?: CampaignSetting) {
+  const prompt = settings
+    ? `Generate a city for a ${settings.theme} campaign with a ${settings.tone.join(', ')} tone. The city should be consistent with the following settings:
+      - Magic is ${settings.magicCommonality || 'common'}
+      - Technology level is ${settings.technologyLevel || 'medieval'}
+      - The world is ${settings.civilizationState || 'thriving'}
+      - Common landscapes include ${(settings.commonLandscapes || []).join(', ')}
+      - Religion is ${settings.roleOfReligion || 'important'} and religious figures are ${settings.religiousFiguresPerception || 'respected'}
+      - Major conflicts: ${settings.majorConflictsThreats || 'none specified'}
+
+      Generate a detailed city with the following structure:
+      {
+        "name": "string",
+        "size": "string",
+        "population": "string",
+        "government": "string",
+        "economy": "string",
+        "notableLocations": ["string"],
+        "description": "string",
+        "history": "string"
+      }`
+    : `Generate a detailed fantasy city with the following structure:
+      {
+        "name": "string",
+        "size": "string",
+        "population": "string",
+        "government": "string",
+        "economy": "string",
+        "notableLocations": ["string"],
+        "description": "string",
+        "history": "string"
+      }`;
+
+  const response = await openai.chat.completions.create({
+    model: "gpt-4-turbo-preview",
     messages: [
-      { role: 'system', content: 'You are a creative assistant that generates D&D content. Respond with valid JSON.' },
-      { role: 'user', content: prompt }
+      {
+        role: "system",
+        content: "You are a creative assistant that generates detailed fantasy cities. Your responses should be in valid JSON format."
+      },
+      {
+        role: "user",
+        content: prompt
+      }
     ],
-    model: 'gpt-3.5-turbo',
-    response_format: { type: 'json_object' },
-    temperature: 0.9,
+    response_format: { type: "json_object" }
   });
 
-  // Log the raw response for debugging
-  console.log('OpenAI City response:', completion.choices[0].message.content);
+  console.log('Raw response:', response.choices[0].message.content);
 
-  return parseResponse('city', completion.choices[0].message.content || '{}') as City;
+  const content = response.choices[0].message.content;
+  if (!content) {
+    throw new Error('No content received from OpenAI');
+  }
+
+  const city = JSON.parse(content);
+  return city;
 }
 
 export async function generateNPC(settings: CampaignSetting): Promise<NPC> {

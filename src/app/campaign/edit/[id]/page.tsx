@@ -117,7 +117,7 @@ export default function EditCampaign() {
       }
       const updated = await response.json();
       localStorage.setItem("campaignSettings", JSON.stringify(updated));
-      router.push("/campaign/generate");
+      router.push(`/campaign/${campaignId}`);
     } catch (err) {
       setApiError("Failed to update campaign");
       setSaving(false);
