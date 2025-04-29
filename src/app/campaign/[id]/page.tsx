@@ -116,7 +116,7 @@ export default function GenerateContent() {
             </button>
           </div>
           <div className="bg-white rounded shadow p-4 text-gray-900">
-            <div><strong>Campaign Name:</strong> {settings.campaignName || 'N/A'}</div>
+            <div><strong>Campaign Name:</strong> {settings.name || 'N/A'}</div>
             <div><strong>Theme:</strong> {settings.theme || 'N/A'}</div>
             <div><strong>Tone:</strong> {Array.isArray(settings.tone) && settings.tone.length > 0 ? settings.tone.join(', ') : 'N/A'}</div>
             <div><strong>Homebrew Allowed:</strong> {settings.homebrewAllowed ? 'Yes' : 'No'}</div>
