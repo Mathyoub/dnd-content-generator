@@ -1,25 +1,30 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Layout from '@/components/Layout';
 import type { CampaignSetting, City, NPC, Item } from '@/types/campaign';
 
-// Mock campaign settings (in a real app, this would come from state or context)
-const mockSettings: CampaignSetting = {
-  theme: 'fantasy',
-  tone: 'serious',
-  homebrewAllowed: false,
-  description: 'A classic fantasy world with ancient ruins and mysterious forests.'
-};
-
 export default function GenerateContent() {
+  const router = useRouter();
+  const [settings, setSettings] = useState<CampaignSetting | null>(null);
   const [cities, setCities] = useState<City[]>([]);
   const [npcs, setNPCs] = useState<NPC[]>([]);
   const [items, setItems] = useState<Item[]>([]);
   const [isGenerating, setIsGenerating] = useState<'city' | 'npc' | 'item' | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const stored = localStorage.getItem('campaignSettings');
+    if (stored) {
+      setSettings(JSON.parse(stored));
+    } else {
+      router.replace('/campaign/new');
+    }
+  }, [router]);
+
   const generateContent = async (type: 'city' | 'npc' | 'item') => {
+    if (!settings) return;
     setIsGenerating(type);
     setError(null);
 
@@ -29,7 +34,7 @@ export default function GenerateContent() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(mockSettings),
+        body: JSON.stringify(settings),
       });
 
       if (!response.ok) {
@@ -57,6 +62,8 @@ export default function GenerateContent() {
     }
   };
 
+  if (!settings) return null;
+
   return (
     <Layout>
       <div className="max-w-3xl mx-auto">
@@ -69,10 +76,18 @@ export default function GenerateContent() {
         <section className="mb-8">
           <h2 className="text-xl font-semibold text-gray-800 mb-2">Campaign Settings</h2>
           <div className="bg-white rounded shadow p-4 text-gray-900">
-            <div><strong>Theme:</strong> {mockSettings.theme}</div>
-            <div><strong>Tone:</strong> {mockSettings.tone}</div>
-            <div><strong>Homebrew Allowed:</strong> {mockSettings.homebrewAllowed ? 'Yes' : 'No'}</div>
-            {mockSettings.description && <div><strong>Description:</strong> {mockSettings.description}</div>}
+            <div><strong>Campaign Name:</strong> {settings.campaignName || 'N/A'}</div>
+            <div><strong>Theme:</strong> {settings.theme || 'N/A'}</div>
+            <div><strong>Tone:</strong> {Array.isArray(settings.tone) && settings.tone.length > 0 ? settings.tone.join(', ') : 'N/A'}</div>
+            <div><strong>Homebrew Allowed:</strong> {settings.homebrewAllowed ? 'Yes' : 'No'}</div>
+            <div><strong>Magic Commonality:</strong> {settings.magicCommonality || 'N/A'}</div>
+            <div><strong>Geographical Scale:</strong> {settings.geographicalScale || 'N/A'}</div>
+            <div><strong>Civilization State:</strong> {settings.civilizationState || 'N/A'}</div>
+            <div><strong>Common Landscapes:</strong> {Array.isArray(settings.commonLandscapes) && settings.commonLandscapes.length > 0 ? settings.commonLandscapes.join(', ') : 'N/A'}</div>
+            <div><strong>Technology Level:</strong> {settings.technologyLevel || 'N/A'}</div>
+            <div><strong>Role of Religion:</strong> {settings.roleOfReligion || 'N/A'}</div>
+            <div><strong>Religious Figures Perception:</strong> {settings.religiousFiguresPerception || 'N/A'}</div>
+            <div><strong>Major Conflicts or Threats:</strong> {settings.majorConflictsThreats || 'N/A'}</div>
           </div>
         </section>
         <section className="mb-8">
