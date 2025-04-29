@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Layout from '@/components/Layout';
 import type { CampaignSetting, City, NPC, Item } from '@/types/campaign';
+import React from 'react';
 
 export default function GenerateContent() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function GenerateContent() {
   const [collapsedNPCs, setCollapsedNPCs] = useState<{ [id: string]: boolean }>({});
   const [collapsedCities, setCollapsedCities] = useState<{ [id: string]: boolean }>({});
   const [collapsedItems, setCollapsedItems] = useState<{ [id: string]: boolean }>({});
+  const [deleteModal, setDeleteModal] = useState<null | { type: 'city' | 'npc' | 'item'; id: string }>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem('campaignSettings');
@@ -117,6 +119,15 @@ export default function GenerateContent() {
                       <div><strong>Notable Locations:</strong> {Array.isArray(city.notableLocations) ? city.notableLocations.join(', ') : city.notableLocations}</div>
                       <div><strong>Description:</strong> {city.description}</div>
                       <div><strong>History:</strong> {city.history}</div>
+                      <div className="mt-4 flex justify-end">
+                        <button
+                          className="text-red-500 hover:underline text-sm"
+                          onClick={() => setDeleteModal({ type: 'city', id: city.id })}
+                          aria-label="Delete city"
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </>}
                   </li>
                 );
@@ -222,6 +233,15 @@ export default function GenerateContent() {
                       <div><strong>Background:</strong> {background}</div>
                       <div><strong>Personality:</strong> {personality}</div>
                       <div><strong>Goals:</strong> {goals}</div>
+                      <div className="mt-4 flex justify-end">
+                        <button
+                          className="text-red-500 hover:underline text-sm"
+                          onClick={() => setDeleteModal({ type: 'npc', id: npc.id })}
+                          aria-label="Delete NPC"
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </>}
                   </li>
                 );
@@ -259,6 +279,15 @@ export default function GenerateContent() {
                       <div><strong>Description:</strong> {item.description}</div>
                       <div><strong>Properties:</strong> {Array.isArray(item.properties) ? item.properties.join(', ') : item.properties}</div>
                       {item.history && <div><strong>History:</strong> {item.history}</div>}
+                      <div className="mt-4 flex justify-end">
+                        <button
+                          className="text-red-500 hover:underline text-sm"
+                          onClick={() => setDeleteModal({ type: 'item', id: item.id })}
+                          aria-label="Delete item"
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </>}
                   </li>
                 );
@@ -275,6 +304,34 @@ export default function GenerateContent() {
             </button>
           </div>
         </section>
+        {/* Confirmation Modal */}
+        {deleteModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800/50">
+            <div className="bg-white rounded shadow-lg p-6 max-w-sm w-full text-gray-900">
+              <h3 className="text-lg font-semibold mb-4">Confirm Deletion</h3>
+              <p className="mb-6">Are you sure you want to delete this {deleteModal.type}?</p>
+              <div className="flex justify-end gap-4">
+                <button
+                  className="px-4 py-2 rounded bg-gray-200 text-gray-900 hover:bg-gray-300"
+                  onClick={() => setDeleteModal(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
+                  onClick={() => {
+                    if (deleteModal.type === 'city') setCities(cities => cities.filter(c => c.id !== deleteModal.id));
+                    if (deleteModal.type === 'npc') setNPCs(npcs => npcs.filter(n => n.id !== deleteModal.id));
+                    if (deleteModal.type === 'item') setItems(items => items.filter(i => i.id !== deleteModal.id));
+                    setDeleteModal(null);
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </Layout>
   );
