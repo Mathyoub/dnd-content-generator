@@ -1,29 +1,23 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Layout from '@/components/Layout';
-import type { Item } from '@/types/campaign';
+import { useEffect, useState } from "react";
+import Layout from "@/components/Layout";
+import type { Item } from "@/types/campaign";
+import Link from "next/link";
 
-export default function ItemsList() {
-  const router = useRouter();
-  const [items, setItems] = useState<Array<Item & { campaign: { id: string; name: string } }>>([]);
+export default function ItemsPage() {
+  const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [collapsedItems, setCollapsedItems] = useState<{ [id: string]: boolean }>({});
 
   useEffect(() => {
-    fetch('/api/items')
+    fetch("/api/items")
       .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch items');
+        if (!res.ok) throw new Error("Failed to fetch items");
         return res.json();
       })
       .then((data) => {
         setItems(data);
-        setCollapsedItems(data.reduce((acc: { [id: string]: boolean }, item: Item) => {
-          acc[item.id] = true;
-          return acc;
-        }, {}));
         setLoading(false);
       })
       .catch((err) => {
@@ -32,55 +26,59 @@ export default function ItemsList() {
       });
   }, []);
 
+  if (loading) return <div className="text-center py-8">Loading items...</div>;
+  if (error) return <div className="text-red-500 text-center py-8">{error}</div>;
+
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto px-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">All Items</h1>
-        {loading && <div className="text-gray-700">Loading items...</div>}
-        {error && <div className="text-red-500 mb-4">{error}</div>}
-        {!loading && !error && (
-          <ul className="space-y-4">
-            {items.length === 0 ? (
-              <li className="text-gray-700">No items found.</li>
-            ) : (
-              items.map((item) => {
-                const isCollapsed = collapsedItems[item.id] ?? false;
-                return (
-                  <li key={item.id} className="bg-white rounded shadow p-4 text-gray-900">
-                    <div className="flex items-center justify-between mb-2">
-                      <div>
-                        <span className="font-bold text-lg">{item.name} ({item.type}, {item.rarity})</span>
-                        <div className="text-sm text-gray-600 mt-1">
-                          <span className="font-medium">Campaign:</span>{' '}
-                          <button
-                            className="text-blue-600 hover:underline"
-                            onClick={() => router.push(`/campaign/${item.campaign.id}`)}
-                          >
-                            {item.campaign.name}
-                          </button>
-                        </div>
-                      </div>
-                      <div className="flex gap-2">
-                        <button
-                          className="text-blue-600 hover:underline text-sm"
-                          onClick={() => setCollapsedItems(prev => ({ ...prev, [item.id]: !isCollapsed }))}
-                        >
-                          {isCollapsed ? 'Show more' : 'Show less'}
-                        </button>
-                      </div>
-                    </div>
-                    {!isCollapsed && (
-                      <>
-                        <div><strong>Description:</strong> {item.description}</div>
-                        <div><strong>Properties:</strong> {Array.isArray(item.properties) ? item.properties.join(', ') : item.properties}</div>
-                        {item.history && <div><strong>History:</strong> {item.history}</div>}
-                      </>
-                    )}
-                  </li>
-                );
-              })
-            )}
-          </ul>
+        {items.length === 0 ? (
+          <p className="text-gray-600">No items have been generated yet.</p>
+        ) : (
+          <div className="grid gap-6">
+            {items.map((item) => (
+              <div key={item.id} className="bg-white rounded-lg shadow p-6">
+                <div className="flex justify-between items-start mb-4">
+                  <h2 className="text-xl font-bold text-gray-900">{item.name}</h2>
+                  <Link
+                    href={`/campaign/${item.campaignId}`}
+                    className="text-sm text-blue-600 hover:text-blue-800"
+                  >
+                    View Campaign
+                  </Link>
+                </div>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <p className="text-sm text-gray-600">Type</p>
+                    <p className="text-gray-900">{item.type}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Rarity</p>
+                    <p className="text-gray-900">{item.rarity}</p>
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <p className="text-sm text-gray-600 mb-1">Description</p>
+                  <p className="text-gray-900">{item.description}</p>
+                </div>
+                {item.history && (
+                  <div className="mb-4">
+                    <p className="text-sm text-gray-600 mb-1">History</p>
+                    <p className="text-gray-900">{item.history}</p>
+                  </div>
+                )}
+                <div>
+                  <p className="text-sm text-gray-600 mb-1">Properties</p>
+                  <ul className="list-disc list-inside text-gray-900">
+                    {(item.properties as string[]).map((property, index) => (
+                      <li key={index}>{property}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </Layout>

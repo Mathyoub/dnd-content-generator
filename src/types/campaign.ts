@@ -28,6 +28,7 @@ export type CampaignSetting = {
 
 export type NPC = {
   id: string;
+  campaignId?: string;
   name: string;
   race: string;
   class?: string;
@@ -37,6 +38,10 @@ export type NPC = {
   personality: string;
   goals: string[];
   relationships: string[];
+  campaign?: {
+    id: string;
+    name: string;
+  };
 };
 
 export interface City {
@@ -60,12 +65,17 @@ export interface City {
 
 export type Item = {
   id: string;
+  campaignId?: string;
   name: string;
   type: string;
   rarity: 'common' | 'uncommon' | 'rare' | 'very-rare' | 'legendary';
   description: string;
   properties: string[];
   history?: string;
+  campaign?: {
+    id: string;
+    name: string;
+  };
 };
 
 export type GeneratedContent = {

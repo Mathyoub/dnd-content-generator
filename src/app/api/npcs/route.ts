@@ -1,24 +1,27 @@
 import { NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import { PrismaClient } from '@/generated/prisma';
+
+const prisma = new PrismaClient();
 
 export async function GET() {
   try {
     const npcs = await prisma.nPC.findMany({
       include: {
-        campaign: true,
+        campaign: {
+          select: {
+            id: true,
+            name: true
+          }
+        }
       },
       orderBy: {
-        createdAt: 'desc',
-      },
+        createdAt: 'desc'
+      }
     });
-
     return NextResponse.json(npcs);
   } catch (error) {
     console.error('Error fetching NPCs:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch NPCs' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch NPCs' }, { status: 500 });
   }
 }
 

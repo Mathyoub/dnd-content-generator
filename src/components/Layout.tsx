@@ -27,6 +27,21 @@ export default function Layout({ children }: LayoutProps) {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/cities" className="text-gray-600 hover:text-gray-900">
+                    Cities
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/npcs" className="text-gray-600 hover:text-gray-900">
+                    NPCs
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/items" className="text-gray-600 hover:text-gray-900">
+                    Items
+                  </Link>
+                </li>
+                <li>
                   <Link href="/about" className="text-gray-600 hover:text-gray-900">
                     About
                   </Link>
