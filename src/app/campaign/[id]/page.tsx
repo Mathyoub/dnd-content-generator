@@ -39,7 +39,7 @@ export default function GenerateContent() {
     const loadCampaignContent = async () => {
       try {
         // Load cities
-        const citiesResponse = await fetch(`/api/campaign/${campaignId}/city`);
+        const citiesResponse = await fetch(`/api/cities?campaignId=${campaignId}`);
         if (citiesResponse.ok) {
           const citiesData = await citiesResponse.json();
           setCities(citiesData);
@@ -51,7 +51,7 @@ export default function GenerateContent() {
         }
 
         // Load NPCs
-        const npcsResponse = await fetch(`/api/campaign/${campaignId}/npc`);
+        const npcsResponse = await fetch(`/api/npcs?campaignId=${campaignId}`);
         if (npcsResponse.ok) {
           const npcsData = await npcsResponse.json();
           setNPCs(npcsData);
@@ -63,7 +63,7 @@ export default function GenerateContent() {
         }
 
         // Load items
-        const itemsResponse = await fetch(`/api/campaign/${campaignId}/item`);
+        const itemsResponse = await fetch(`/api/items?campaignId=${campaignId}`);
         if (itemsResponse.ok) {
           const itemsData = await itemsResponse.json();
           setItems(itemsData);
@@ -104,13 +104,82 @@ export default function GenerateContent() {
       const generatedData = await generateResponse.json();
 
       // Then save it to the database
-      const saveResponse = await fetch(`/api/campaign/${campaignId}/${type}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(generatedData),
-      });
+      let saveResponse;
+      if (type === 'city') {
+        // First create the city
+        const cityResponse = await fetch('/api/cities', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(generatedData),
+        });
+
+        if (!cityResponse.ok) {
+          throw new Error(`Failed to save ${type}`);
+        }
+
+        const cityData = await cityResponse.json();
+
+        // Then associate it with the campaign
+        saveResponse = await fetch(`/api/cities/${cityData.id}/campaigns`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ campaignId }),
+        });
+      } else if (type === 'npc') {
+        // First create the NPC
+        const npcResponse = await fetch('/api/npcs', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(generatedData),
+        });
+
+        if (!npcResponse.ok) {
+          throw new Error(`Failed to save ${type}`);
+        }
+
+        const npcData = await npcResponse.json();
+
+        // Then associate it with the campaign
+        saveResponse = await fetch(`/api/npcs/${npcData.id}/campaigns`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ campaignId }),
+        });
+      } else if (type === 'item') {
+        // First create the item
+        const itemResponse = await fetch('/api/items', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(generatedData),
+        });
+
+        if (!itemResponse.ok) {
+          throw new Error(`Failed to save ${type}`);
+        }
+
+        const itemData = await itemResponse.json();
+
+        // Then associate it with the campaign
+        saveResponse = await fetch(`/api/items/${itemData.id}/campaigns`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ campaignId }),
+        });
+      } else {
+        throw new Error(`Invalid type: ${type}`);
+      }
 
       if (!saveResponse.ok) {
         throw new Error(`Failed to save ${type}`);

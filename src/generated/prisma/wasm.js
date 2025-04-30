@@ -140,7 +140,6 @@ exports.Prisma.CampaignScalarFieldEnum = {
 
 exports.Prisma.NPCScalarFieldEnum = {
   id: 'id',
-  campaignId: 'campaignId',
   name: 'name',
   race: 'race',
   class: 'class',
@@ -155,7 +154,6 @@ exports.Prisma.NPCScalarFieldEnum = {
 
 exports.Prisma.CityScalarFieldEnum = {
   id: 'id',
-  campaignId: 'campaignId',
   name: 'name',
   size: 'size',
   population: 'population',
@@ -170,13 +168,36 @@ exports.Prisma.CityScalarFieldEnum = {
 
 exports.Prisma.ItemScalarFieldEnum = {
   id: 'id',
-  campaignId: 'campaignId',
   name: 'name',
   type: 'type',
   rarity: 'rarity',
   description: 'description',
   properties: 'properties',
   history: 'history',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CampaignCityScalarFieldEnum = {
+  id: 'id',
+  campaignId: 'campaignId',
+  cityId: 'cityId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CampaignNPCScalarFieldEnum = {
+  id: 'id',
+  campaignId: 'campaignId',
+  npcId: 'npcId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CampaignItemScalarFieldEnum = {
+  id: 'id',
+  campaignId: 'campaignId',
+  itemId: 'itemId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -211,7 +232,10 @@ exports.Prisma.ModelName = {
   Campaign: 'Campaign',
   NPC: 'NPC',
   City: 'City',
-  Item: 'Item'
+  Item: 'Item',
+  CampaignCity: 'CampaignCity',
+  CampaignNPC: 'CampaignNPC',
+  CampaignItem: 'CampaignItem'
 };
 
 /**

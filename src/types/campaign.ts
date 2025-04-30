@@ -11,24 +11,22 @@ export type RoleOfReligion = 'Powerful and Intervening' | 'Local and Personal' |
 export type ReligiousFiguresPerception = 'Revered' | 'Feared' | 'Neutral' | 'In Conflict with Other Beliefs' | 'Outlawed';
 
 export type CampaignSetting = {
-  id?: string;
   name: string;
-  theme: CampaignTheme;
-  tone: CampaignTone[];
+  theme: string;
+  tone: string[];
   homebrewAllowed: boolean;
-  magicCommonality?: MagicCommonality;
-  geographicalScale?: GeographicalScale;
-  civilizationState?: CivilizationState;
-  commonLandscapes?: CommonLandscape[];
-  technologyLevel?: TechnologyLevel;
-  roleOfReligion?: RoleOfReligion;
-  religiousFiguresPerception?: ReligiousFiguresPerception;
+  magicCommonality?: string;
+  geographicalScale?: string;
+  civilizationState?: string;
+  commonLandscapes: string[];
+  technologyLevel?: string;
+  roleOfReligion?: string;
+  religiousFiguresPerception?: string;
   majorConflictsThreats?: string;
 };
 
 export type NPC = {
   id: string;
-  campaignId?: string;
   name: string;
   race: string;
   class?: string;
@@ -38,45 +36,49 @@ export type NPC = {
   personality: string;
   goals: string[];
   relationships: string[];
-  campaign?: {
+  campaigns: {
     id: string;
     name: string;
-  };
+  }[];
 };
 
-export interface City {
+export type City = {
   id: string;
-  campaignId?: string;
   name: string;
   size: string;
   population: string;
   government: string;
   economy: string;
-  notableLocations: any;
+  notableLocations: string;
   description: string;
   history: string;
+  campaignId?: string | null;
+  campaigns?: Campaign[];
+};
+
+export type Campaign = {
+  id: string;
+  name: string;
+  description: string;
   createdAt: string;
   updatedAt: string;
-  campaign?: {
-    id: string;
-    name: string;
-  };
-}
+};
 
-export type Item = {
+export interface Item {
   id: string;
-  campaignId?: string;
   name: string;
   type: string;
-  rarity: 'common' | 'uncommon' | 'rare' | 'very-rare' | 'legendary';
+  rarity: string;
   description: string;
-  properties: string[];
+  properties: any;
   history?: string;
-  campaign?: {
+  createdAt: string;
+  updatedAt: string;
+  campaigns: {
     id: string;
     name: string;
-  };
-};
+  }[];
+}
 
 export type GeneratedContent = {
   npcs: NPC[];

@@ -1,85 +1,146 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Layout from "@/components/Layout";
 import type { City } from "@/types/campaign";
-import Link from "next/link";
 
 export default function CitiesPage() {
+  const router = useRouter();
   const [cities, setCities] = useState<City[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [collapsedCities, setCollapsedCities] = useState<{ [id: string]: boolean }>({});
 
   useEffect(() => {
-    fetch("/api/cities")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch cities");
-        return res.json();
-      })
-      .then((data) => {
+    const fetchCities = async () => {
+      try {
+        const response = await fetch("/api/cities");
+        if (!response.ok) {
+          throw new Error("Failed to fetch cities");
+        }
+        const data = await response.json();
         setCities(data);
+        // Initialize collapsed state for cities
+        setCollapsedCities(data.reduce((acc: { [id: string]: boolean }, city: City) => {
+          acc[city.id] = true;
+          return acc;
+        }, {}));
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred");
+      } finally {
         setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
+      }
+    };
+
+    fetchCities();
   }, []);
 
-  if (loading) return <div className="text-center py-8">Loading cities...</div>;
-  if (error) return <div className="text-red-500 text-center py-8">{error}</div>;
+  if (loading) {
+    return (
+      <Layout>
+        <div className="flex justify-center items-center min-h-[400px]">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <div className="text-center text-red-600">
+          <p>Error: {error}</p>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
       <div className="max-w-4xl mx-auto px-4">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">All Cities</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Cities</h1>
+          <button
+            onClick={() => router.push('/cities/new')}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Create New City
+          </button>
+        </div>
+
         {cities.length === 0 ? (
-          <p className="text-gray-600">No cities have been generated yet.</p>
+          <div className="text-center text-gray-500">No cities found</div>
         ) : (
-          <div className="grid gap-6">
-            {cities.map((city) => (
-              <div key={city.id} className="bg-white rounded-lg shadow p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <h2 className="text-xl font-bold text-gray-900">{city.name}</h2>
-                  <Link
-                    href={`/campaign/${city.campaignId}`}
-                    className="text-sm text-blue-600 hover:text-blue-800"
-                  >
-                    View Campaign
-                  </Link>
-                </div>
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <p className="text-sm text-gray-600">Size</p>
-                    <p className="text-gray-900">{city.size}</p>
+          <div className="space-y-4">
+            {cities.map((city) => {
+              const isCollapsed = collapsedCities[city.id] ?? false;
+              return (
+                <div key={city.id} className="bg-white rounded-lg shadow p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h2 className="text-xl font-semibold text-gray-900">{city.name}</h2>
+                      <p className="text-sm text-gray-500">
+                        {city.size} • Population: {city.population}
+                      </p>
+                      <div className="mt-2">
+                        <span className="text-sm text-gray-600">Campaigns: </span>
+                        {city.campaigns && city.campaigns.length > 0 ? (
+                          city.campaigns.map((campaign, index) => (
+                            <Link
+                              key={campaign.id}
+                              href={`/campaign/${campaign.id}`}
+                              className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
+                            >
+                              {campaign.name}
+                              {index < city.campaigns!.length - 1 ? ', ' : ''}
+                            </Link>
+                          ))
+                        ) : (
+                          <span className="text-sm text-gray-500">none</span>
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setCollapsedCities(prev => ({ ...prev, [city.id]: !isCollapsed }))}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      {isCollapsed ? 'Show Details' : 'Hide Details'}
+                    </button>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Population</p>
-                    <p className="text-gray-900">{city.population}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Government</p>
-                    <p className="text-gray-900">{city.government}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Economy</p>
-                    <p className="text-gray-900">{city.economy}</p>
-                  </div>
+
+                  {!isCollapsed && (
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="text-sm font-medium text-gray-500">Government</h3>
+                        <p className="mt-1 text-gray-900">{city.government}</p>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-medium text-gray-500">Economy</h3>
+                        <p className="mt-1 text-gray-900">{city.economy}</p>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-medium text-gray-500">Notable Locations</h3>
+                        <p className="mt-1 text-gray-900">{city.notableLocations}</p>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-medium text-gray-500">Description</h3>
+                        <p className="mt-1 text-gray-900">{city.description}</p>
+                      </div>
+                      <div className="flex justify-end space-x-4">
+                        <button
+                          onClick={() => router.push(`/cities/${city.id}/edit`)}
+                          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className="mb-4">
-                  <p className="text-sm text-gray-600 mb-1">Description</p>
-                  <p className="text-gray-900">{city.description}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600 mb-1">Notable Locations</p>
-                  <ul className="list-disc list-inside text-gray-900">
-                    {(city.notableLocations as string[]).map((location, index) => (
-                      <li key={index}>{location}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

@@ -33,6 +33,21 @@ export type City = $Result.DefaultSelection<Prisma.$CityPayload>
  * 
  */
 export type Item = $Result.DefaultSelection<Prisma.$ItemPayload>
+/**
+ * Model CampaignCity
+ * 
+ */
+export type CampaignCity = $Result.DefaultSelection<Prisma.$CampaignCityPayload>
+/**
+ * Model CampaignNPC
+ * 
+ */
+export type CampaignNPC = $Result.DefaultSelection<Prisma.$CampaignNPCPayload>
+/**
+ * Model CampaignItem
+ * 
+ */
+export type CampaignItem = $Result.DefaultSelection<Prisma.$CampaignItemPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -198,6 +213,36 @@ export class PrismaClient<
     * ```
     */
   get item(): Prisma.ItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.campaignCity`: Exposes CRUD operations for the **CampaignCity** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CampaignCities
+    * const campaignCities = await prisma.campaignCity.findMany()
+    * ```
+    */
+  get campaignCity(): Prisma.CampaignCityDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.campaignNPC`: Exposes CRUD operations for the **CampaignNPC** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CampaignNPCS
+    * const campaignNPCS = await prisma.campaignNPC.findMany()
+    * ```
+    */
+  get campaignNPC(): Prisma.CampaignNPCDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.campaignItem`: Exposes CRUD operations for the **CampaignItem** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CampaignItems
+    * const campaignItems = await prisma.campaignItem.findMany()
+    * ```
+    */
+  get campaignItem(): Prisma.CampaignItemDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -641,7 +686,10 @@ export namespace Prisma {
     Campaign: 'Campaign',
     NPC: 'NPC',
     City: 'City',
-    Item: 'Item'
+    Item: 'Item',
+    CampaignCity: 'CampaignCity',
+    CampaignNPC: 'CampaignNPC',
+    CampaignItem: 'CampaignItem'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -660,7 +708,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "campaign" | "nPC" | "city" | "item"
+      modelProps: "campaign" | "nPC" | "city" | "item" | "campaignCity" | "campaignNPC" | "campaignItem"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -960,6 +1008,228 @@ export namespace Prisma {
           }
         }
       }
+      CampaignCity: {
+        payload: Prisma.$CampaignCityPayload<ExtArgs>
+        fields: Prisma.CampaignCityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CampaignCityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignCityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CampaignCityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignCityPayload>
+          }
+          findFirst: {
+            args: Prisma.CampaignCityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignCityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CampaignCityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignCityPayload>
+          }
+          findMany: {
+            args: Prisma.CampaignCityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignCityPayload>[]
+          }
+          create: {
+            args: Prisma.CampaignCityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignCityPayload>
+          }
+          createMany: {
+            args: Prisma.CampaignCityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CampaignCityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignCityPayload>[]
+          }
+          delete: {
+            args: Prisma.CampaignCityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignCityPayload>
+          }
+          update: {
+            args: Prisma.CampaignCityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignCityPayload>
+          }
+          deleteMany: {
+            args: Prisma.CampaignCityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CampaignCityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CampaignCityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignCityPayload>[]
+          }
+          upsert: {
+            args: Prisma.CampaignCityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignCityPayload>
+          }
+          aggregate: {
+            args: Prisma.CampaignCityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCampaignCity>
+          }
+          groupBy: {
+            args: Prisma.CampaignCityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CampaignCityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CampaignCityCountArgs<ExtArgs>
+            result: $Utils.Optional<CampaignCityCountAggregateOutputType> | number
+          }
+        }
+      }
+      CampaignNPC: {
+        payload: Prisma.$CampaignNPCPayload<ExtArgs>
+        fields: Prisma.CampaignNPCFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CampaignNPCFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignNPCPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CampaignNPCFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignNPCPayload>
+          }
+          findFirst: {
+            args: Prisma.CampaignNPCFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignNPCPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CampaignNPCFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignNPCPayload>
+          }
+          findMany: {
+            args: Prisma.CampaignNPCFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignNPCPayload>[]
+          }
+          create: {
+            args: Prisma.CampaignNPCCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignNPCPayload>
+          }
+          createMany: {
+            args: Prisma.CampaignNPCCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CampaignNPCCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignNPCPayload>[]
+          }
+          delete: {
+            args: Prisma.CampaignNPCDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignNPCPayload>
+          }
+          update: {
+            args: Prisma.CampaignNPCUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignNPCPayload>
+          }
+          deleteMany: {
+            args: Prisma.CampaignNPCDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CampaignNPCUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CampaignNPCUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignNPCPayload>[]
+          }
+          upsert: {
+            args: Prisma.CampaignNPCUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignNPCPayload>
+          }
+          aggregate: {
+            args: Prisma.CampaignNPCAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCampaignNPC>
+          }
+          groupBy: {
+            args: Prisma.CampaignNPCGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CampaignNPCGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CampaignNPCCountArgs<ExtArgs>
+            result: $Utils.Optional<CampaignNPCCountAggregateOutputType> | number
+          }
+        }
+      }
+      CampaignItem: {
+        payload: Prisma.$CampaignItemPayload<ExtArgs>
+        fields: Prisma.CampaignItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CampaignItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CampaignItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignItemPayload>
+          }
+          findFirst: {
+            args: Prisma.CampaignItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CampaignItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignItemPayload>
+          }
+          findMany: {
+            args: Prisma.CampaignItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignItemPayload>[]
+          }
+          create: {
+            args: Prisma.CampaignItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignItemPayload>
+          }
+          createMany: {
+            args: Prisma.CampaignItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CampaignItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignItemPayload>[]
+          }
+          delete: {
+            args: Prisma.CampaignItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignItemPayload>
+          }
+          update: {
+            args: Prisma.CampaignItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.CampaignItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CampaignItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CampaignItemUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignItemPayload>[]
+          }
+          upsert: {
+            args: Prisma.CampaignItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignItemPayload>
+          }
+          aggregate: {
+            args: Prisma.CampaignItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCampaignItem>
+          }
+          groupBy: {
+            args: Prisma.CampaignItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CampaignItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CampaignItemCountArgs<ExtArgs>
+            result: $Utils.Optional<CampaignItemCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1048,6 +1318,9 @@ export namespace Prisma {
     nPC?: NPCOmit
     city?: CityOmit
     item?: ItemOmit
+    campaignCity?: CampaignCityOmit
+    campaignNPC?: CampaignNPCOmit
+    campaignItem?: CampaignItemOmit
   }
 
   /* Types for Logging */
@@ -1142,14 +1415,14 @@ export namespace Prisma {
    */
 
   export type CampaignCountOutputType = {
-    npcs: number
     cities: number
+    npcs: number
     items: number
   }
 
   export type CampaignCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    npcs?: boolean | CampaignCountOutputTypeCountNpcsArgs
     cities?: boolean | CampaignCountOutputTypeCountCitiesArgs
+    npcs?: boolean | CampaignCountOutputTypeCountNpcsArgs
     items?: boolean | CampaignCountOutputTypeCountItemsArgs
   }
 
@@ -1167,22 +1440,115 @@ export namespace Prisma {
   /**
    * CampaignCountOutputType without action
    */
-  export type CampaignCountOutputTypeCountNpcsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NPCWhereInput
+  export type CampaignCountOutputTypeCountCitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CampaignCityWhereInput
   }
 
   /**
    * CampaignCountOutputType without action
    */
-  export type CampaignCountOutputTypeCountCitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CityWhereInput
+  export type CampaignCountOutputTypeCountNpcsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CampaignNPCWhereInput
   }
 
   /**
    * CampaignCountOutputType without action
    */
   export type CampaignCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ItemWhereInput
+    where?: CampaignItemWhereInput
+  }
+
+
+  /**
+   * Count Type NPCCountOutputType
+   */
+
+  export type NPCCountOutputType = {
+    campaigns: number
+  }
+
+  export type NPCCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaigns?: boolean | NPCCountOutputTypeCountCampaignsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * NPCCountOutputType without action
+   */
+  export type NPCCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NPCCountOutputType
+     */
+    select?: NPCCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * NPCCountOutputType without action
+   */
+  export type NPCCountOutputTypeCountCampaignsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CampaignNPCWhereInput
+  }
+
+
+  /**
+   * Count Type CityCountOutputType
+   */
+
+  export type CityCountOutputType = {
+    campaigns: number
+  }
+
+  export type CityCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaigns?: boolean | CityCountOutputTypeCountCampaignsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CityCountOutputType without action
+   */
+  export type CityCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CityCountOutputType
+     */
+    select?: CityCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CityCountOutputType without action
+   */
+  export type CityCountOutputTypeCountCampaignsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CampaignCityWhereInput
+  }
+
+
+  /**
+   * Count Type ItemCountOutputType
+   */
+
+  export type ItemCountOutputType = {
+    campaigns: number
+  }
+
+  export type ItemCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaigns?: boolean | ItemCountOutputTypeCountCampaignsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ItemCountOutputType without action
+   */
+  export type ItemCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ItemCountOutputType
+     */
+    select?: ItemCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ItemCountOutputType without action
+   */
+  export type ItemCountOutputTypeCountCampaignsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CampaignItemWhereInput
   }
 
 
@@ -1426,8 +1792,8 @@ export namespace Prisma {
     majorConflictsThreats?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    npcs?: boolean | Campaign$npcsArgs<ExtArgs>
     cities?: boolean | Campaign$citiesArgs<ExtArgs>
+    npcs?: boolean | Campaign$npcsArgs<ExtArgs>
     items?: boolean | Campaign$itemsArgs<ExtArgs>
     _count?: boolean | CampaignCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["campaign"]>
@@ -1488,8 +1854,8 @@ export namespace Prisma {
 
   export type CampaignOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "theme" | "tone" | "homebrewAllowed" | "magicCommonality" | "geographicalScale" | "civilizationState" | "commonLandscapes" | "technologyLevel" | "roleOfReligion" | "religiousFiguresPerception" | "majorConflictsThreats" | "createdAt" | "updatedAt", ExtArgs["result"]["campaign"]>
   export type CampaignInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    npcs?: boolean | Campaign$npcsArgs<ExtArgs>
     cities?: boolean | Campaign$citiesArgs<ExtArgs>
+    npcs?: boolean | Campaign$npcsArgs<ExtArgs>
     items?: boolean | Campaign$itemsArgs<ExtArgs>
     _count?: boolean | CampaignCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -1499,9 +1865,9 @@ export namespace Prisma {
   export type $CampaignPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Campaign"
     objects: {
-      npcs: Prisma.$NPCPayload<ExtArgs>[]
-      cities: Prisma.$CityPayload<ExtArgs>[]
-      items: Prisma.$ItemPayload<ExtArgs>[]
+      cities: Prisma.$CampaignCityPayload<ExtArgs>[]
+      npcs: Prisma.$CampaignNPCPayload<ExtArgs>[]
+      items: Prisma.$CampaignItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1913,9 +2279,9 @@ export namespace Prisma {
    */
   export interface Prisma__CampaignClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    npcs<T extends Campaign$npcsArgs<ExtArgs> = {}>(args?: Subset<T, Campaign$npcsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NPCPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    cities<T extends Campaign$citiesArgs<ExtArgs> = {}>(args?: Subset<T, Campaign$citiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    items<T extends Campaign$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Campaign$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cities<T extends Campaign$citiesArgs<ExtArgs> = {}>(args?: Subset<T, Campaign$citiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignCityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    npcs<T extends Campaign$npcsArgs<ExtArgs> = {}>(args?: Subset<T, Campaign$npcsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignNPCPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    items<T extends Campaign$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Campaign$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2348,51 +2714,51 @@ export namespace Prisma {
   }
 
   /**
-   * Campaign.npcs
-   */
-  export type Campaign$npcsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NPC
-     */
-    select?: NPCSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the NPC
-     */
-    omit?: NPCOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NPCInclude<ExtArgs> | null
-    where?: NPCWhereInput
-    orderBy?: NPCOrderByWithRelationInput | NPCOrderByWithRelationInput[]
-    cursor?: NPCWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: NPCScalarFieldEnum | NPCScalarFieldEnum[]
-  }
-
-  /**
    * Campaign.cities
    */
   export type Campaign$citiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the City
+     * Select specific fields to fetch from the CampaignCity
      */
-    select?: CitySelect<ExtArgs> | null
+    select?: CampaignCitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the City
+     * Omit specific fields from the CampaignCity
      */
-    omit?: CityOmit<ExtArgs> | null
+    omit?: CampaignCityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CityInclude<ExtArgs> | null
-    where?: CityWhereInput
-    orderBy?: CityOrderByWithRelationInput | CityOrderByWithRelationInput[]
-    cursor?: CityWhereUniqueInput
+    include?: CampaignCityInclude<ExtArgs> | null
+    where?: CampaignCityWhereInput
+    orderBy?: CampaignCityOrderByWithRelationInput | CampaignCityOrderByWithRelationInput[]
+    cursor?: CampaignCityWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: CityScalarFieldEnum | CityScalarFieldEnum[]
+    distinct?: CampaignCityScalarFieldEnum | CampaignCityScalarFieldEnum[]
+  }
+
+  /**
+   * Campaign.npcs
+   */
+  export type Campaign$npcsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignNPC
+     */
+    select?: CampaignNPCSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignNPC
+     */
+    omit?: CampaignNPCOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignNPCInclude<ExtArgs> | null
+    where?: CampaignNPCWhereInput
+    orderBy?: CampaignNPCOrderByWithRelationInput | CampaignNPCOrderByWithRelationInput[]
+    cursor?: CampaignNPCWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CampaignNPCScalarFieldEnum | CampaignNPCScalarFieldEnum[]
   }
 
   /**
@@ -2400,23 +2766,23 @@ export namespace Prisma {
    */
   export type Campaign$itemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Item
+     * Select specific fields to fetch from the CampaignItem
      */
-    select?: ItemSelect<ExtArgs> | null
+    select?: CampaignItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Item
+     * Omit specific fields from the CampaignItem
      */
-    omit?: ItemOmit<ExtArgs> | null
+    omit?: CampaignItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ItemInclude<ExtArgs> | null
-    where?: ItemWhereInput
-    orderBy?: ItemOrderByWithRelationInput | ItemOrderByWithRelationInput[]
-    cursor?: ItemWhereUniqueInput
+    include?: CampaignItemInclude<ExtArgs> | null
+    where?: CampaignItemWhereInput
+    orderBy?: CampaignItemOrderByWithRelationInput | CampaignItemOrderByWithRelationInput[]
+    cursor?: CampaignItemWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ItemScalarFieldEnum | ItemScalarFieldEnum[]
+    distinct?: CampaignItemScalarFieldEnum | CampaignItemScalarFieldEnum[]
   }
 
   /**
@@ -2450,7 +2816,6 @@ export namespace Prisma {
 
   export type NPCMinAggregateOutputType = {
     id: string | null
-    campaignId: string | null
     name: string | null
     race: string | null
     class: string | null
@@ -2464,7 +2829,6 @@ export namespace Prisma {
 
   export type NPCMaxAggregateOutputType = {
     id: string | null
-    campaignId: string | null
     name: string | null
     race: string | null
     class: string | null
@@ -2478,7 +2842,6 @@ export namespace Prisma {
 
   export type NPCCountAggregateOutputType = {
     id: number
-    campaignId: number
     name: number
     race: number
     class: number
@@ -2495,7 +2858,6 @@ export namespace Prisma {
 
   export type NPCMinAggregateInputType = {
     id?: true
-    campaignId?: true
     name?: true
     race?: true
     class?: true
@@ -2509,7 +2871,6 @@ export namespace Prisma {
 
   export type NPCMaxAggregateInputType = {
     id?: true
-    campaignId?: true
     name?: true
     race?: true
     class?: true
@@ -2523,7 +2884,6 @@ export namespace Prisma {
 
   export type NPCCountAggregateInputType = {
     id?: true
-    campaignId?: true
     name?: true
     race?: true
     class?: true
@@ -2611,7 +2971,6 @@ export namespace Prisma {
 
   export type NPCGroupByOutputType = {
     id: string
-    campaignId: string | null
     name: string
     race: string
     class: string | null
@@ -2643,7 +3002,6 @@ export namespace Prisma {
 
   export type NPCSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    campaignId?: boolean
     name?: boolean
     race?: boolean
     class?: boolean
@@ -2654,12 +3012,12 @@ export namespace Prisma {
     goals?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | NPC$campaignArgs<ExtArgs>
+    campaigns?: boolean | NPC$campaignsArgs<ExtArgs>
+    _count?: boolean | NPCCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["nPC"]>
 
   export type NPCSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    campaignId?: boolean
     name?: boolean
     race?: boolean
     class?: boolean
@@ -2670,12 +3028,10 @@ export namespace Prisma {
     goals?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | NPC$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["nPC"]>
 
   export type NPCSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    campaignId?: boolean
     name?: boolean
     race?: boolean
     class?: boolean
@@ -2686,12 +3042,10 @@ export namespace Prisma {
     goals?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | NPC$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["nPC"]>
 
   export type NPCSelectScalar = {
     id?: boolean
-    campaignId?: boolean
     name?: boolean
     race?: boolean
     class?: boolean
@@ -2704,25 +3058,21 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type NPCOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "campaignId" | "name" | "race" | "class" | "alignment" | "description" | "background" | "personality" | "goals" | "createdAt" | "updatedAt", ExtArgs["result"]["nPC"]>
+  export type NPCOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "race" | "class" | "alignment" | "description" | "background" | "personality" | "goals" | "createdAt" | "updatedAt", ExtArgs["result"]["nPC"]>
   export type NPCInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | NPC$campaignArgs<ExtArgs>
+    campaigns?: boolean | NPC$campaignsArgs<ExtArgs>
+    _count?: boolean | NPCCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type NPCIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | NPC$campaignArgs<ExtArgs>
-  }
-  export type NPCIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | NPC$campaignArgs<ExtArgs>
-  }
+  export type NPCIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type NPCIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $NPCPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "NPC"
     objects: {
-      campaign: Prisma.$CampaignPayload<ExtArgs> | null
+      campaigns: Prisma.$CampaignNPCPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      campaignId: string | null
       name: string
       race: string
       class: string | null
@@ -3127,7 +3477,7 @@ export namespace Prisma {
    */
   export interface Prisma__NPCClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    campaign<T extends NPC$campaignArgs<ExtArgs> = {}>(args?: Subset<T, NPC$campaignArgs<ExtArgs>>): Prisma__CampaignClient<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    campaigns<T extends NPC$campaignsArgs<ExtArgs> = {}>(args?: Subset<T, NPC$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignNPCPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3158,7 +3508,6 @@ export namespace Prisma {
    */
   interface NPCFieldRefs {
     readonly id: FieldRef<"NPC", 'String'>
-    readonly campaignId: FieldRef<"NPC", 'String'>
     readonly name: FieldRef<"NPC", 'String'>
     readonly race: FieldRef<"NPC", 'String'>
     readonly class: FieldRef<"NPC", 'String'>
@@ -3418,10 +3767,6 @@ export namespace Prisma {
      */
     data: NPCCreateManyInput | NPCCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NPCIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3492,10 +3837,6 @@ export namespace Prisma {
      * Limit how many NPCS to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NPCIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3565,22 +3906,27 @@ export namespace Prisma {
   }
 
   /**
-   * NPC.campaign
+   * NPC.campaigns
    */
-  export type NPC$campaignArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type NPC$campaignsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Campaign
+     * Select specific fields to fetch from the CampaignNPC
      */
-    select?: CampaignSelect<ExtArgs> | null
+    select?: CampaignNPCSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Campaign
+     * Omit specific fields from the CampaignNPC
      */
-    omit?: CampaignOmit<ExtArgs> | null
+    omit?: CampaignNPCOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CampaignInclude<ExtArgs> | null
-    where?: CampaignWhereInput
+    include?: CampaignNPCInclude<ExtArgs> | null
+    where?: CampaignNPCWhereInput
+    orderBy?: CampaignNPCOrderByWithRelationInput | CampaignNPCOrderByWithRelationInput[]
+    cursor?: CampaignNPCWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CampaignNPCScalarFieldEnum | CampaignNPCScalarFieldEnum[]
   }
 
   /**
@@ -3614,7 +3960,6 @@ export namespace Prisma {
 
   export type CityMinAggregateOutputType = {
     id: string | null
-    campaignId: string | null
     name: string | null
     size: string | null
     population: string | null
@@ -3628,7 +3973,6 @@ export namespace Prisma {
 
   export type CityMaxAggregateOutputType = {
     id: string | null
-    campaignId: string | null
     name: string | null
     size: string | null
     population: string | null
@@ -3642,7 +3986,6 @@ export namespace Prisma {
 
   export type CityCountAggregateOutputType = {
     id: number
-    campaignId: number
     name: number
     size: number
     population: number
@@ -3659,7 +4002,6 @@ export namespace Prisma {
 
   export type CityMinAggregateInputType = {
     id?: true
-    campaignId?: true
     name?: true
     size?: true
     population?: true
@@ -3673,7 +4015,6 @@ export namespace Prisma {
 
   export type CityMaxAggregateInputType = {
     id?: true
-    campaignId?: true
     name?: true
     size?: true
     population?: true
@@ -3687,7 +4028,6 @@ export namespace Prisma {
 
   export type CityCountAggregateInputType = {
     id?: true
-    campaignId?: true
     name?: true
     size?: true
     population?: true
@@ -3775,7 +4115,6 @@ export namespace Prisma {
 
   export type CityGroupByOutputType = {
     id: string
-    campaignId: string | null
     name: string
     size: string
     population: string
@@ -3807,7 +4146,6 @@ export namespace Prisma {
 
   export type CitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    campaignId?: boolean
     name?: boolean
     size?: boolean
     population?: boolean
@@ -3818,12 +4156,12 @@ export namespace Prisma {
     history?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | City$campaignArgs<ExtArgs>
+    campaigns?: boolean | City$campaignsArgs<ExtArgs>
+    _count?: boolean | CityCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["city"]>
 
   export type CitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    campaignId?: boolean
     name?: boolean
     size?: boolean
     population?: boolean
@@ -3834,12 +4172,10 @@ export namespace Prisma {
     history?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | City$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["city"]>
 
   export type CitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    campaignId?: boolean
     name?: boolean
     size?: boolean
     population?: boolean
@@ -3850,12 +4186,10 @@ export namespace Prisma {
     history?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | City$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["city"]>
 
   export type CitySelectScalar = {
     id?: boolean
-    campaignId?: boolean
     name?: boolean
     size?: boolean
     population?: boolean
@@ -3868,25 +4202,21 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type CityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "campaignId" | "name" | "size" | "population" | "government" | "economy" | "notableLocations" | "description" | "history" | "createdAt" | "updatedAt", ExtArgs["result"]["city"]>
+  export type CityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "size" | "population" | "government" | "economy" | "notableLocations" | "description" | "history" | "createdAt" | "updatedAt", ExtArgs["result"]["city"]>
   export type CityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | City$campaignArgs<ExtArgs>
+    campaigns?: boolean | City$campaignsArgs<ExtArgs>
+    _count?: boolean | CityCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type CityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | City$campaignArgs<ExtArgs>
-  }
-  export type CityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | City$campaignArgs<ExtArgs>
-  }
+  export type CityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type CityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $CityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "City"
     objects: {
-      campaign: Prisma.$CampaignPayload<ExtArgs> | null
+      campaigns: Prisma.$CampaignCityPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      campaignId: string | null
       name: string
       size: string
       population: string
@@ -4291,7 +4621,7 @@ export namespace Prisma {
    */
   export interface Prisma__CityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    campaign<T extends City$campaignArgs<ExtArgs> = {}>(args?: Subset<T, City$campaignArgs<ExtArgs>>): Prisma__CampaignClient<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    campaigns<T extends City$campaignsArgs<ExtArgs> = {}>(args?: Subset<T, City$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignCityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4322,7 +4652,6 @@ export namespace Prisma {
    */
   interface CityFieldRefs {
     readonly id: FieldRef<"City", 'String'>
-    readonly campaignId: FieldRef<"City", 'String'>
     readonly name: FieldRef<"City", 'String'>
     readonly size: FieldRef<"City", 'String'>
     readonly population: FieldRef<"City", 'String'>
@@ -4582,10 +4911,6 @@ export namespace Prisma {
      */
     data: CityCreateManyInput | CityCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CityIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4656,10 +4981,6 @@ export namespace Prisma {
      * Limit how many Cities to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CityIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4729,22 +5050,27 @@ export namespace Prisma {
   }
 
   /**
-   * City.campaign
+   * City.campaigns
    */
-  export type City$campaignArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type City$campaignsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Campaign
+     * Select specific fields to fetch from the CampaignCity
      */
-    select?: CampaignSelect<ExtArgs> | null
+    select?: CampaignCitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Campaign
+     * Omit specific fields from the CampaignCity
      */
-    omit?: CampaignOmit<ExtArgs> | null
+    omit?: CampaignCityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CampaignInclude<ExtArgs> | null
-    where?: CampaignWhereInput
+    include?: CampaignCityInclude<ExtArgs> | null
+    where?: CampaignCityWhereInput
+    orderBy?: CampaignCityOrderByWithRelationInput | CampaignCityOrderByWithRelationInput[]
+    cursor?: CampaignCityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CampaignCityScalarFieldEnum | CampaignCityScalarFieldEnum[]
   }
 
   /**
@@ -4778,7 +5104,6 @@ export namespace Prisma {
 
   export type ItemMinAggregateOutputType = {
     id: string | null
-    campaignId: string | null
     name: string | null
     type: string | null
     rarity: string | null
@@ -4790,7 +5115,6 @@ export namespace Prisma {
 
   export type ItemMaxAggregateOutputType = {
     id: string | null
-    campaignId: string | null
     name: string | null
     type: string | null
     rarity: string | null
@@ -4802,7 +5126,6 @@ export namespace Prisma {
 
   export type ItemCountAggregateOutputType = {
     id: number
-    campaignId: number
     name: number
     type: number
     rarity: number
@@ -4817,7 +5140,6 @@ export namespace Prisma {
 
   export type ItemMinAggregateInputType = {
     id?: true
-    campaignId?: true
     name?: true
     type?: true
     rarity?: true
@@ -4829,7 +5151,6 @@ export namespace Prisma {
 
   export type ItemMaxAggregateInputType = {
     id?: true
-    campaignId?: true
     name?: true
     type?: true
     rarity?: true
@@ -4841,7 +5162,6 @@ export namespace Prisma {
 
   export type ItemCountAggregateInputType = {
     id?: true
-    campaignId?: true
     name?: true
     type?: true
     rarity?: true
@@ -4927,7 +5247,6 @@ export namespace Prisma {
 
   export type ItemGroupByOutputType = {
     id: string
-    campaignId: string | null
     name: string
     type: string
     rarity: string
@@ -4957,7 +5276,6 @@ export namespace Prisma {
 
   export type ItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    campaignId?: boolean
     name?: boolean
     type?: boolean
     rarity?: boolean
@@ -4966,12 +5284,12 @@ export namespace Prisma {
     history?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | Item$campaignArgs<ExtArgs>
+    campaigns?: boolean | Item$campaignsArgs<ExtArgs>
+    _count?: boolean | ItemCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["item"]>
 
   export type ItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    campaignId?: boolean
     name?: boolean
     type?: boolean
     rarity?: boolean
@@ -4980,12 +5298,10 @@ export namespace Prisma {
     history?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | Item$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["item"]>
 
   export type ItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    campaignId?: boolean
     name?: boolean
     type?: boolean
     rarity?: boolean
@@ -4994,12 +5310,10 @@ export namespace Prisma {
     history?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    campaign?: boolean | Item$campaignArgs<ExtArgs>
   }, ExtArgs["result"]["item"]>
 
   export type ItemSelectScalar = {
     id?: boolean
-    campaignId?: boolean
     name?: boolean
     type?: boolean
     rarity?: boolean
@@ -5010,25 +5324,21 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "campaignId" | "name" | "type" | "rarity" | "description" | "properties" | "history" | "createdAt" | "updatedAt", ExtArgs["result"]["item"]>
+  export type ItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "type" | "rarity" | "description" | "properties" | "history" | "createdAt" | "updatedAt", ExtArgs["result"]["item"]>
   export type ItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | Item$campaignArgs<ExtArgs>
+    campaigns?: boolean | Item$campaignsArgs<ExtArgs>
+    _count?: boolean | ItemCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | Item$campaignArgs<ExtArgs>
-  }
-  export type ItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campaign?: boolean | Item$campaignArgs<ExtArgs>
-  }
+  export type ItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $ItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Item"
     objects: {
-      campaign: Prisma.$CampaignPayload<ExtArgs> | null
+      campaigns: Prisma.$CampaignItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      campaignId: string | null
       name: string
       type: string
       rarity: string
@@ -5431,7 +5741,7 @@ export namespace Prisma {
    */
   export interface Prisma__ItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    campaign<T extends Item$campaignArgs<ExtArgs> = {}>(args?: Subset<T, Item$campaignArgs<ExtArgs>>): Prisma__CampaignClient<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    campaigns<T extends Item$campaignsArgs<ExtArgs> = {}>(args?: Subset<T, Item$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5462,7 +5772,6 @@ export namespace Prisma {
    */
   interface ItemFieldRefs {
     readonly id: FieldRef<"Item", 'String'>
-    readonly campaignId: FieldRef<"Item", 'String'>
     readonly name: FieldRef<"Item", 'String'>
     readonly type: FieldRef<"Item", 'String'>
     readonly rarity: FieldRef<"Item", 'String'>
@@ -5720,10 +6029,6 @@ export namespace Prisma {
      */
     data: ItemCreateManyInput | ItemCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ItemIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -5794,10 +6099,6 @@ export namespace Prisma {
      * Limit how many Items to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ItemIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -5867,22 +6168,27 @@ export namespace Prisma {
   }
 
   /**
-   * Item.campaign
+   * Item.campaigns
    */
-  export type Item$campaignArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Item$campaignsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Campaign
+     * Select specific fields to fetch from the CampaignItem
      */
-    select?: CampaignSelect<ExtArgs> | null
+    select?: CampaignItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Campaign
+     * Omit specific fields from the CampaignItem
      */
-    omit?: CampaignOmit<ExtArgs> | null
+    omit?: CampaignItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CampaignInclude<ExtArgs> | null
-    where?: CampaignWhereInput
+    include?: CampaignItemInclude<ExtArgs> | null
+    where?: CampaignItemWhereInput
+    orderBy?: CampaignItemOrderByWithRelationInput | CampaignItemOrderByWithRelationInput[]
+    cursor?: CampaignItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CampaignItemScalarFieldEnum | CampaignItemScalarFieldEnum[]
   }
 
   /**
@@ -5901,6 +6207,3204 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ItemInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CampaignCity
+   */
+
+  export type AggregateCampaignCity = {
+    _count: CampaignCityCountAggregateOutputType | null
+    _min: CampaignCityMinAggregateOutputType | null
+    _max: CampaignCityMaxAggregateOutputType | null
+  }
+
+  export type CampaignCityMinAggregateOutputType = {
+    id: string | null
+    campaignId: string | null
+    cityId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CampaignCityMaxAggregateOutputType = {
+    id: string | null
+    campaignId: string | null
+    cityId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CampaignCityCountAggregateOutputType = {
+    id: number
+    campaignId: number
+    cityId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CampaignCityMinAggregateInputType = {
+    id?: true
+    campaignId?: true
+    cityId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CampaignCityMaxAggregateInputType = {
+    id?: true
+    campaignId?: true
+    cityId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CampaignCityCountAggregateInputType = {
+    id?: true
+    campaignId?: true
+    cityId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CampaignCityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CampaignCity to aggregate.
+     */
+    where?: CampaignCityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignCities to fetch.
+     */
+    orderBy?: CampaignCityOrderByWithRelationInput | CampaignCityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CampaignCityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignCities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignCities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CampaignCities
+    **/
+    _count?: true | CampaignCityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CampaignCityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CampaignCityMaxAggregateInputType
+  }
+
+  export type GetCampaignCityAggregateType<T extends CampaignCityAggregateArgs> = {
+        [P in keyof T & keyof AggregateCampaignCity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCampaignCity[P]>
+      : GetScalarType<T[P], AggregateCampaignCity[P]>
+  }
+
+
+
+
+  export type CampaignCityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CampaignCityWhereInput
+    orderBy?: CampaignCityOrderByWithAggregationInput | CampaignCityOrderByWithAggregationInput[]
+    by: CampaignCityScalarFieldEnum[] | CampaignCityScalarFieldEnum
+    having?: CampaignCityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CampaignCityCountAggregateInputType | true
+    _min?: CampaignCityMinAggregateInputType
+    _max?: CampaignCityMaxAggregateInputType
+  }
+
+  export type CampaignCityGroupByOutputType = {
+    id: string
+    campaignId: string
+    cityId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: CampaignCityCountAggregateOutputType | null
+    _min: CampaignCityMinAggregateOutputType | null
+    _max: CampaignCityMaxAggregateOutputType | null
+  }
+
+  type GetCampaignCityGroupByPayload<T extends CampaignCityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CampaignCityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CampaignCityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CampaignCityGroupByOutputType[P]>
+            : GetScalarType<T[P], CampaignCityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CampaignCitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    campaignId?: boolean
+    cityId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    city?: boolean | CityDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["campaignCity"]>
+
+  export type CampaignCitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    campaignId?: boolean
+    cityId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    city?: boolean | CityDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["campaignCity"]>
+
+  export type CampaignCitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    campaignId?: boolean
+    cityId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    city?: boolean | CityDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["campaignCity"]>
+
+  export type CampaignCitySelectScalar = {
+    id?: boolean
+    campaignId?: boolean
+    cityId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CampaignCityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "campaignId" | "cityId" | "createdAt" | "updatedAt", ExtArgs["result"]["campaignCity"]>
+  export type CampaignCityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    city?: boolean | CityDefaultArgs<ExtArgs>
+  }
+  export type CampaignCityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    city?: boolean | CityDefaultArgs<ExtArgs>
+  }
+  export type CampaignCityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    city?: boolean | CityDefaultArgs<ExtArgs>
+  }
+
+  export type $CampaignCityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CampaignCity"
+    objects: {
+      campaign: Prisma.$CampaignPayload<ExtArgs>
+      city: Prisma.$CityPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      campaignId: string
+      cityId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["campaignCity"]>
+    composites: {}
+  }
+
+  type CampaignCityGetPayload<S extends boolean | null | undefined | CampaignCityDefaultArgs> = $Result.GetResult<Prisma.$CampaignCityPayload, S>
+
+  type CampaignCityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CampaignCityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CampaignCityCountAggregateInputType | true
+    }
+
+  export interface CampaignCityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CampaignCity'], meta: { name: 'CampaignCity' } }
+    /**
+     * Find zero or one CampaignCity that matches the filter.
+     * @param {CampaignCityFindUniqueArgs} args - Arguments to find a CampaignCity
+     * @example
+     * // Get one CampaignCity
+     * const campaignCity = await prisma.campaignCity.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CampaignCityFindUniqueArgs>(args: SelectSubset<T, CampaignCityFindUniqueArgs<ExtArgs>>): Prisma__CampaignCityClient<$Result.GetResult<Prisma.$CampaignCityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CampaignCity that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CampaignCityFindUniqueOrThrowArgs} args - Arguments to find a CampaignCity
+     * @example
+     * // Get one CampaignCity
+     * const campaignCity = await prisma.campaignCity.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CampaignCityFindUniqueOrThrowArgs>(args: SelectSubset<T, CampaignCityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CampaignCityClient<$Result.GetResult<Prisma.$CampaignCityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CampaignCity that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignCityFindFirstArgs} args - Arguments to find a CampaignCity
+     * @example
+     * // Get one CampaignCity
+     * const campaignCity = await prisma.campaignCity.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CampaignCityFindFirstArgs>(args?: SelectSubset<T, CampaignCityFindFirstArgs<ExtArgs>>): Prisma__CampaignCityClient<$Result.GetResult<Prisma.$CampaignCityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CampaignCity that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignCityFindFirstOrThrowArgs} args - Arguments to find a CampaignCity
+     * @example
+     * // Get one CampaignCity
+     * const campaignCity = await prisma.campaignCity.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CampaignCityFindFirstOrThrowArgs>(args?: SelectSubset<T, CampaignCityFindFirstOrThrowArgs<ExtArgs>>): Prisma__CampaignCityClient<$Result.GetResult<Prisma.$CampaignCityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CampaignCities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignCityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CampaignCities
+     * const campaignCities = await prisma.campaignCity.findMany()
+     * 
+     * // Get first 10 CampaignCities
+     * const campaignCities = await prisma.campaignCity.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const campaignCityWithIdOnly = await prisma.campaignCity.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CampaignCityFindManyArgs>(args?: SelectSubset<T, CampaignCityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignCityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CampaignCity.
+     * @param {CampaignCityCreateArgs} args - Arguments to create a CampaignCity.
+     * @example
+     * // Create one CampaignCity
+     * const CampaignCity = await prisma.campaignCity.create({
+     *   data: {
+     *     // ... data to create a CampaignCity
+     *   }
+     * })
+     * 
+     */
+    create<T extends CampaignCityCreateArgs>(args: SelectSubset<T, CampaignCityCreateArgs<ExtArgs>>): Prisma__CampaignCityClient<$Result.GetResult<Prisma.$CampaignCityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CampaignCities.
+     * @param {CampaignCityCreateManyArgs} args - Arguments to create many CampaignCities.
+     * @example
+     * // Create many CampaignCities
+     * const campaignCity = await prisma.campaignCity.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CampaignCityCreateManyArgs>(args?: SelectSubset<T, CampaignCityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CampaignCities and returns the data saved in the database.
+     * @param {CampaignCityCreateManyAndReturnArgs} args - Arguments to create many CampaignCities.
+     * @example
+     * // Create many CampaignCities
+     * const campaignCity = await prisma.campaignCity.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CampaignCities and only return the `id`
+     * const campaignCityWithIdOnly = await prisma.campaignCity.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CampaignCityCreateManyAndReturnArgs>(args?: SelectSubset<T, CampaignCityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignCityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CampaignCity.
+     * @param {CampaignCityDeleteArgs} args - Arguments to delete one CampaignCity.
+     * @example
+     * // Delete one CampaignCity
+     * const CampaignCity = await prisma.campaignCity.delete({
+     *   where: {
+     *     // ... filter to delete one CampaignCity
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CampaignCityDeleteArgs>(args: SelectSubset<T, CampaignCityDeleteArgs<ExtArgs>>): Prisma__CampaignCityClient<$Result.GetResult<Prisma.$CampaignCityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CampaignCity.
+     * @param {CampaignCityUpdateArgs} args - Arguments to update one CampaignCity.
+     * @example
+     * // Update one CampaignCity
+     * const campaignCity = await prisma.campaignCity.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CampaignCityUpdateArgs>(args: SelectSubset<T, CampaignCityUpdateArgs<ExtArgs>>): Prisma__CampaignCityClient<$Result.GetResult<Prisma.$CampaignCityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CampaignCities.
+     * @param {CampaignCityDeleteManyArgs} args - Arguments to filter CampaignCities to delete.
+     * @example
+     * // Delete a few CampaignCities
+     * const { count } = await prisma.campaignCity.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CampaignCityDeleteManyArgs>(args?: SelectSubset<T, CampaignCityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CampaignCities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignCityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CampaignCities
+     * const campaignCity = await prisma.campaignCity.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CampaignCityUpdateManyArgs>(args: SelectSubset<T, CampaignCityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CampaignCities and returns the data updated in the database.
+     * @param {CampaignCityUpdateManyAndReturnArgs} args - Arguments to update many CampaignCities.
+     * @example
+     * // Update many CampaignCities
+     * const campaignCity = await prisma.campaignCity.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CampaignCities and only return the `id`
+     * const campaignCityWithIdOnly = await prisma.campaignCity.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CampaignCityUpdateManyAndReturnArgs>(args: SelectSubset<T, CampaignCityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignCityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CampaignCity.
+     * @param {CampaignCityUpsertArgs} args - Arguments to update or create a CampaignCity.
+     * @example
+     * // Update or create a CampaignCity
+     * const campaignCity = await prisma.campaignCity.upsert({
+     *   create: {
+     *     // ... data to create a CampaignCity
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CampaignCity we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CampaignCityUpsertArgs>(args: SelectSubset<T, CampaignCityUpsertArgs<ExtArgs>>): Prisma__CampaignCityClient<$Result.GetResult<Prisma.$CampaignCityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CampaignCities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignCityCountArgs} args - Arguments to filter CampaignCities to count.
+     * @example
+     * // Count the number of CampaignCities
+     * const count = await prisma.campaignCity.count({
+     *   where: {
+     *     // ... the filter for the CampaignCities we want to count
+     *   }
+     * })
+    **/
+    count<T extends CampaignCityCountArgs>(
+      args?: Subset<T, CampaignCityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CampaignCityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CampaignCity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignCityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CampaignCityAggregateArgs>(args: Subset<T, CampaignCityAggregateArgs>): Prisma.PrismaPromise<GetCampaignCityAggregateType<T>>
+
+    /**
+     * Group by CampaignCity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignCityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CampaignCityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CampaignCityGroupByArgs['orderBy'] }
+        : { orderBy?: CampaignCityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CampaignCityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCampaignCityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CampaignCity model
+   */
+  readonly fields: CampaignCityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CampaignCity.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CampaignCityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    campaign<T extends CampaignDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CampaignDefaultArgs<ExtArgs>>): Prisma__CampaignClient<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    city<T extends CityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CityDefaultArgs<ExtArgs>>): Prisma__CityClient<$Result.GetResult<Prisma.$CityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CampaignCity model
+   */
+  interface CampaignCityFieldRefs {
+    readonly id: FieldRef<"CampaignCity", 'String'>
+    readonly campaignId: FieldRef<"CampaignCity", 'String'>
+    readonly cityId: FieldRef<"CampaignCity", 'String'>
+    readonly createdAt: FieldRef<"CampaignCity", 'DateTime'>
+    readonly updatedAt: FieldRef<"CampaignCity", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CampaignCity findUnique
+   */
+  export type CampaignCityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignCity
+     */
+    select?: CampaignCitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignCity
+     */
+    omit?: CampaignCityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignCityInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignCity to fetch.
+     */
+    where: CampaignCityWhereUniqueInput
+  }
+
+  /**
+   * CampaignCity findUniqueOrThrow
+   */
+  export type CampaignCityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignCity
+     */
+    select?: CampaignCitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignCity
+     */
+    omit?: CampaignCityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignCityInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignCity to fetch.
+     */
+    where: CampaignCityWhereUniqueInput
+  }
+
+  /**
+   * CampaignCity findFirst
+   */
+  export type CampaignCityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignCity
+     */
+    select?: CampaignCitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignCity
+     */
+    omit?: CampaignCityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignCityInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignCity to fetch.
+     */
+    where?: CampaignCityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignCities to fetch.
+     */
+    orderBy?: CampaignCityOrderByWithRelationInput | CampaignCityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CampaignCities.
+     */
+    cursor?: CampaignCityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignCities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignCities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CampaignCities.
+     */
+    distinct?: CampaignCityScalarFieldEnum | CampaignCityScalarFieldEnum[]
+  }
+
+  /**
+   * CampaignCity findFirstOrThrow
+   */
+  export type CampaignCityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignCity
+     */
+    select?: CampaignCitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignCity
+     */
+    omit?: CampaignCityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignCityInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignCity to fetch.
+     */
+    where?: CampaignCityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignCities to fetch.
+     */
+    orderBy?: CampaignCityOrderByWithRelationInput | CampaignCityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CampaignCities.
+     */
+    cursor?: CampaignCityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignCities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignCities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CampaignCities.
+     */
+    distinct?: CampaignCityScalarFieldEnum | CampaignCityScalarFieldEnum[]
+  }
+
+  /**
+   * CampaignCity findMany
+   */
+  export type CampaignCityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignCity
+     */
+    select?: CampaignCitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignCity
+     */
+    omit?: CampaignCityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignCityInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignCities to fetch.
+     */
+    where?: CampaignCityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignCities to fetch.
+     */
+    orderBy?: CampaignCityOrderByWithRelationInput | CampaignCityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CampaignCities.
+     */
+    cursor?: CampaignCityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignCities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignCities.
+     */
+    skip?: number
+    distinct?: CampaignCityScalarFieldEnum | CampaignCityScalarFieldEnum[]
+  }
+
+  /**
+   * CampaignCity create
+   */
+  export type CampaignCityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignCity
+     */
+    select?: CampaignCitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignCity
+     */
+    omit?: CampaignCityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignCityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CampaignCity.
+     */
+    data: XOR<CampaignCityCreateInput, CampaignCityUncheckedCreateInput>
+  }
+
+  /**
+   * CampaignCity createMany
+   */
+  export type CampaignCityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CampaignCities.
+     */
+    data: CampaignCityCreateManyInput | CampaignCityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CampaignCity createManyAndReturn
+   */
+  export type CampaignCityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignCity
+     */
+    select?: CampaignCitySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignCity
+     */
+    omit?: CampaignCityOmit<ExtArgs> | null
+    /**
+     * The data used to create many CampaignCities.
+     */
+    data: CampaignCityCreateManyInput | CampaignCityCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignCityIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CampaignCity update
+   */
+  export type CampaignCityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignCity
+     */
+    select?: CampaignCitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignCity
+     */
+    omit?: CampaignCityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignCityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CampaignCity.
+     */
+    data: XOR<CampaignCityUpdateInput, CampaignCityUncheckedUpdateInput>
+    /**
+     * Choose, which CampaignCity to update.
+     */
+    where: CampaignCityWhereUniqueInput
+  }
+
+  /**
+   * CampaignCity updateMany
+   */
+  export type CampaignCityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CampaignCities.
+     */
+    data: XOR<CampaignCityUpdateManyMutationInput, CampaignCityUncheckedUpdateManyInput>
+    /**
+     * Filter which CampaignCities to update
+     */
+    where?: CampaignCityWhereInput
+    /**
+     * Limit how many CampaignCities to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CampaignCity updateManyAndReturn
+   */
+  export type CampaignCityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignCity
+     */
+    select?: CampaignCitySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignCity
+     */
+    omit?: CampaignCityOmit<ExtArgs> | null
+    /**
+     * The data used to update CampaignCities.
+     */
+    data: XOR<CampaignCityUpdateManyMutationInput, CampaignCityUncheckedUpdateManyInput>
+    /**
+     * Filter which CampaignCities to update
+     */
+    where?: CampaignCityWhereInput
+    /**
+     * Limit how many CampaignCities to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignCityIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CampaignCity upsert
+   */
+  export type CampaignCityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignCity
+     */
+    select?: CampaignCitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignCity
+     */
+    omit?: CampaignCityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignCityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CampaignCity to update in case it exists.
+     */
+    where: CampaignCityWhereUniqueInput
+    /**
+     * In case the CampaignCity found by the `where` argument doesn't exist, create a new CampaignCity with this data.
+     */
+    create: XOR<CampaignCityCreateInput, CampaignCityUncheckedCreateInput>
+    /**
+     * In case the CampaignCity was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CampaignCityUpdateInput, CampaignCityUncheckedUpdateInput>
+  }
+
+  /**
+   * CampaignCity delete
+   */
+  export type CampaignCityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignCity
+     */
+    select?: CampaignCitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignCity
+     */
+    omit?: CampaignCityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignCityInclude<ExtArgs> | null
+    /**
+     * Filter which CampaignCity to delete.
+     */
+    where: CampaignCityWhereUniqueInput
+  }
+
+  /**
+   * CampaignCity deleteMany
+   */
+  export type CampaignCityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CampaignCities to delete
+     */
+    where?: CampaignCityWhereInput
+    /**
+     * Limit how many CampaignCities to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CampaignCity without action
+   */
+  export type CampaignCityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignCity
+     */
+    select?: CampaignCitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignCity
+     */
+    omit?: CampaignCityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignCityInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CampaignNPC
+   */
+
+  export type AggregateCampaignNPC = {
+    _count: CampaignNPCCountAggregateOutputType | null
+    _min: CampaignNPCMinAggregateOutputType | null
+    _max: CampaignNPCMaxAggregateOutputType | null
+  }
+
+  export type CampaignNPCMinAggregateOutputType = {
+    id: string | null
+    campaignId: string | null
+    npcId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CampaignNPCMaxAggregateOutputType = {
+    id: string | null
+    campaignId: string | null
+    npcId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CampaignNPCCountAggregateOutputType = {
+    id: number
+    campaignId: number
+    npcId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CampaignNPCMinAggregateInputType = {
+    id?: true
+    campaignId?: true
+    npcId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CampaignNPCMaxAggregateInputType = {
+    id?: true
+    campaignId?: true
+    npcId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CampaignNPCCountAggregateInputType = {
+    id?: true
+    campaignId?: true
+    npcId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CampaignNPCAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CampaignNPC to aggregate.
+     */
+    where?: CampaignNPCWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignNPCS to fetch.
+     */
+    orderBy?: CampaignNPCOrderByWithRelationInput | CampaignNPCOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CampaignNPCWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignNPCS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignNPCS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CampaignNPCS
+    **/
+    _count?: true | CampaignNPCCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CampaignNPCMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CampaignNPCMaxAggregateInputType
+  }
+
+  export type GetCampaignNPCAggregateType<T extends CampaignNPCAggregateArgs> = {
+        [P in keyof T & keyof AggregateCampaignNPC]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCampaignNPC[P]>
+      : GetScalarType<T[P], AggregateCampaignNPC[P]>
+  }
+
+
+
+
+  export type CampaignNPCGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CampaignNPCWhereInput
+    orderBy?: CampaignNPCOrderByWithAggregationInput | CampaignNPCOrderByWithAggregationInput[]
+    by: CampaignNPCScalarFieldEnum[] | CampaignNPCScalarFieldEnum
+    having?: CampaignNPCScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CampaignNPCCountAggregateInputType | true
+    _min?: CampaignNPCMinAggregateInputType
+    _max?: CampaignNPCMaxAggregateInputType
+  }
+
+  export type CampaignNPCGroupByOutputType = {
+    id: string
+    campaignId: string
+    npcId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: CampaignNPCCountAggregateOutputType | null
+    _min: CampaignNPCMinAggregateOutputType | null
+    _max: CampaignNPCMaxAggregateOutputType | null
+  }
+
+  type GetCampaignNPCGroupByPayload<T extends CampaignNPCGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CampaignNPCGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CampaignNPCGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CampaignNPCGroupByOutputType[P]>
+            : GetScalarType<T[P], CampaignNPCGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CampaignNPCSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    campaignId?: boolean
+    npcId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    npc?: boolean | NPCDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["campaignNPC"]>
+
+  export type CampaignNPCSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    campaignId?: boolean
+    npcId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    npc?: boolean | NPCDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["campaignNPC"]>
+
+  export type CampaignNPCSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    campaignId?: boolean
+    npcId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    npc?: boolean | NPCDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["campaignNPC"]>
+
+  export type CampaignNPCSelectScalar = {
+    id?: boolean
+    campaignId?: boolean
+    npcId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CampaignNPCOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "campaignId" | "npcId" | "createdAt" | "updatedAt", ExtArgs["result"]["campaignNPC"]>
+  export type CampaignNPCInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    npc?: boolean | NPCDefaultArgs<ExtArgs>
+  }
+  export type CampaignNPCIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    npc?: boolean | NPCDefaultArgs<ExtArgs>
+  }
+  export type CampaignNPCIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    npc?: boolean | NPCDefaultArgs<ExtArgs>
+  }
+
+  export type $CampaignNPCPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CampaignNPC"
+    objects: {
+      campaign: Prisma.$CampaignPayload<ExtArgs>
+      npc: Prisma.$NPCPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      campaignId: string
+      npcId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["campaignNPC"]>
+    composites: {}
+  }
+
+  type CampaignNPCGetPayload<S extends boolean | null | undefined | CampaignNPCDefaultArgs> = $Result.GetResult<Prisma.$CampaignNPCPayload, S>
+
+  type CampaignNPCCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CampaignNPCFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CampaignNPCCountAggregateInputType | true
+    }
+
+  export interface CampaignNPCDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CampaignNPC'], meta: { name: 'CampaignNPC' } }
+    /**
+     * Find zero or one CampaignNPC that matches the filter.
+     * @param {CampaignNPCFindUniqueArgs} args - Arguments to find a CampaignNPC
+     * @example
+     * // Get one CampaignNPC
+     * const campaignNPC = await prisma.campaignNPC.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CampaignNPCFindUniqueArgs>(args: SelectSubset<T, CampaignNPCFindUniqueArgs<ExtArgs>>): Prisma__CampaignNPCClient<$Result.GetResult<Prisma.$CampaignNPCPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CampaignNPC that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CampaignNPCFindUniqueOrThrowArgs} args - Arguments to find a CampaignNPC
+     * @example
+     * // Get one CampaignNPC
+     * const campaignNPC = await prisma.campaignNPC.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CampaignNPCFindUniqueOrThrowArgs>(args: SelectSubset<T, CampaignNPCFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CampaignNPCClient<$Result.GetResult<Prisma.$CampaignNPCPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CampaignNPC that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignNPCFindFirstArgs} args - Arguments to find a CampaignNPC
+     * @example
+     * // Get one CampaignNPC
+     * const campaignNPC = await prisma.campaignNPC.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CampaignNPCFindFirstArgs>(args?: SelectSubset<T, CampaignNPCFindFirstArgs<ExtArgs>>): Prisma__CampaignNPCClient<$Result.GetResult<Prisma.$CampaignNPCPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CampaignNPC that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignNPCFindFirstOrThrowArgs} args - Arguments to find a CampaignNPC
+     * @example
+     * // Get one CampaignNPC
+     * const campaignNPC = await prisma.campaignNPC.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CampaignNPCFindFirstOrThrowArgs>(args?: SelectSubset<T, CampaignNPCFindFirstOrThrowArgs<ExtArgs>>): Prisma__CampaignNPCClient<$Result.GetResult<Prisma.$CampaignNPCPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CampaignNPCS that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignNPCFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CampaignNPCS
+     * const campaignNPCS = await prisma.campaignNPC.findMany()
+     * 
+     * // Get first 10 CampaignNPCS
+     * const campaignNPCS = await prisma.campaignNPC.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const campaignNPCWithIdOnly = await prisma.campaignNPC.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CampaignNPCFindManyArgs>(args?: SelectSubset<T, CampaignNPCFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignNPCPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CampaignNPC.
+     * @param {CampaignNPCCreateArgs} args - Arguments to create a CampaignNPC.
+     * @example
+     * // Create one CampaignNPC
+     * const CampaignNPC = await prisma.campaignNPC.create({
+     *   data: {
+     *     // ... data to create a CampaignNPC
+     *   }
+     * })
+     * 
+     */
+    create<T extends CampaignNPCCreateArgs>(args: SelectSubset<T, CampaignNPCCreateArgs<ExtArgs>>): Prisma__CampaignNPCClient<$Result.GetResult<Prisma.$CampaignNPCPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CampaignNPCS.
+     * @param {CampaignNPCCreateManyArgs} args - Arguments to create many CampaignNPCS.
+     * @example
+     * // Create many CampaignNPCS
+     * const campaignNPC = await prisma.campaignNPC.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CampaignNPCCreateManyArgs>(args?: SelectSubset<T, CampaignNPCCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CampaignNPCS and returns the data saved in the database.
+     * @param {CampaignNPCCreateManyAndReturnArgs} args - Arguments to create many CampaignNPCS.
+     * @example
+     * // Create many CampaignNPCS
+     * const campaignNPC = await prisma.campaignNPC.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CampaignNPCS and only return the `id`
+     * const campaignNPCWithIdOnly = await prisma.campaignNPC.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CampaignNPCCreateManyAndReturnArgs>(args?: SelectSubset<T, CampaignNPCCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignNPCPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CampaignNPC.
+     * @param {CampaignNPCDeleteArgs} args - Arguments to delete one CampaignNPC.
+     * @example
+     * // Delete one CampaignNPC
+     * const CampaignNPC = await prisma.campaignNPC.delete({
+     *   where: {
+     *     // ... filter to delete one CampaignNPC
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CampaignNPCDeleteArgs>(args: SelectSubset<T, CampaignNPCDeleteArgs<ExtArgs>>): Prisma__CampaignNPCClient<$Result.GetResult<Prisma.$CampaignNPCPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CampaignNPC.
+     * @param {CampaignNPCUpdateArgs} args - Arguments to update one CampaignNPC.
+     * @example
+     * // Update one CampaignNPC
+     * const campaignNPC = await prisma.campaignNPC.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CampaignNPCUpdateArgs>(args: SelectSubset<T, CampaignNPCUpdateArgs<ExtArgs>>): Prisma__CampaignNPCClient<$Result.GetResult<Prisma.$CampaignNPCPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CampaignNPCS.
+     * @param {CampaignNPCDeleteManyArgs} args - Arguments to filter CampaignNPCS to delete.
+     * @example
+     * // Delete a few CampaignNPCS
+     * const { count } = await prisma.campaignNPC.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CampaignNPCDeleteManyArgs>(args?: SelectSubset<T, CampaignNPCDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CampaignNPCS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignNPCUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CampaignNPCS
+     * const campaignNPC = await prisma.campaignNPC.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CampaignNPCUpdateManyArgs>(args: SelectSubset<T, CampaignNPCUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CampaignNPCS and returns the data updated in the database.
+     * @param {CampaignNPCUpdateManyAndReturnArgs} args - Arguments to update many CampaignNPCS.
+     * @example
+     * // Update many CampaignNPCS
+     * const campaignNPC = await prisma.campaignNPC.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CampaignNPCS and only return the `id`
+     * const campaignNPCWithIdOnly = await prisma.campaignNPC.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CampaignNPCUpdateManyAndReturnArgs>(args: SelectSubset<T, CampaignNPCUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignNPCPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CampaignNPC.
+     * @param {CampaignNPCUpsertArgs} args - Arguments to update or create a CampaignNPC.
+     * @example
+     * // Update or create a CampaignNPC
+     * const campaignNPC = await prisma.campaignNPC.upsert({
+     *   create: {
+     *     // ... data to create a CampaignNPC
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CampaignNPC we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CampaignNPCUpsertArgs>(args: SelectSubset<T, CampaignNPCUpsertArgs<ExtArgs>>): Prisma__CampaignNPCClient<$Result.GetResult<Prisma.$CampaignNPCPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CampaignNPCS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignNPCCountArgs} args - Arguments to filter CampaignNPCS to count.
+     * @example
+     * // Count the number of CampaignNPCS
+     * const count = await prisma.campaignNPC.count({
+     *   where: {
+     *     // ... the filter for the CampaignNPCS we want to count
+     *   }
+     * })
+    **/
+    count<T extends CampaignNPCCountArgs>(
+      args?: Subset<T, CampaignNPCCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CampaignNPCCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CampaignNPC.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignNPCAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CampaignNPCAggregateArgs>(args: Subset<T, CampaignNPCAggregateArgs>): Prisma.PrismaPromise<GetCampaignNPCAggregateType<T>>
+
+    /**
+     * Group by CampaignNPC.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignNPCGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CampaignNPCGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CampaignNPCGroupByArgs['orderBy'] }
+        : { orderBy?: CampaignNPCGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CampaignNPCGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCampaignNPCGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CampaignNPC model
+   */
+  readonly fields: CampaignNPCFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CampaignNPC.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CampaignNPCClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    campaign<T extends CampaignDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CampaignDefaultArgs<ExtArgs>>): Prisma__CampaignClient<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    npc<T extends NPCDefaultArgs<ExtArgs> = {}>(args?: Subset<T, NPCDefaultArgs<ExtArgs>>): Prisma__NPCClient<$Result.GetResult<Prisma.$NPCPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CampaignNPC model
+   */
+  interface CampaignNPCFieldRefs {
+    readonly id: FieldRef<"CampaignNPC", 'String'>
+    readonly campaignId: FieldRef<"CampaignNPC", 'String'>
+    readonly npcId: FieldRef<"CampaignNPC", 'String'>
+    readonly createdAt: FieldRef<"CampaignNPC", 'DateTime'>
+    readonly updatedAt: FieldRef<"CampaignNPC", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CampaignNPC findUnique
+   */
+  export type CampaignNPCFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignNPC
+     */
+    select?: CampaignNPCSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignNPC
+     */
+    omit?: CampaignNPCOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignNPCInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignNPC to fetch.
+     */
+    where: CampaignNPCWhereUniqueInput
+  }
+
+  /**
+   * CampaignNPC findUniqueOrThrow
+   */
+  export type CampaignNPCFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignNPC
+     */
+    select?: CampaignNPCSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignNPC
+     */
+    omit?: CampaignNPCOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignNPCInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignNPC to fetch.
+     */
+    where: CampaignNPCWhereUniqueInput
+  }
+
+  /**
+   * CampaignNPC findFirst
+   */
+  export type CampaignNPCFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignNPC
+     */
+    select?: CampaignNPCSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignNPC
+     */
+    omit?: CampaignNPCOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignNPCInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignNPC to fetch.
+     */
+    where?: CampaignNPCWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignNPCS to fetch.
+     */
+    orderBy?: CampaignNPCOrderByWithRelationInput | CampaignNPCOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CampaignNPCS.
+     */
+    cursor?: CampaignNPCWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignNPCS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignNPCS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CampaignNPCS.
+     */
+    distinct?: CampaignNPCScalarFieldEnum | CampaignNPCScalarFieldEnum[]
+  }
+
+  /**
+   * CampaignNPC findFirstOrThrow
+   */
+  export type CampaignNPCFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignNPC
+     */
+    select?: CampaignNPCSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignNPC
+     */
+    omit?: CampaignNPCOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignNPCInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignNPC to fetch.
+     */
+    where?: CampaignNPCWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignNPCS to fetch.
+     */
+    orderBy?: CampaignNPCOrderByWithRelationInput | CampaignNPCOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CampaignNPCS.
+     */
+    cursor?: CampaignNPCWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignNPCS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignNPCS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CampaignNPCS.
+     */
+    distinct?: CampaignNPCScalarFieldEnum | CampaignNPCScalarFieldEnum[]
+  }
+
+  /**
+   * CampaignNPC findMany
+   */
+  export type CampaignNPCFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignNPC
+     */
+    select?: CampaignNPCSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignNPC
+     */
+    omit?: CampaignNPCOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignNPCInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignNPCS to fetch.
+     */
+    where?: CampaignNPCWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignNPCS to fetch.
+     */
+    orderBy?: CampaignNPCOrderByWithRelationInput | CampaignNPCOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CampaignNPCS.
+     */
+    cursor?: CampaignNPCWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignNPCS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignNPCS.
+     */
+    skip?: number
+    distinct?: CampaignNPCScalarFieldEnum | CampaignNPCScalarFieldEnum[]
+  }
+
+  /**
+   * CampaignNPC create
+   */
+  export type CampaignNPCCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignNPC
+     */
+    select?: CampaignNPCSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignNPC
+     */
+    omit?: CampaignNPCOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignNPCInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CampaignNPC.
+     */
+    data: XOR<CampaignNPCCreateInput, CampaignNPCUncheckedCreateInput>
+  }
+
+  /**
+   * CampaignNPC createMany
+   */
+  export type CampaignNPCCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CampaignNPCS.
+     */
+    data: CampaignNPCCreateManyInput | CampaignNPCCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CampaignNPC createManyAndReturn
+   */
+  export type CampaignNPCCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignNPC
+     */
+    select?: CampaignNPCSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignNPC
+     */
+    omit?: CampaignNPCOmit<ExtArgs> | null
+    /**
+     * The data used to create many CampaignNPCS.
+     */
+    data: CampaignNPCCreateManyInput | CampaignNPCCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignNPCIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CampaignNPC update
+   */
+  export type CampaignNPCUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignNPC
+     */
+    select?: CampaignNPCSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignNPC
+     */
+    omit?: CampaignNPCOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignNPCInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CampaignNPC.
+     */
+    data: XOR<CampaignNPCUpdateInput, CampaignNPCUncheckedUpdateInput>
+    /**
+     * Choose, which CampaignNPC to update.
+     */
+    where: CampaignNPCWhereUniqueInput
+  }
+
+  /**
+   * CampaignNPC updateMany
+   */
+  export type CampaignNPCUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CampaignNPCS.
+     */
+    data: XOR<CampaignNPCUpdateManyMutationInput, CampaignNPCUncheckedUpdateManyInput>
+    /**
+     * Filter which CampaignNPCS to update
+     */
+    where?: CampaignNPCWhereInput
+    /**
+     * Limit how many CampaignNPCS to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CampaignNPC updateManyAndReturn
+   */
+  export type CampaignNPCUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignNPC
+     */
+    select?: CampaignNPCSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignNPC
+     */
+    omit?: CampaignNPCOmit<ExtArgs> | null
+    /**
+     * The data used to update CampaignNPCS.
+     */
+    data: XOR<CampaignNPCUpdateManyMutationInput, CampaignNPCUncheckedUpdateManyInput>
+    /**
+     * Filter which CampaignNPCS to update
+     */
+    where?: CampaignNPCWhereInput
+    /**
+     * Limit how many CampaignNPCS to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignNPCIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CampaignNPC upsert
+   */
+  export type CampaignNPCUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignNPC
+     */
+    select?: CampaignNPCSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignNPC
+     */
+    omit?: CampaignNPCOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignNPCInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CampaignNPC to update in case it exists.
+     */
+    where: CampaignNPCWhereUniqueInput
+    /**
+     * In case the CampaignNPC found by the `where` argument doesn't exist, create a new CampaignNPC with this data.
+     */
+    create: XOR<CampaignNPCCreateInput, CampaignNPCUncheckedCreateInput>
+    /**
+     * In case the CampaignNPC was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CampaignNPCUpdateInput, CampaignNPCUncheckedUpdateInput>
+  }
+
+  /**
+   * CampaignNPC delete
+   */
+  export type CampaignNPCDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignNPC
+     */
+    select?: CampaignNPCSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignNPC
+     */
+    omit?: CampaignNPCOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignNPCInclude<ExtArgs> | null
+    /**
+     * Filter which CampaignNPC to delete.
+     */
+    where: CampaignNPCWhereUniqueInput
+  }
+
+  /**
+   * CampaignNPC deleteMany
+   */
+  export type CampaignNPCDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CampaignNPCS to delete
+     */
+    where?: CampaignNPCWhereInput
+    /**
+     * Limit how many CampaignNPCS to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CampaignNPC without action
+   */
+  export type CampaignNPCDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignNPC
+     */
+    select?: CampaignNPCSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignNPC
+     */
+    omit?: CampaignNPCOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignNPCInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CampaignItem
+   */
+
+  export type AggregateCampaignItem = {
+    _count: CampaignItemCountAggregateOutputType | null
+    _min: CampaignItemMinAggregateOutputType | null
+    _max: CampaignItemMaxAggregateOutputType | null
+  }
+
+  export type CampaignItemMinAggregateOutputType = {
+    id: string | null
+    campaignId: string | null
+    itemId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CampaignItemMaxAggregateOutputType = {
+    id: string | null
+    campaignId: string | null
+    itemId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CampaignItemCountAggregateOutputType = {
+    id: number
+    campaignId: number
+    itemId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CampaignItemMinAggregateInputType = {
+    id?: true
+    campaignId?: true
+    itemId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CampaignItemMaxAggregateInputType = {
+    id?: true
+    campaignId?: true
+    itemId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CampaignItemCountAggregateInputType = {
+    id?: true
+    campaignId?: true
+    itemId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CampaignItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CampaignItem to aggregate.
+     */
+    where?: CampaignItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignItems to fetch.
+     */
+    orderBy?: CampaignItemOrderByWithRelationInput | CampaignItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CampaignItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CampaignItems
+    **/
+    _count?: true | CampaignItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CampaignItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CampaignItemMaxAggregateInputType
+  }
+
+  export type GetCampaignItemAggregateType<T extends CampaignItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateCampaignItem]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCampaignItem[P]>
+      : GetScalarType<T[P], AggregateCampaignItem[P]>
+  }
+
+
+
+
+  export type CampaignItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CampaignItemWhereInput
+    orderBy?: CampaignItemOrderByWithAggregationInput | CampaignItemOrderByWithAggregationInput[]
+    by: CampaignItemScalarFieldEnum[] | CampaignItemScalarFieldEnum
+    having?: CampaignItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CampaignItemCountAggregateInputType | true
+    _min?: CampaignItemMinAggregateInputType
+    _max?: CampaignItemMaxAggregateInputType
+  }
+
+  export type CampaignItemGroupByOutputType = {
+    id: string
+    campaignId: string
+    itemId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: CampaignItemCountAggregateOutputType | null
+    _min: CampaignItemMinAggregateOutputType | null
+    _max: CampaignItemMaxAggregateOutputType | null
+  }
+
+  type GetCampaignItemGroupByPayload<T extends CampaignItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CampaignItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CampaignItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CampaignItemGroupByOutputType[P]>
+            : GetScalarType<T[P], CampaignItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CampaignItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    campaignId?: boolean
+    itemId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    item?: boolean | ItemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["campaignItem"]>
+
+  export type CampaignItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    campaignId?: boolean
+    itemId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    item?: boolean | ItemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["campaignItem"]>
+
+  export type CampaignItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    campaignId?: boolean
+    itemId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    item?: boolean | ItemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["campaignItem"]>
+
+  export type CampaignItemSelectScalar = {
+    id?: boolean
+    campaignId?: boolean
+    itemId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CampaignItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "campaignId" | "itemId" | "createdAt" | "updatedAt", ExtArgs["result"]["campaignItem"]>
+  export type CampaignItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    item?: boolean | ItemDefaultArgs<ExtArgs>
+  }
+  export type CampaignItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    item?: boolean | ItemDefaultArgs<ExtArgs>
+  }
+  export type CampaignItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+    item?: boolean | ItemDefaultArgs<ExtArgs>
+  }
+
+  export type $CampaignItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CampaignItem"
+    objects: {
+      campaign: Prisma.$CampaignPayload<ExtArgs>
+      item: Prisma.$ItemPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      campaignId: string
+      itemId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["campaignItem"]>
+    composites: {}
+  }
+
+  type CampaignItemGetPayload<S extends boolean | null | undefined | CampaignItemDefaultArgs> = $Result.GetResult<Prisma.$CampaignItemPayload, S>
+
+  type CampaignItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CampaignItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CampaignItemCountAggregateInputType | true
+    }
+
+  export interface CampaignItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CampaignItem'], meta: { name: 'CampaignItem' } }
+    /**
+     * Find zero or one CampaignItem that matches the filter.
+     * @param {CampaignItemFindUniqueArgs} args - Arguments to find a CampaignItem
+     * @example
+     * // Get one CampaignItem
+     * const campaignItem = await prisma.campaignItem.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CampaignItemFindUniqueArgs>(args: SelectSubset<T, CampaignItemFindUniqueArgs<ExtArgs>>): Prisma__CampaignItemClient<$Result.GetResult<Prisma.$CampaignItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CampaignItem that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CampaignItemFindUniqueOrThrowArgs} args - Arguments to find a CampaignItem
+     * @example
+     * // Get one CampaignItem
+     * const campaignItem = await prisma.campaignItem.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CampaignItemFindUniqueOrThrowArgs>(args: SelectSubset<T, CampaignItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CampaignItemClient<$Result.GetResult<Prisma.$CampaignItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CampaignItem that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignItemFindFirstArgs} args - Arguments to find a CampaignItem
+     * @example
+     * // Get one CampaignItem
+     * const campaignItem = await prisma.campaignItem.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CampaignItemFindFirstArgs>(args?: SelectSubset<T, CampaignItemFindFirstArgs<ExtArgs>>): Prisma__CampaignItemClient<$Result.GetResult<Prisma.$CampaignItemPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CampaignItem that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignItemFindFirstOrThrowArgs} args - Arguments to find a CampaignItem
+     * @example
+     * // Get one CampaignItem
+     * const campaignItem = await prisma.campaignItem.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CampaignItemFindFirstOrThrowArgs>(args?: SelectSubset<T, CampaignItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__CampaignItemClient<$Result.GetResult<Prisma.$CampaignItemPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CampaignItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CampaignItems
+     * const campaignItems = await prisma.campaignItem.findMany()
+     * 
+     * // Get first 10 CampaignItems
+     * const campaignItems = await prisma.campaignItem.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const campaignItemWithIdOnly = await prisma.campaignItem.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CampaignItemFindManyArgs>(args?: SelectSubset<T, CampaignItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CampaignItem.
+     * @param {CampaignItemCreateArgs} args - Arguments to create a CampaignItem.
+     * @example
+     * // Create one CampaignItem
+     * const CampaignItem = await prisma.campaignItem.create({
+     *   data: {
+     *     // ... data to create a CampaignItem
+     *   }
+     * })
+     * 
+     */
+    create<T extends CampaignItemCreateArgs>(args: SelectSubset<T, CampaignItemCreateArgs<ExtArgs>>): Prisma__CampaignItemClient<$Result.GetResult<Prisma.$CampaignItemPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CampaignItems.
+     * @param {CampaignItemCreateManyArgs} args - Arguments to create many CampaignItems.
+     * @example
+     * // Create many CampaignItems
+     * const campaignItem = await prisma.campaignItem.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CampaignItemCreateManyArgs>(args?: SelectSubset<T, CampaignItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CampaignItems and returns the data saved in the database.
+     * @param {CampaignItemCreateManyAndReturnArgs} args - Arguments to create many CampaignItems.
+     * @example
+     * // Create many CampaignItems
+     * const campaignItem = await prisma.campaignItem.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CampaignItems and only return the `id`
+     * const campaignItemWithIdOnly = await prisma.campaignItem.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CampaignItemCreateManyAndReturnArgs>(args?: SelectSubset<T, CampaignItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignItemPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CampaignItem.
+     * @param {CampaignItemDeleteArgs} args - Arguments to delete one CampaignItem.
+     * @example
+     * // Delete one CampaignItem
+     * const CampaignItem = await prisma.campaignItem.delete({
+     *   where: {
+     *     // ... filter to delete one CampaignItem
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CampaignItemDeleteArgs>(args: SelectSubset<T, CampaignItemDeleteArgs<ExtArgs>>): Prisma__CampaignItemClient<$Result.GetResult<Prisma.$CampaignItemPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CampaignItem.
+     * @param {CampaignItemUpdateArgs} args - Arguments to update one CampaignItem.
+     * @example
+     * // Update one CampaignItem
+     * const campaignItem = await prisma.campaignItem.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CampaignItemUpdateArgs>(args: SelectSubset<T, CampaignItemUpdateArgs<ExtArgs>>): Prisma__CampaignItemClient<$Result.GetResult<Prisma.$CampaignItemPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CampaignItems.
+     * @param {CampaignItemDeleteManyArgs} args - Arguments to filter CampaignItems to delete.
+     * @example
+     * // Delete a few CampaignItems
+     * const { count } = await prisma.campaignItem.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CampaignItemDeleteManyArgs>(args?: SelectSubset<T, CampaignItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CampaignItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CampaignItems
+     * const campaignItem = await prisma.campaignItem.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CampaignItemUpdateManyArgs>(args: SelectSubset<T, CampaignItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CampaignItems and returns the data updated in the database.
+     * @param {CampaignItemUpdateManyAndReturnArgs} args - Arguments to update many CampaignItems.
+     * @example
+     * // Update many CampaignItems
+     * const campaignItem = await prisma.campaignItem.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CampaignItems and only return the `id`
+     * const campaignItemWithIdOnly = await prisma.campaignItem.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CampaignItemUpdateManyAndReturnArgs>(args: SelectSubset<T, CampaignItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CampaignItem.
+     * @param {CampaignItemUpsertArgs} args - Arguments to update or create a CampaignItem.
+     * @example
+     * // Update or create a CampaignItem
+     * const campaignItem = await prisma.campaignItem.upsert({
+     *   create: {
+     *     // ... data to create a CampaignItem
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CampaignItem we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CampaignItemUpsertArgs>(args: SelectSubset<T, CampaignItemUpsertArgs<ExtArgs>>): Prisma__CampaignItemClient<$Result.GetResult<Prisma.$CampaignItemPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CampaignItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignItemCountArgs} args - Arguments to filter CampaignItems to count.
+     * @example
+     * // Count the number of CampaignItems
+     * const count = await prisma.campaignItem.count({
+     *   where: {
+     *     // ... the filter for the CampaignItems we want to count
+     *   }
+     * })
+    **/
+    count<T extends CampaignItemCountArgs>(
+      args?: Subset<T, CampaignItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CampaignItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CampaignItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CampaignItemAggregateArgs>(args: Subset<T, CampaignItemAggregateArgs>): Prisma.PrismaPromise<GetCampaignItemAggregateType<T>>
+
+    /**
+     * Group by CampaignItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CampaignItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CampaignItemGroupByArgs['orderBy'] }
+        : { orderBy?: CampaignItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CampaignItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCampaignItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CampaignItem model
+   */
+  readonly fields: CampaignItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CampaignItem.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CampaignItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    campaign<T extends CampaignDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CampaignDefaultArgs<ExtArgs>>): Prisma__CampaignClient<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    item<T extends ItemDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ItemDefaultArgs<ExtArgs>>): Prisma__ItemClient<$Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CampaignItem model
+   */
+  interface CampaignItemFieldRefs {
+    readonly id: FieldRef<"CampaignItem", 'String'>
+    readonly campaignId: FieldRef<"CampaignItem", 'String'>
+    readonly itemId: FieldRef<"CampaignItem", 'String'>
+    readonly createdAt: FieldRef<"CampaignItem", 'DateTime'>
+    readonly updatedAt: FieldRef<"CampaignItem", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CampaignItem findUnique
+   */
+  export type CampaignItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignItem
+     */
+    select?: CampaignItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignItem
+     */
+    omit?: CampaignItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignItemInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignItem to fetch.
+     */
+    where: CampaignItemWhereUniqueInput
+  }
+
+  /**
+   * CampaignItem findUniqueOrThrow
+   */
+  export type CampaignItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignItem
+     */
+    select?: CampaignItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignItem
+     */
+    omit?: CampaignItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignItemInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignItem to fetch.
+     */
+    where: CampaignItemWhereUniqueInput
+  }
+
+  /**
+   * CampaignItem findFirst
+   */
+  export type CampaignItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignItem
+     */
+    select?: CampaignItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignItem
+     */
+    omit?: CampaignItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignItemInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignItem to fetch.
+     */
+    where?: CampaignItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignItems to fetch.
+     */
+    orderBy?: CampaignItemOrderByWithRelationInput | CampaignItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CampaignItems.
+     */
+    cursor?: CampaignItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CampaignItems.
+     */
+    distinct?: CampaignItemScalarFieldEnum | CampaignItemScalarFieldEnum[]
+  }
+
+  /**
+   * CampaignItem findFirstOrThrow
+   */
+  export type CampaignItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignItem
+     */
+    select?: CampaignItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignItem
+     */
+    omit?: CampaignItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignItemInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignItem to fetch.
+     */
+    where?: CampaignItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignItems to fetch.
+     */
+    orderBy?: CampaignItemOrderByWithRelationInput | CampaignItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CampaignItems.
+     */
+    cursor?: CampaignItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CampaignItems.
+     */
+    distinct?: CampaignItemScalarFieldEnum | CampaignItemScalarFieldEnum[]
+  }
+
+  /**
+   * CampaignItem findMany
+   */
+  export type CampaignItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignItem
+     */
+    select?: CampaignItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignItem
+     */
+    omit?: CampaignItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignItemInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignItems to fetch.
+     */
+    where?: CampaignItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignItems to fetch.
+     */
+    orderBy?: CampaignItemOrderByWithRelationInput | CampaignItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CampaignItems.
+     */
+    cursor?: CampaignItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignItems.
+     */
+    skip?: number
+    distinct?: CampaignItemScalarFieldEnum | CampaignItemScalarFieldEnum[]
+  }
+
+  /**
+   * CampaignItem create
+   */
+  export type CampaignItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignItem
+     */
+    select?: CampaignItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignItem
+     */
+    omit?: CampaignItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CampaignItem.
+     */
+    data: XOR<CampaignItemCreateInput, CampaignItemUncheckedCreateInput>
+  }
+
+  /**
+   * CampaignItem createMany
+   */
+  export type CampaignItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CampaignItems.
+     */
+    data: CampaignItemCreateManyInput | CampaignItemCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CampaignItem createManyAndReturn
+   */
+  export type CampaignItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignItem
+     */
+    select?: CampaignItemSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignItem
+     */
+    omit?: CampaignItemOmit<ExtArgs> | null
+    /**
+     * The data used to create many CampaignItems.
+     */
+    data: CampaignItemCreateManyInput | CampaignItemCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignItemIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CampaignItem update
+   */
+  export type CampaignItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignItem
+     */
+    select?: CampaignItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignItem
+     */
+    omit?: CampaignItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CampaignItem.
+     */
+    data: XOR<CampaignItemUpdateInput, CampaignItemUncheckedUpdateInput>
+    /**
+     * Choose, which CampaignItem to update.
+     */
+    where: CampaignItemWhereUniqueInput
+  }
+
+  /**
+   * CampaignItem updateMany
+   */
+  export type CampaignItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CampaignItems.
+     */
+    data: XOR<CampaignItemUpdateManyMutationInput, CampaignItemUncheckedUpdateManyInput>
+    /**
+     * Filter which CampaignItems to update
+     */
+    where?: CampaignItemWhereInput
+    /**
+     * Limit how many CampaignItems to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CampaignItem updateManyAndReturn
+   */
+  export type CampaignItemUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignItem
+     */
+    select?: CampaignItemSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignItem
+     */
+    omit?: CampaignItemOmit<ExtArgs> | null
+    /**
+     * The data used to update CampaignItems.
+     */
+    data: XOR<CampaignItemUpdateManyMutationInput, CampaignItemUncheckedUpdateManyInput>
+    /**
+     * Filter which CampaignItems to update
+     */
+    where?: CampaignItemWhereInput
+    /**
+     * Limit how many CampaignItems to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignItemIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CampaignItem upsert
+   */
+  export type CampaignItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignItem
+     */
+    select?: CampaignItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignItem
+     */
+    omit?: CampaignItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CampaignItem to update in case it exists.
+     */
+    where: CampaignItemWhereUniqueInput
+    /**
+     * In case the CampaignItem found by the `where` argument doesn't exist, create a new CampaignItem with this data.
+     */
+    create: XOR<CampaignItemCreateInput, CampaignItemUncheckedCreateInput>
+    /**
+     * In case the CampaignItem was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CampaignItemUpdateInput, CampaignItemUncheckedUpdateInput>
+  }
+
+  /**
+   * CampaignItem delete
+   */
+  export type CampaignItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignItem
+     */
+    select?: CampaignItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignItem
+     */
+    omit?: CampaignItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignItemInclude<ExtArgs> | null
+    /**
+     * Filter which CampaignItem to delete.
+     */
+    where: CampaignItemWhereUniqueInput
+  }
+
+  /**
+   * CampaignItem deleteMany
+   */
+  export type CampaignItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CampaignItems to delete
+     */
+    where?: CampaignItemWhereInput
+    /**
+     * Limit how many CampaignItems to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CampaignItem without action
+   */
+  export type CampaignItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignItem
+     */
+    select?: CampaignItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignItem
+     */
+    omit?: CampaignItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignItemInclude<ExtArgs> | null
   }
 
 
@@ -5941,7 +9445,6 @@ export namespace Prisma {
 
   export const NPCScalarFieldEnum: {
     id: 'id',
-    campaignId: 'campaignId',
     name: 'name',
     race: 'race',
     class: 'class',
@@ -5959,7 +9462,6 @@ export namespace Prisma {
 
   export const CityScalarFieldEnum: {
     id: 'id',
-    campaignId: 'campaignId',
     name: 'name',
     size: 'size',
     population: 'population',
@@ -5977,7 +9479,6 @@ export namespace Prisma {
 
   export const ItemScalarFieldEnum: {
     id: 'id',
-    campaignId: 'campaignId',
     name: 'name',
     type: 'type',
     rarity: 'rarity',
@@ -5989,6 +9490,39 @@ export namespace Prisma {
   };
 
   export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof ItemScalarFieldEnum]
+
+
+  export const CampaignCityScalarFieldEnum: {
+    id: 'id',
+    campaignId: 'campaignId',
+    cityId: 'cityId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CampaignCityScalarFieldEnum = (typeof CampaignCityScalarFieldEnum)[keyof typeof CampaignCityScalarFieldEnum]
+
+
+  export const CampaignNPCScalarFieldEnum: {
+    id: 'id',
+    campaignId: 'campaignId',
+    npcId: 'npcId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CampaignNPCScalarFieldEnum = (typeof CampaignNPCScalarFieldEnum)[keyof typeof CampaignNPCScalarFieldEnum]
+
+
+  export const CampaignItemScalarFieldEnum: {
+    id: 'id',
+    campaignId: 'campaignId',
+    itemId: 'itemId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CampaignItemScalarFieldEnum = (typeof CampaignItemScalarFieldEnum)[keyof typeof CampaignItemScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -6121,9 +9655,9 @@ export namespace Prisma {
     majorConflictsThreats?: StringNullableFilter<"Campaign"> | string | null
     createdAt?: DateTimeFilter<"Campaign"> | Date | string
     updatedAt?: DateTimeFilter<"Campaign"> | Date | string
-    npcs?: NPCListRelationFilter
-    cities?: CityListRelationFilter
-    items?: ItemListRelationFilter
+    cities?: CampaignCityListRelationFilter
+    npcs?: CampaignNPCListRelationFilter
+    items?: CampaignItemListRelationFilter
   }
 
   export type CampaignOrderByWithRelationInput = {
@@ -6142,9 +9676,9 @@ export namespace Prisma {
     majorConflictsThreats?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    npcs?: NPCOrderByRelationAggregateInput
-    cities?: CityOrderByRelationAggregateInput
-    items?: ItemOrderByRelationAggregateInput
+    cities?: CampaignCityOrderByRelationAggregateInput
+    npcs?: CampaignNPCOrderByRelationAggregateInput
+    items?: CampaignItemOrderByRelationAggregateInput
   }
 
   export type CampaignWhereUniqueInput = Prisma.AtLeast<{
@@ -6166,9 +9700,9 @@ export namespace Prisma {
     majorConflictsThreats?: StringNullableFilter<"Campaign"> | string | null
     createdAt?: DateTimeFilter<"Campaign"> | Date | string
     updatedAt?: DateTimeFilter<"Campaign"> | Date | string
-    npcs?: NPCListRelationFilter
-    cities?: CityListRelationFilter
-    items?: ItemListRelationFilter
+    cities?: CampaignCityListRelationFilter
+    npcs?: CampaignNPCListRelationFilter
+    items?: CampaignItemListRelationFilter
   }, "id">
 
   export type CampaignOrderByWithAggregationInput = {
@@ -6218,7 +9752,6 @@ export namespace Prisma {
     OR?: NPCWhereInput[]
     NOT?: NPCWhereInput | NPCWhereInput[]
     id?: StringFilter<"NPC"> | string
-    campaignId?: StringNullableFilter<"NPC"> | string | null
     name?: StringFilter<"NPC"> | string
     race?: StringFilter<"NPC"> | string
     class?: StringNullableFilter<"NPC"> | string | null
@@ -6229,12 +9762,11 @@ export namespace Prisma {
     goals?: JsonFilter<"NPC">
     createdAt?: DateTimeFilter<"NPC"> | Date | string
     updatedAt?: DateTimeFilter<"NPC"> | Date | string
-    campaign?: XOR<CampaignNullableScalarRelationFilter, CampaignWhereInput> | null
+    campaigns?: CampaignNPCListRelationFilter
   }
 
   export type NPCOrderByWithRelationInput = {
     id?: SortOrder
-    campaignId?: SortOrderInput | SortOrder
     name?: SortOrder
     race?: SortOrder
     class?: SortOrderInput | SortOrder
@@ -6245,7 +9777,7 @@ export namespace Prisma {
     goals?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    campaign?: CampaignOrderByWithRelationInput
+    campaigns?: CampaignNPCOrderByRelationAggregateInput
   }
 
   export type NPCWhereUniqueInput = Prisma.AtLeast<{
@@ -6253,7 +9785,6 @@ export namespace Prisma {
     AND?: NPCWhereInput | NPCWhereInput[]
     OR?: NPCWhereInput[]
     NOT?: NPCWhereInput | NPCWhereInput[]
-    campaignId?: StringNullableFilter<"NPC"> | string | null
     name?: StringFilter<"NPC"> | string
     race?: StringFilter<"NPC"> | string
     class?: StringNullableFilter<"NPC"> | string | null
@@ -6264,12 +9795,11 @@ export namespace Prisma {
     goals?: JsonFilter<"NPC">
     createdAt?: DateTimeFilter<"NPC"> | Date | string
     updatedAt?: DateTimeFilter<"NPC"> | Date | string
-    campaign?: XOR<CampaignNullableScalarRelationFilter, CampaignWhereInput> | null
+    campaigns?: CampaignNPCListRelationFilter
   }, "id">
 
   export type NPCOrderByWithAggregationInput = {
     id?: SortOrder
-    campaignId?: SortOrderInput | SortOrder
     name?: SortOrder
     race?: SortOrder
     class?: SortOrderInput | SortOrder
@@ -6290,7 +9820,6 @@ export namespace Prisma {
     OR?: NPCScalarWhereWithAggregatesInput[]
     NOT?: NPCScalarWhereWithAggregatesInput | NPCScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"NPC"> | string
-    campaignId?: StringNullableWithAggregatesFilter<"NPC"> | string | null
     name?: StringWithAggregatesFilter<"NPC"> | string
     race?: StringWithAggregatesFilter<"NPC"> | string
     class?: StringNullableWithAggregatesFilter<"NPC"> | string | null
@@ -6308,7 +9837,6 @@ export namespace Prisma {
     OR?: CityWhereInput[]
     NOT?: CityWhereInput | CityWhereInput[]
     id?: StringFilter<"City"> | string
-    campaignId?: StringNullableFilter<"City"> | string | null
     name?: StringFilter<"City"> | string
     size?: StringFilter<"City"> | string
     population?: StringFilter<"City"> | string
@@ -6319,12 +9847,11 @@ export namespace Prisma {
     history?: StringFilter<"City"> | string
     createdAt?: DateTimeFilter<"City"> | Date | string
     updatedAt?: DateTimeFilter<"City"> | Date | string
-    campaign?: XOR<CampaignNullableScalarRelationFilter, CampaignWhereInput> | null
+    campaigns?: CampaignCityListRelationFilter
   }
 
   export type CityOrderByWithRelationInput = {
     id?: SortOrder
-    campaignId?: SortOrderInput | SortOrder
     name?: SortOrder
     size?: SortOrder
     population?: SortOrder
@@ -6335,7 +9862,7 @@ export namespace Prisma {
     history?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    campaign?: CampaignOrderByWithRelationInput
+    campaigns?: CampaignCityOrderByRelationAggregateInput
   }
 
   export type CityWhereUniqueInput = Prisma.AtLeast<{
@@ -6343,7 +9870,6 @@ export namespace Prisma {
     AND?: CityWhereInput | CityWhereInput[]
     OR?: CityWhereInput[]
     NOT?: CityWhereInput | CityWhereInput[]
-    campaignId?: StringNullableFilter<"City"> | string | null
     name?: StringFilter<"City"> | string
     size?: StringFilter<"City"> | string
     population?: StringFilter<"City"> | string
@@ -6354,12 +9880,11 @@ export namespace Prisma {
     history?: StringFilter<"City"> | string
     createdAt?: DateTimeFilter<"City"> | Date | string
     updatedAt?: DateTimeFilter<"City"> | Date | string
-    campaign?: XOR<CampaignNullableScalarRelationFilter, CampaignWhereInput> | null
+    campaigns?: CampaignCityListRelationFilter
   }, "id">
 
   export type CityOrderByWithAggregationInput = {
     id?: SortOrder
-    campaignId?: SortOrderInput | SortOrder
     name?: SortOrder
     size?: SortOrder
     population?: SortOrder
@@ -6380,7 +9905,6 @@ export namespace Prisma {
     OR?: CityScalarWhereWithAggregatesInput[]
     NOT?: CityScalarWhereWithAggregatesInput | CityScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"City"> | string
-    campaignId?: StringNullableWithAggregatesFilter<"City"> | string | null
     name?: StringWithAggregatesFilter<"City"> | string
     size?: StringWithAggregatesFilter<"City"> | string
     population?: StringWithAggregatesFilter<"City"> | string
@@ -6398,7 +9922,6 @@ export namespace Prisma {
     OR?: ItemWhereInput[]
     NOT?: ItemWhereInput | ItemWhereInput[]
     id?: StringFilter<"Item"> | string
-    campaignId?: StringNullableFilter<"Item"> | string | null
     name?: StringFilter<"Item"> | string
     type?: StringFilter<"Item"> | string
     rarity?: StringFilter<"Item"> | string
@@ -6407,12 +9930,11 @@ export namespace Prisma {
     history?: StringNullableFilter<"Item"> | string | null
     createdAt?: DateTimeFilter<"Item"> | Date | string
     updatedAt?: DateTimeFilter<"Item"> | Date | string
-    campaign?: XOR<CampaignNullableScalarRelationFilter, CampaignWhereInput> | null
+    campaigns?: CampaignItemListRelationFilter
   }
 
   export type ItemOrderByWithRelationInput = {
     id?: SortOrder
-    campaignId?: SortOrderInput | SortOrder
     name?: SortOrder
     type?: SortOrder
     rarity?: SortOrder
@@ -6421,7 +9943,7 @@ export namespace Prisma {
     history?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    campaign?: CampaignOrderByWithRelationInput
+    campaigns?: CampaignItemOrderByRelationAggregateInput
   }
 
   export type ItemWhereUniqueInput = Prisma.AtLeast<{
@@ -6429,7 +9951,6 @@ export namespace Prisma {
     AND?: ItemWhereInput | ItemWhereInput[]
     OR?: ItemWhereInput[]
     NOT?: ItemWhereInput | ItemWhereInput[]
-    campaignId?: StringNullableFilter<"Item"> | string | null
     name?: StringFilter<"Item"> | string
     type?: StringFilter<"Item"> | string
     rarity?: StringFilter<"Item"> | string
@@ -6438,12 +9959,11 @@ export namespace Prisma {
     history?: StringNullableFilter<"Item"> | string | null
     createdAt?: DateTimeFilter<"Item"> | Date | string
     updatedAt?: DateTimeFilter<"Item"> | Date | string
-    campaign?: XOR<CampaignNullableScalarRelationFilter, CampaignWhereInput> | null
+    campaigns?: CampaignItemListRelationFilter
   }, "id">
 
   export type ItemOrderByWithAggregationInput = {
     id?: SortOrder
-    campaignId?: SortOrderInput | SortOrder
     name?: SortOrder
     type?: SortOrder
     rarity?: SortOrder
@@ -6462,7 +9982,6 @@ export namespace Prisma {
     OR?: ItemScalarWhereWithAggregatesInput[]
     NOT?: ItemScalarWhereWithAggregatesInput | ItemScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Item"> | string
-    campaignId?: StringNullableWithAggregatesFilter<"Item"> | string | null
     name?: StringWithAggregatesFilter<"Item"> | string
     type?: StringWithAggregatesFilter<"Item"> | string
     rarity?: StringWithAggregatesFilter<"Item"> | string
@@ -6471,6 +9990,183 @@ export namespace Prisma {
     history?: StringNullableWithAggregatesFilter<"Item"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Item"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Item"> | Date | string
+  }
+
+  export type CampaignCityWhereInput = {
+    AND?: CampaignCityWhereInput | CampaignCityWhereInput[]
+    OR?: CampaignCityWhereInput[]
+    NOT?: CampaignCityWhereInput | CampaignCityWhereInput[]
+    id?: StringFilter<"CampaignCity"> | string
+    campaignId?: StringFilter<"CampaignCity"> | string
+    cityId?: StringFilter<"CampaignCity"> | string
+    createdAt?: DateTimeFilter<"CampaignCity"> | Date | string
+    updatedAt?: DateTimeFilter<"CampaignCity"> | Date | string
+    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+    city?: XOR<CityScalarRelationFilter, CityWhereInput>
+  }
+
+  export type CampaignCityOrderByWithRelationInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    cityId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    campaign?: CampaignOrderByWithRelationInput
+    city?: CityOrderByWithRelationInput
+  }
+
+  export type CampaignCityWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    campaignId_cityId?: CampaignCityCampaignIdCityIdCompoundUniqueInput
+    AND?: CampaignCityWhereInput | CampaignCityWhereInput[]
+    OR?: CampaignCityWhereInput[]
+    NOT?: CampaignCityWhereInput | CampaignCityWhereInput[]
+    campaignId?: StringFilter<"CampaignCity"> | string
+    cityId?: StringFilter<"CampaignCity"> | string
+    createdAt?: DateTimeFilter<"CampaignCity"> | Date | string
+    updatedAt?: DateTimeFilter<"CampaignCity"> | Date | string
+    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+    city?: XOR<CityScalarRelationFilter, CityWhereInput>
+  }, "id" | "campaignId_cityId">
+
+  export type CampaignCityOrderByWithAggregationInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    cityId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CampaignCityCountOrderByAggregateInput
+    _max?: CampaignCityMaxOrderByAggregateInput
+    _min?: CampaignCityMinOrderByAggregateInput
+  }
+
+  export type CampaignCityScalarWhereWithAggregatesInput = {
+    AND?: CampaignCityScalarWhereWithAggregatesInput | CampaignCityScalarWhereWithAggregatesInput[]
+    OR?: CampaignCityScalarWhereWithAggregatesInput[]
+    NOT?: CampaignCityScalarWhereWithAggregatesInput | CampaignCityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CampaignCity"> | string
+    campaignId?: StringWithAggregatesFilter<"CampaignCity"> | string
+    cityId?: StringWithAggregatesFilter<"CampaignCity"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CampaignCity"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CampaignCity"> | Date | string
+  }
+
+  export type CampaignNPCWhereInput = {
+    AND?: CampaignNPCWhereInput | CampaignNPCWhereInput[]
+    OR?: CampaignNPCWhereInput[]
+    NOT?: CampaignNPCWhereInput | CampaignNPCWhereInput[]
+    id?: StringFilter<"CampaignNPC"> | string
+    campaignId?: StringFilter<"CampaignNPC"> | string
+    npcId?: StringFilter<"CampaignNPC"> | string
+    createdAt?: DateTimeFilter<"CampaignNPC"> | Date | string
+    updatedAt?: DateTimeFilter<"CampaignNPC"> | Date | string
+    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+    npc?: XOR<NPCScalarRelationFilter, NPCWhereInput>
+  }
+
+  export type CampaignNPCOrderByWithRelationInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    npcId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    campaign?: CampaignOrderByWithRelationInput
+    npc?: NPCOrderByWithRelationInput
+  }
+
+  export type CampaignNPCWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    campaignId_npcId?: CampaignNPCCampaignIdNpcIdCompoundUniqueInput
+    AND?: CampaignNPCWhereInput | CampaignNPCWhereInput[]
+    OR?: CampaignNPCWhereInput[]
+    NOT?: CampaignNPCWhereInput | CampaignNPCWhereInput[]
+    campaignId?: StringFilter<"CampaignNPC"> | string
+    npcId?: StringFilter<"CampaignNPC"> | string
+    createdAt?: DateTimeFilter<"CampaignNPC"> | Date | string
+    updatedAt?: DateTimeFilter<"CampaignNPC"> | Date | string
+    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+    npc?: XOR<NPCScalarRelationFilter, NPCWhereInput>
+  }, "id" | "campaignId_npcId">
+
+  export type CampaignNPCOrderByWithAggregationInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    npcId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CampaignNPCCountOrderByAggregateInput
+    _max?: CampaignNPCMaxOrderByAggregateInput
+    _min?: CampaignNPCMinOrderByAggregateInput
+  }
+
+  export type CampaignNPCScalarWhereWithAggregatesInput = {
+    AND?: CampaignNPCScalarWhereWithAggregatesInput | CampaignNPCScalarWhereWithAggregatesInput[]
+    OR?: CampaignNPCScalarWhereWithAggregatesInput[]
+    NOT?: CampaignNPCScalarWhereWithAggregatesInput | CampaignNPCScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CampaignNPC"> | string
+    campaignId?: StringWithAggregatesFilter<"CampaignNPC"> | string
+    npcId?: StringWithAggregatesFilter<"CampaignNPC"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CampaignNPC"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CampaignNPC"> | Date | string
+  }
+
+  export type CampaignItemWhereInput = {
+    AND?: CampaignItemWhereInput | CampaignItemWhereInput[]
+    OR?: CampaignItemWhereInput[]
+    NOT?: CampaignItemWhereInput | CampaignItemWhereInput[]
+    id?: StringFilter<"CampaignItem"> | string
+    campaignId?: StringFilter<"CampaignItem"> | string
+    itemId?: StringFilter<"CampaignItem"> | string
+    createdAt?: DateTimeFilter<"CampaignItem"> | Date | string
+    updatedAt?: DateTimeFilter<"CampaignItem"> | Date | string
+    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+    item?: XOR<ItemScalarRelationFilter, ItemWhereInput>
+  }
+
+  export type CampaignItemOrderByWithRelationInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    itemId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    campaign?: CampaignOrderByWithRelationInput
+    item?: ItemOrderByWithRelationInput
+  }
+
+  export type CampaignItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    campaignId_itemId?: CampaignItemCampaignIdItemIdCompoundUniqueInput
+    AND?: CampaignItemWhereInput | CampaignItemWhereInput[]
+    OR?: CampaignItemWhereInput[]
+    NOT?: CampaignItemWhereInput | CampaignItemWhereInput[]
+    campaignId?: StringFilter<"CampaignItem"> | string
+    itemId?: StringFilter<"CampaignItem"> | string
+    createdAt?: DateTimeFilter<"CampaignItem"> | Date | string
+    updatedAt?: DateTimeFilter<"CampaignItem"> | Date | string
+    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+    item?: XOR<ItemScalarRelationFilter, ItemWhereInput>
+  }, "id" | "campaignId_itemId">
+
+  export type CampaignItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    itemId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CampaignItemCountOrderByAggregateInput
+    _max?: CampaignItemMaxOrderByAggregateInput
+    _min?: CampaignItemMinOrderByAggregateInput
+  }
+
+  export type CampaignItemScalarWhereWithAggregatesInput = {
+    AND?: CampaignItemScalarWhereWithAggregatesInput | CampaignItemScalarWhereWithAggregatesInput[]
+    OR?: CampaignItemScalarWhereWithAggregatesInput[]
+    NOT?: CampaignItemScalarWhereWithAggregatesInput | CampaignItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CampaignItem"> | string
+    campaignId?: StringWithAggregatesFilter<"CampaignItem"> | string
+    itemId?: StringWithAggregatesFilter<"CampaignItem"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CampaignItem"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CampaignItem"> | Date | string
   }
 
   export type CampaignCreateInput = {
@@ -6489,9 +10185,9 @@ export namespace Prisma {
     majorConflictsThreats?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    npcs?: NPCCreateNestedManyWithoutCampaignInput
-    cities?: CityCreateNestedManyWithoutCampaignInput
-    items?: ItemCreateNestedManyWithoutCampaignInput
+    cities?: CampaignCityCreateNestedManyWithoutCampaignInput
+    npcs?: CampaignNPCCreateNestedManyWithoutCampaignInput
+    items?: CampaignItemCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignUncheckedCreateInput = {
@@ -6510,9 +10206,9 @@ export namespace Prisma {
     majorConflictsThreats?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    npcs?: NPCUncheckedCreateNestedManyWithoutCampaignInput
-    cities?: CityUncheckedCreateNestedManyWithoutCampaignInput
-    items?: ItemUncheckedCreateNestedManyWithoutCampaignInput
+    cities?: CampaignCityUncheckedCreateNestedManyWithoutCampaignInput
+    npcs?: CampaignNPCUncheckedCreateNestedManyWithoutCampaignInput
+    items?: CampaignItemUncheckedCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignUpdateInput = {
@@ -6531,9 +10227,9 @@ export namespace Prisma {
     majorConflictsThreats?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    npcs?: NPCUpdateManyWithoutCampaignNestedInput
-    cities?: CityUpdateManyWithoutCampaignNestedInput
-    items?: ItemUpdateManyWithoutCampaignNestedInput
+    cities?: CampaignCityUpdateManyWithoutCampaignNestedInput
+    npcs?: CampaignNPCUpdateManyWithoutCampaignNestedInput
+    items?: CampaignItemUpdateManyWithoutCampaignNestedInput
   }
 
   export type CampaignUncheckedUpdateInput = {
@@ -6552,9 +10248,9 @@ export namespace Prisma {
     majorConflictsThreats?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    npcs?: NPCUncheckedUpdateManyWithoutCampaignNestedInput
-    cities?: CityUncheckedUpdateManyWithoutCampaignNestedInput
-    items?: ItemUncheckedUpdateManyWithoutCampaignNestedInput
+    cities?: CampaignCityUncheckedUpdateManyWithoutCampaignNestedInput
+    npcs?: CampaignNPCUncheckedUpdateManyWithoutCampaignNestedInput
+    items?: CampaignItemUncheckedUpdateManyWithoutCampaignNestedInput
   }
 
   export type CampaignCreateManyInput = {
@@ -6623,12 +10319,11 @@ export namespace Prisma {
     goals: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    campaign?: CampaignCreateNestedOneWithoutNpcsInput
+    campaigns?: CampaignNPCCreateNestedManyWithoutNpcInput
   }
 
   export type NPCUncheckedCreateInput = {
     id?: string
-    campaignId?: string | null
     name: string
     race: string
     class?: string | null
@@ -6639,6 +10334,7 @@ export namespace Prisma {
     goals: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    campaigns?: CampaignNPCUncheckedCreateNestedManyWithoutNpcInput
   }
 
   export type NPCUpdateInput = {
@@ -6653,12 +10349,11 @@ export namespace Prisma {
     goals?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    campaign?: CampaignUpdateOneWithoutNpcsNestedInput
+    campaigns?: CampaignNPCUpdateManyWithoutNpcNestedInput
   }
 
   export type NPCUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     race?: StringFieldUpdateOperationsInput | string
     class?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6669,11 +10364,11 @@ export namespace Prisma {
     goals?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaigns?: CampaignNPCUncheckedUpdateManyWithoutNpcNestedInput
   }
 
   export type NPCCreateManyInput = {
     id?: string
-    campaignId?: string | null
     name: string
     race: string
     class?: string | null
@@ -6702,7 +10397,6 @@ export namespace Prisma {
 
   export type NPCUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     race?: StringFieldUpdateOperationsInput | string
     class?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6727,12 +10421,11 @@ export namespace Prisma {
     history: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    campaign?: CampaignCreateNestedOneWithoutCitiesInput
+    campaigns?: CampaignCityCreateNestedManyWithoutCityInput
   }
 
   export type CityUncheckedCreateInput = {
     id?: string
-    campaignId?: string | null
     name: string
     size: string
     population: string
@@ -6743,6 +10436,7 @@ export namespace Prisma {
     history: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    campaigns?: CampaignCityUncheckedCreateNestedManyWithoutCityInput
   }
 
   export type CityUpdateInput = {
@@ -6757,12 +10451,11 @@ export namespace Prisma {
     history?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    campaign?: CampaignUpdateOneWithoutCitiesNestedInput
+    campaigns?: CampaignCityUpdateManyWithoutCityNestedInput
   }
 
   export type CityUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     population?: StringFieldUpdateOperationsInput | string
@@ -6773,11 +10466,11 @@ export namespace Prisma {
     history?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaigns?: CampaignCityUncheckedUpdateManyWithoutCityNestedInput
   }
 
   export type CityCreateManyInput = {
     id?: string
-    campaignId?: string | null
     name: string
     size: string
     population: string
@@ -6806,7 +10499,6 @@ export namespace Prisma {
 
   export type CityUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     population?: StringFieldUpdateOperationsInput | string
@@ -6829,12 +10521,11 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    campaign?: CampaignCreateNestedOneWithoutItemsInput
+    campaigns?: CampaignItemCreateNestedManyWithoutItemInput
   }
 
   export type ItemUncheckedCreateInput = {
     id?: string
-    campaignId?: string | null
     name: string
     type: string
     rarity: string
@@ -6843,6 +10534,7 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    campaigns?: CampaignItemUncheckedCreateNestedManyWithoutItemInput
   }
 
   export type ItemUpdateInput = {
@@ -6855,12 +10547,11 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    campaign?: CampaignUpdateOneWithoutItemsNestedInput
+    campaigns?: CampaignItemUpdateManyWithoutItemNestedInput
   }
 
   export type ItemUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     rarity?: StringFieldUpdateOperationsInput | string
@@ -6869,11 +10560,11 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaigns?: CampaignItemUncheckedUpdateManyWithoutItemNestedInput
   }
 
   export type ItemCreateManyInput = {
     id?: string
-    campaignId?: string | null
     name: string
     type: string
     rarity: string
@@ -6898,13 +10589,174 @@ export namespace Prisma {
 
   export type ItemUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     rarity?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     properties?: JsonNullValueInput | InputJsonValue
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignCityCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    campaign: CampaignCreateNestedOneWithoutCitiesInput
+    city: CityCreateNestedOneWithoutCampaignsInput
+  }
+
+  export type CampaignCityUncheckedCreateInput = {
+    id?: string
+    campaignId: string
+    cityId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignCityUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaign?: CampaignUpdateOneRequiredWithoutCitiesNestedInput
+    city?: CityUpdateOneRequiredWithoutCampaignsNestedInput
+  }
+
+  export type CampaignCityUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campaignId?: StringFieldUpdateOperationsInput | string
+    cityId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignCityCreateManyInput = {
+    id?: string
+    campaignId: string
+    cityId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignCityUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignCityUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campaignId?: StringFieldUpdateOperationsInput | string
+    cityId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignNPCCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    campaign: CampaignCreateNestedOneWithoutNpcsInput
+    npc: NPCCreateNestedOneWithoutCampaignsInput
+  }
+
+  export type CampaignNPCUncheckedCreateInput = {
+    id?: string
+    campaignId: string
+    npcId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignNPCUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaign?: CampaignUpdateOneRequiredWithoutNpcsNestedInput
+    npc?: NPCUpdateOneRequiredWithoutCampaignsNestedInput
+  }
+
+  export type CampaignNPCUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campaignId?: StringFieldUpdateOperationsInput | string
+    npcId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignNPCCreateManyInput = {
+    id?: string
+    campaignId: string
+    npcId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignNPCUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignNPCUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campaignId?: StringFieldUpdateOperationsInput | string
+    npcId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignItemCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    campaign: CampaignCreateNestedOneWithoutItemsInput
+    item: ItemCreateNestedOneWithoutCampaignsInput
+  }
+
+  export type CampaignItemUncheckedCreateInput = {
+    id?: string
+    campaignId: string
+    itemId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignItemUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaign?: CampaignUpdateOneRequiredWithoutItemsNestedInput
+    item?: ItemUpdateOneRequiredWithoutCampaignsNestedInput
+  }
+
+  export type CampaignItemUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campaignId?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignItemCreateManyInput = {
+    id?: string
+    campaignId: string
+    itemId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignItemUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignItemUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campaignId?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6978,22 +10830,22 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type NPCListRelationFilter = {
-    every?: NPCWhereInput
-    some?: NPCWhereInput
-    none?: NPCWhereInput
+  export type CampaignCityListRelationFilter = {
+    every?: CampaignCityWhereInput
+    some?: CampaignCityWhereInput
+    none?: CampaignCityWhereInput
   }
 
-  export type CityListRelationFilter = {
-    every?: CityWhereInput
-    some?: CityWhereInput
-    none?: CityWhereInput
+  export type CampaignNPCListRelationFilter = {
+    every?: CampaignNPCWhereInput
+    some?: CampaignNPCWhereInput
+    none?: CampaignNPCWhereInput
   }
 
-  export type ItemListRelationFilter = {
-    every?: ItemWhereInput
-    some?: ItemWhereInput
-    none?: ItemWhereInput
+  export type CampaignItemListRelationFilter = {
+    every?: CampaignItemWhereInput
+    some?: CampaignItemWhereInput
+    none?: CampaignItemWhereInput
   }
 
   export type SortOrderInput = {
@@ -7001,15 +10853,15 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type NPCOrderByRelationAggregateInput = {
+  export type CampaignCityOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type CityOrderByRelationAggregateInput = {
+  export type CampaignNPCOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type ItemOrderByRelationAggregateInput = {
+  export type CampaignItemOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -7147,14 +10999,8 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type CampaignNullableScalarRelationFilter = {
-    is?: CampaignWhereInput | null
-    isNot?: CampaignWhereInput | null
-  }
-
   export type NPCCountOrderByAggregateInput = {
     id?: SortOrder
-    campaignId?: SortOrder
     name?: SortOrder
     race?: SortOrder
     class?: SortOrder
@@ -7169,7 +11015,6 @@ export namespace Prisma {
 
   export type NPCMaxOrderByAggregateInput = {
     id?: SortOrder
-    campaignId?: SortOrder
     name?: SortOrder
     race?: SortOrder
     class?: SortOrder
@@ -7183,7 +11028,6 @@ export namespace Prisma {
 
   export type NPCMinOrderByAggregateInput = {
     id?: SortOrder
-    campaignId?: SortOrder
     name?: SortOrder
     race?: SortOrder
     class?: SortOrder
@@ -7197,7 +11041,6 @@ export namespace Prisma {
 
   export type CityCountOrderByAggregateInput = {
     id?: SortOrder
-    campaignId?: SortOrder
     name?: SortOrder
     size?: SortOrder
     population?: SortOrder
@@ -7212,7 +11055,6 @@ export namespace Prisma {
 
   export type CityMaxOrderByAggregateInput = {
     id?: SortOrder
-    campaignId?: SortOrder
     name?: SortOrder
     size?: SortOrder
     population?: SortOrder
@@ -7226,7 +11068,6 @@ export namespace Prisma {
 
   export type CityMinOrderByAggregateInput = {
     id?: SortOrder
-    campaignId?: SortOrder
     name?: SortOrder
     size?: SortOrder
     population?: SortOrder
@@ -7240,7 +11081,6 @@ export namespace Prisma {
 
   export type ItemCountOrderByAggregateInput = {
     id?: SortOrder
-    campaignId?: SortOrder
     name?: SortOrder
     type?: SortOrder
     rarity?: SortOrder
@@ -7253,7 +11093,6 @@ export namespace Prisma {
 
   export type ItemMaxOrderByAggregateInput = {
     id?: SortOrder
-    campaignId?: SortOrder
     name?: SortOrder
     type?: SortOrder
     rarity?: SortOrder
@@ -7265,7 +11104,6 @@ export namespace Prisma {
 
   export type ItemMinOrderByAggregateInput = {
     id?: SortOrder
-    campaignId?: SortOrder
     name?: SortOrder
     type?: SortOrder
     rarity?: SortOrder
@@ -7275,46 +11113,153 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type NPCCreateNestedManyWithoutCampaignInput = {
-    create?: XOR<NPCCreateWithoutCampaignInput, NPCUncheckedCreateWithoutCampaignInput> | NPCCreateWithoutCampaignInput[] | NPCUncheckedCreateWithoutCampaignInput[]
-    connectOrCreate?: NPCCreateOrConnectWithoutCampaignInput | NPCCreateOrConnectWithoutCampaignInput[]
-    createMany?: NPCCreateManyCampaignInputEnvelope
-    connect?: NPCWhereUniqueInput | NPCWhereUniqueInput[]
+  export type CampaignScalarRelationFilter = {
+    is?: CampaignWhereInput
+    isNot?: CampaignWhereInput
   }
 
-  export type CityCreateNestedManyWithoutCampaignInput = {
-    create?: XOR<CityCreateWithoutCampaignInput, CityUncheckedCreateWithoutCampaignInput> | CityCreateWithoutCampaignInput[] | CityUncheckedCreateWithoutCampaignInput[]
-    connectOrCreate?: CityCreateOrConnectWithoutCampaignInput | CityCreateOrConnectWithoutCampaignInput[]
-    createMany?: CityCreateManyCampaignInputEnvelope
-    connect?: CityWhereUniqueInput | CityWhereUniqueInput[]
+  export type CityScalarRelationFilter = {
+    is?: CityWhereInput
+    isNot?: CityWhereInput
   }
 
-  export type ItemCreateNestedManyWithoutCampaignInput = {
-    create?: XOR<ItemCreateWithoutCampaignInput, ItemUncheckedCreateWithoutCampaignInput> | ItemCreateWithoutCampaignInput[] | ItemUncheckedCreateWithoutCampaignInput[]
-    connectOrCreate?: ItemCreateOrConnectWithoutCampaignInput | ItemCreateOrConnectWithoutCampaignInput[]
-    createMany?: ItemCreateManyCampaignInputEnvelope
-    connect?: ItemWhereUniqueInput | ItemWhereUniqueInput[]
+  export type CampaignCityCampaignIdCityIdCompoundUniqueInput = {
+    campaignId: string
+    cityId: string
   }
 
-  export type NPCUncheckedCreateNestedManyWithoutCampaignInput = {
-    create?: XOR<NPCCreateWithoutCampaignInput, NPCUncheckedCreateWithoutCampaignInput> | NPCCreateWithoutCampaignInput[] | NPCUncheckedCreateWithoutCampaignInput[]
-    connectOrCreate?: NPCCreateOrConnectWithoutCampaignInput | NPCCreateOrConnectWithoutCampaignInput[]
-    createMany?: NPCCreateManyCampaignInputEnvelope
-    connect?: NPCWhereUniqueInput | NPCWhereUniqueInput[]
+  export type CampaignCityCountOrderByAggregateInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    cityId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type CityUncheckedCreateNestedManyWithoutCampaignInput = {
-    create?: XOR<CityCreateWithoutCampaignInput, CityUncheckedCreateWithoutCampaignInput> | CityCreateWithoutCampaignInput[] | CityUncheckedCreateWithoutCampaignInput[]
-    connectOrCreate?: CityCreateOrConnectWithoutCampaignInput | CityCreateOrConnectWithoutCampaignInput[]
-    createMany?: CityCreateManyCampaignInputEnvelope
-    connect?: CityWhereUniqueInput | CityWhereUniqueInput[]
+  export type CampaignCityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    cityId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type ItemUncheckedCreateNestedManyWithoutCampaignInput = {
-    create?: XOR<ItemCreateWithoutCampaignInput, ItemUncheckedCreateWithoutCampaignInput> | ItemCreateWithoutCampaignInput[] | ItemUncheckedCreateWithoutCampaignInput[]
-    connectOrCreate?: ItemCreateOrConnectWithoutCampaignInput | ItemCreateOrConnectWithoutCampaignInput[]
-    createMany?: ItemCreateManyCampaignInputEnvelope
-    connect?: ItemWhereUniqueInput | ItemWhereUniqueInput[]
+  export type CampaignCityMinOrderByAggregateInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    cityId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type NPCScalarRelationFilter = {
+    is?: NPCWhereInput
+    isNot?: NPCWhereInput
+  }
+
+  export type CampaignNPCCampaignIdNpcIdCompoundUniqueInput = {
+    campaignId: string
+    npcId: string
+  }
+
+  export type CampaignNPCCountOrderByAggregateInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    npcId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CampaignNPCMaxOrderByAggregateInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    npcId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CampaignNPCMinOrderByAggregateInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    npcId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ItemScalarRelationFilter = {
+    is?: ItemWhereInput
+    isNot?: ItemWhereInput
+  }
+
+  export type CampaignItemCampaignIdItemIdCompoundUniqueInput = {
+    campaignId: string
+    itemId: string
+  }
+
+  export type CampaignItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    itemId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CampaignItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    itemId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CampaignItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    campaignId?: SortOrder
+    itemId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CampaignCityCreateNestedManyWithoutCampaignInput = {
+    create?: XOR<CampaignCityCreateWithoutCampaignInput, CampaignCityUncheckedCreateWithoutCampaignInput> | CampaignCityCreateWithoutCampaignInput[] | CampaignCityUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignCityCreateOrConnectWithoutCampaignInput | CampaignCityCreateOrConnectWithoutCampaignInput[]
+    createMany?: CampaignCityCreateManyCampaignInputEnvelope
+    connect?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+  }
+
+  export type CampaignNPCCreateNestedManyWithoutCampaignInput = {
+    create?: XOR<CampaignNPCCreateWithoutCampaignInput, CampaignNPCUncheckedCreateWithoutCampaignInput> | CampaignNPCCreateWithoutCampaignInput[] | CampaignNPCUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignNPCCreateOrConnectWithoutCampaignInput | CampaignNPCCreateOrConnectWithoutCampaignInput[]
+    createMany?: CampaignNPCCreateManyCampaignInputEnvelope
+    connect?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+  }
+
+  export type CampaignItemCreateNestedManyWithoutCampaignInput = {
+    create?: XOR<CampaignItemCreateWithoutCampaignInput, CampaignItemUncheckedCreateWithoutCampaignInput> | CampaignItemCreateWithoutCampaignInput[] | CampaignItemUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignItemCreateOrConnectWithoutCampaignInput | CampaignItemCreateOrConnectWithoutCampaignInput[]
+    createMany?: CampaignItemCreateManyCampaignInputEnvelope
+    connect?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+  }
+
+  export type CampaignCityUncheckedCreateNestedManyWithoutCampaignInput = {
+    create?: XOR<CampaignCityCreateWithoutCampaignInput, CampaignCityUncheckedCreateWithoutCampaignInput> | CampaignCityCreateWithoutCampaignInput[] | CampaignCityUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignCityCreateOrConnectWithoutCampaignInput | CampaignCityCreateOrConnectWithoutCampaignInput[]
+    createMany?: CampaignCityCreateManyCampaignInputEnvelope
+    connect?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+  }
+
+  export type CampaignNPCUncheckedCreateNestedManyWithoutCampaignInput = {
+    create?: XOR<CampaignNPCCreateWithoutCampaignInput, CampaignNPCUncheckedCreateWithoutCampaignInput> | CampaignNPCCreateWithoutCampaignInput[] | CampaignNPCUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignNPCCreateOrConnectWithoutCampaignInput | CampaignNPCCreateOrConnectWithoutCampaignInput[]
+    createMany?: CampaignNPCCreateManyCampaignInputEnvelope
+    connect?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+  }
+
+  export type CampaignItemUncheckedCreateNestedManyWithoutCampaignInput = {
+    create?: XOR<CampaignItemCreateWithoutCampaignInput, CampaignItemUncheckedCreateWithoutCampaignInput> | CampaignItemCreateWithoutCampaignInput[] | CampaignItemUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignItemCreateOrConnectWithoutCampaignInput | CampaignItemCreateOrConnectWithoutCampaignInput[]
+    createMany?: CampaignItemCreateManyCampaignInputEnvelope
+    connect?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -7333,104 +11278,214 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type NPCUpdateManyWithoutCampaignNestedInput = {
-    create?: XOR<NPCCreateWithoutCampaignInput, NPCUncheckedCreateWithoutCampaignInput> | NPCCreateWithoutCampaignInput[] | NPCUncheckedCreateWithoutCampaignInput[]
-    connectOrCreate?: NPCCreateOrConnectWithoutCampaignInput | NPCCreateOrConnectWithoutCampaignInput[]
-    upsert?: NPCUpsertWithWhereUniqueWithoutCampaignInput | NPCUpsertWithWhereUniqueWithoutCampaignInput[]
-    createMany?: NPCCreateManyCampaignInputEnvelope
-    set?: NPCWhereUniqueInput | NPCWhereUniqueInput[]
-    disconnect?: NPCWhereUniqueInput | NPCWhereUniqueInput[]
-    delete?: NPCWhereUniqueInput | NPCWhereUniqueInput[]
-    connect?: NPCWhereUniqueInput | NPCWhereUniqueInput[]
-    update?: NPCUpdateWithWhereUniqueWithoutCampaignInput | NPCUpdateWithWhereUniqueWithoutCampaignInput[]
-    updateMany?: NPCUpdateManyWithWhereWithoutCampaignInput | NPCUpdateManyWithWhereWithoutCampaignInput[]
-    deleteMany?: NPCScalarWhereInput | NPCScalarWhereInput[]
+  export type CampaignCityUpdateManyWithoutCampaignNestedInput = {
+    create?: XOR<CampaignCityCreateWithoutCampaignInput, CampaignCityUncheckedCreateWithoutCampaignInput> | CampaignCityCreateWithoutCampaignInput[] | CampaignCityUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignCityCreateOrConnectWithoutCampaignInput | CampaignCityCreateOrConnectWithoutCampaignInput[]
+    upsert?: CampaignCityUpsertWithWhereUniqueWithoutCampaignInput | CampaignCityUpsertWithWhereUniqueWithoutCampaignInput[]
+    createMany?: CampaignCityCreateManyCampaignInputEnvelope
+    set?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    disconnect?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    delete?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    connect?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    update?: CampaignCityUpdateWithWhereUniqueWithoutCampaignInput | CampaignCityUpdateWithWhereUniqueWithoutCampaignInput[]
+    updateMany?: CampaignCityUpdateManyWithWhereWithoutCampaignInput | CampaignCityUpdateManyWithWhereWithoutCampaignInput[]
+    deleteMany?: CampaignCityScalarWhereInput | CampaignCityScalarWhereInput[]
   }
 
-  export type CityUpdateManyWithoutCampaignNestedInput = {
-    create?: XOR<CityCreateWithoutCampaignInput, CityUncheckedCreateWithoutCampaignInput> | CityCreateWithoutCampaignInput[] | CityUncheckedCreateWithoutCampaignInput[]
-    connectOrCreate?: CityCreateOrConnectWithoutCampaignInput | CityCreateOrConnectWithoutCampaignInput[]
-    upsert?: CityUpsertWithWhereUniqueWithoutCampaignInput | CityUpsertWithWhereUniqueWithoutCampaignInput[]
-    createMany?: CityCreateManyCampaignInputEnvelope
-    set?: CityWhereUniqueInput | CityWhereUniqueInput[]
-    disconnect?: CityWhereUniqueInput | CityWhereUniqueInput[]
-    delete?: CityWhereUniqueInput | CityWhereUniqueInput[]
-    connect?: CityWhereUniqueInput | CityWhereUniqueInput[]
-    update?: CityUpdateWithWhereUniqueWithoutCampaignInput | CityUpdateWithWhereUniqueWithoutCampaignInput[]
-    updateMany?: CityUpdateManyWithWhereWithoutCampaignInput | CityUpdateManyWithWhereWithoutCampaignInput[]
-    deleteMany?: CityScalarWhereInput | CityScalarWhereInput[]
+  export type CampaignNPCUpdateManyWithoutCampaignNestedInput = {
+    create?: XOR<CampaignNPCCreateWithoutCampaignInput, CampaignNPCUncheckedCreateWithoutCampaignInput> | CampaignNPCCreateWithoutCampaignInput[] | CampaignNPCUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignNPCCreateOrConnectWithoutCampaignInput | CampaignNPCCreateOrConnectWithoutCampaignInput[]
+    upsert?: CampaignNPCUpsertWithWhereUniqueWithoutCampaignInput | CampaignNPCUpsertWithWhereUniqueWithoutCampaignInput[]
+    createMany?: CampaignNPCCreateManyCampaignInputEnvelope
+    set?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    disconnect?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    delete?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    connect?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    update?: CampaignNPCUpdateWithWhereUniqueWithoutCampaignInput | CampaignNPCUpdateWithWhereUniqueWithoutCampaignInput[]
+    updateMany?: CampaignNPCUpdateManyWithWhereWithoutCampaignInput | CampaignNPCUpdateManyWithWhereWithoutCampaignInput[]
+    deleteMany?: CampaignNPCScalarWhereInput | CampaignNPCScalarWhereInput[]
   }
 
-  export type ItemUpdateManyWithoutCampaignNestedInput = {
-    create?: XOR<ItemCreateWithoutCampaignInput, ItemUncheckedCreateWithoutCampaignInput> | ItemCreateWithoutCampaignInput[] | ItemUncheckedCreateWithoutCampaignInput[]
-    connectOrCreate?: ItemCreateOrConnectWithoutCampaignInput | ItemCreateOrConnectWithoutCampaignInput[]
-    upsert?: ItemUpsertWithWhereUniqueWithoutCampaignInput | ItemUpsertWithWhereUniqueWithoutCampaignInput[]
-    createMany?: ItemCreateManyCampaignInputEnvelope
-    set?: ItemWhereUniqueInput | ItemWhereUniqueInput[]
-    disconnect?: ItemWhereUniqueInput | ItemWhereUniqueInput[]
-    delete?: ItemWhereUniqueInput | ItemWhereUniqueInput[]
-    connect?: ItemWhereUniqueInput | ItemWhereUniqueInput[]
-    update?: ItemUpdateWithWhereUniqueWithoutCampaignInput | ItemUpdateWithWhereUniqueWithoutCampaignInput[]
-    updateMany?: ItemUpdateManyWithWhereWithoutCampaignInput | ItemUpdateManyWithWhereWithoutCampaignInput[]
-    deleteMany?: ItemScalarWhereInput | ItemScalarWhereInput[]
+  export type CampaignItemUpdateManyWithoutCampaignNestedInput = {
+    create?: XOR<CampaignItemCreateWithoutCampaignInput, CampaignItemUncheckedCreateWithoutCampaignInput> | CampaignItemCreateWithoutCampaignInput[] | CampaignItemUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignItemCreateOrConnectWithoutCampaignInput | CampaignItemCreateOrConnectWithoutCampaignInput[]
+    upsert?: CampaignItemUpsertWithWhereUniqueWithoutCampaignInput | CampaignItemUpsertWithWhereUniqueWithoutCampaignInput[]
+    createMany?: CampaignItemCreateManyCampaignInputEnvelope
+    set?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    disconnect?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    delete?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    connect?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    update?: CampaignItemUpdateWithWhereUniqueWithoutCampaignInput | CampaignItemUpdateWithWhereUniqueWithoutCampaignInput[]
+    updateMany?: CampaignItemUpdateManyWithWhereWithoutCampaignInput | CampaignItemUpdateManyWithWhereWithoutCampaignInput[]
+    deleteMany?: CampaignItemScalarWhereInput | CampaignItemScalarWhereInput[]
   }
 
-  export type NPCUncheckedUpdateManyWithoutCampaignNestedInput = {
-    create?: XOR<NPCCreateWithoutCampaignInput, NPCUncheckedCreateWithoutCampaignInput> | NPCCreateWithoutCampaignInput[] | NPCUncheckedCreateWithoutCampaignInput[]
-    connectOrCreate?: NPCCreateOrConnectWithoutCampaignInput | NPCCreateOrConnectWithoutCampaignInput[]
-    upsert?: NPCUpsertWithWhereUniqueWithoutCampaignInput | NPCUpsertWithWhereUniqueWithoutCampaignInput[]
-    createMany?: NPCCreateManyCampaignInputEnvelope
-    set?: NPCWhereUniqueInput | NPCWhereUniqueInput[]
-    disconnect?: NPCWhereUniqueInput | NPCWhereUniqueInput[]
-    delete?: NPCWhereUniqueInput | NPCWhereUniqueInput[]
-    connect?: NPCWhereUniqueInput | NPCWhereUniqueInput[]
-    update?: NPCUpdateWithWhereUniqueWithoutCampaignInput | NPCUpdateWithWhereUniqueWithoutCampaignInput[]
-    updateMany?: NPCUpdateManyWithWhereWithoutCampaignInput | NPCUpdateManyWithWhereWithoutCampaignInput[]
-    deleteMany?: NPCScalarWhereInput | NPCScalarWhereInput[]
+  export type CampaignCityUncheckedUpdateManyWithoutCampaignNestedInput = {
+    create?: XOR<CampaignCityCreateWithoutCampaignInput, CampaignCityUncheckedCreateWithoutCampaignInput> | CampaignCityCreateWithoutCampaignInput[] | CampaignCityUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignCityCreateOrConnectWithoutCampaignInput | CampaignCityCreateOrConnectWithoutCampaignInput[]
+    upsert?: CampaignCityUpsertWithWhereUniqueWithoutCampaignInput | CampaignCityUpsertWithWhereUniqueWithoutCampaignInput[]
+    createMany?: CampaignCityCreateManyCampaignInputEnvelope
+    set?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    disconnect?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    delete?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    connect?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    update?: CampaignCityUpdateWithWhereUniqueWithoutCampaignInput | CampaignCityUpdateWithWhereUniqueWithoutCampaignInput[]
+    updateMany?: CampaignCityUpdateManyWithWhereWithoutCampaignInput | CampaignCityUpdateManyWithWhereWithoutCampaignInput[]
+    deleteMany?: CampaignCityScalarWhereInput | CampaignCityScalarWhereInput[]
   }
 
-  export type CityUncheckedUpdateManyWithoutCampaignNestedInput = {
-    create?: XOR<CityCreateWithoutCampaignInput, CityUncheckedCreateWithoutCampaignInput> | CityCreateWithoutCampaignInput[] | CityUncheckedCreateWithoutCampaignInput[]
-    connectOrCreate?: CityCreateOrConnectWithoutCampaignInput | CityCreateOrConnectWithoutCampaignInput[]
-    upsert?: CityUpsertWithWhereUniqueWithoutCampaignInput | CityUpsertWithWhereUniqueWithoutCampaignInput[]
-    createMany?: CityCreateManyCampaignInputEnvelope
-    set?: CityWhereUniqueInput | CityWhereUniqueInput[]
-    disconnect?: CityWhereUniqueInput | CityWhereUniqueInput[]
-    delete?: CityWhereUniqueInput | CityWhereUniqueInput[]
-    connect?: CityWhereUniqueInput | CityWhereUniqueInput[]
-    update?: CityUpdateWithWhereUniqueWithoutCampaignInput | CityUpdateWithWhereUniqueWithoutCampaignInput[]
-    updateMany?: CityUpdateManyWithWhereWithoutCampaignInput | CityUpdateManyWithWhereWithoutCampaignInput[]
-    deleteMany?: CityScalarWhereInput | CityScalarWhereInput[]
+  export type CampaignNPCUncheckedUpdateManyWithoutCampaignNestedInput = {
+    create?: XOR<CampaignNPCCreateWithoutCampaignInput, CampaignNPCUncheckedCreateWithoutCampaignInput> | CampaignNPCCreateWithoutCampaignInput[] | CampaignNPCUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignNPCCreateOrConnectWithoutCampaignInput | CampaignNPCCreateOrConnectWithoutCampaignInput[]
+    upsert?: CampaignNPCUpsertWithWhereUniqueWithoutCampaignInput | CampaignNPCUpsertWithWhereUniqueWithoutCampaignInput[]
+    createMany?: CampaignNPCCreateManyCampaignInputEnvelope
+    set?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    disconnect?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    delete?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    connect?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    update?: CampaignNPCUpdateWithWhereUniqueWithoutCampaignInput | CampaignNPCUpdateWithWhereUniqueWithoutCampaignInput[]
+    updateMany?: CampaignNPCUpdateManyWithWhereWithoutCampaignInput | CampaignNPCUpdateManyWithWhereWithoutCampaignInput[]
+    deleteMany?: CampaignNPCScalarWhereInput | CampaignNPCScalarWhereInput[]
   }
 
-  export type ItemUncheckedUpdateManyWithoutCampaignNestedInput = {
-    create?: XOR<ItemCreateWithoutCampaignInput, ItemUncheckedCreateWithoutCampaignInput> | ItemCreateWithoutCampaignInput[] | ItemUncheckedCreateWithoutCampaignInput[]
-    connectOrCreate?: ItemCreateOrConnectWithoutCampaignInput | ItemCreateOrConnectWithoutCampaignInput[]
-    upsert?: ItemUpsertWithWhereUniqueWithoutCampaignInput | ItemUpsertWithWhereUniqueWithoutCampaignInput[]
-    createMany?: ItemCreateManyCampaignInputEnvelope
-    set?: ItemWhereUniqueInput | ItemWhereUniqueInput[]
-    disconnect?: ItemWhereUniqueInput | ItemWhereUniqueInput[]
-    delete?: ItemWhereUniqueInput | ItemWhereUniqueInput[]
-    connect?: ItemWhereUniqueInput | ItemWhereUniqueInput[]
-    update?: ItemUpdateWithWhereUniqueWithoutCampaignInput | ItemUpdateWithWhereUniqueWithoutCampaignInput[]
-    updateMany?: ItemUpdateManyWithWhereWithoutCampaignInput | ItemUpdateManyWithWhereWithoutCampaignInput[]
-    deleteMany?: ItemScalarWhereInput | ItemScalarWhereInput[]
+  export type CampaignItemUncheckedUpdateManyWithoutCampaignNestedInput = {
+    create?: XOR<CampaignItemCreateWithoutCampaignInput, CampaignItemUncheckedCreateWithoutCampaignInput> | CampaignItemCreateWithoutCampaignInput[] | CampaignItemUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignItemCreateOrConnectWithoutCampaignInput | CampaignItemCreateOrConnectWithoutCampaignInput[]
+    upsert?: CampaignItemUpsertWithWhereUniqueWithoutCampaignInput | CampaignItemUpsertWithWhereUniqueWithoutCampaignInput[]
+    createMany?: CampaignItemCreateManyCampaignInputEnvelope
+    set?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    disconnect?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    delete?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    connect?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    update?: CampaignItemUpdateWithWhereUniqueWithoutCampaignInput | CampaignItemUpdateWithWhereUniqueWithoutCampaignInput[]
+    updateMany?: CampaignItemUpdateManyWithWhereWithoutCampaignInput | CampaignItemUpdateManyWithWhereWithoutCampaignInput[]
+    deleteMany?: CampaignItemScalarWhereInput | CampaignItemScalarWhereInput[]
   }
 
-  export type CampaignCreateNestedOneWithoutNpcsInput = {
-    create?: XOR<CampaignCreateWithoutNpcsInput, CampaignUncheckedCreateWithoutNpcsInput>
-    connectOrCreate?: CampaignCreateOrConnectWithoutNpcsInput
-    connect?: CampaignWhereUniqueInput
+  export type CampaignNPCCreateNestedManyWithoutNpcInput = {
+    create?: XOR<CampaignNPCCreateWithoutNpcInput, CampaignNPCUncheckedCreateWithoutNpcInput> | CampaignNPCCreateWithoutNpcInput[] | CampaignNPCUncheckedCreateWithoutNpcInput[]
+    connectOrCreate?: CampaignNPCCreateOrConnectWithoutNpcInput | CampaignNPCCreateOrConnectWithoutNpcInput[]
+    createMany?: CampaignNPCCreateManyNpcInputEnvelope
+    connect?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
   }
 
-  export type CampaignUpdateOneWithoutNpcsNestedInput = {
-    create?: XOR<CampaignCreateWithoutNpcsInput, CampaignUncheckedCreateWithoutNpcsInput>
-    connectOrCreate?: CampaignCreateOrConnectWithoutNpcsInput
-    upsert?: CampaignUpsertWithoutNpcsInput
-    disconnect?: CampaignWhereInput | boolean
-    delete?: CampaignWhereInput | boolean
-    connect?: CampaignWhereUniqueInput
-    update?: XOR<XOR<CampaignUpdateToOneWithWhereWithoutNpcsInput, CampaignUpdateWithoutNpcsInput>, CampaignUncheckedUpdateWithoutNpcsInput>
+  export type CampaignNPCUncheckedCreateNestedManyWithoutNpcInput = {
+    create?: XOR<CampaignNPCCreateWithoutNpcInput, CampaignNPCUncheckedCreateWithoutNpcInput> | CampaignNPCCreateWithoutNpcInput[] | CampaignNPCUncheckedCreateWithoutNpcInput[]
+    connectOrCreate?: CampaignNPCCreateOrConnectWithoutNpcInput | CampaignNPCCreateOrConnectWithoutNpcInput[]
+    createMany?: CampaignNPCCreateManyNpcInputEnvelope
+    connect?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+  }
+
+  export type CampaignNPCUpdateManyWithoutNpcNestedInput = {
+    create?: XOR<CampaignNPCCreateWithoutNpcInput, CampaignNPCUncheckedCreateWithoutNpcInput> | CampaignNPCCreateWithoutNpcInput[] | CampaignNPCUncheckedCreateWithoutNpcInput[]
+    connectOrCreate?: CampaignNPCCreateOrConnectWithoutNpcInput | CampaignNPCCreateOrConnectWithoutNpcInput[]
+    upsert?: CampaignNPCUpsertWithWhereUniqueWithoutNpcInput | CampaignNPCUpsertWithWhereUniqueWithoutNpcInput[]
+    createMany?: CampaignNPCCreateManyNpcInputEnvelope
+    set?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    disconnect?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    delete?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    connect?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    update?: CampaignNPCUpdateWithWhereUniqueWithoutNpcInput | CampaignNPCUpdateWithWhereUniqueWithoutNpcInput[]
+    updateMany?: CampaignNPCUpdateManyWithWhereWithoutNpcInput | CampaignNPCUpdateManyWithWhereWithoutNpcInput[]
+    deleteMany?: CampaignNPCScalarWhereInput | CampaignNPCScalarWhereInput[]
+  }
+
+  export type CampaignNPCUncheckedUpdateManyWithoutNpcNestedInput = {
+    create?: XOR<CampaignNPCCreateWithoutNpcInput, CampaignNPCUncheckedCreateWithoutNpcInput> | CampaignNPCCreateWithoutNpcInput[] | CampaignNPCUncheckedCreateWithoutNpcInput[]
+    connectOrCreate?: CampaignNPCCreateOrConnectWithoutNpcInput | CampaignNPCCreateOrConnectWithoutNpcInput[]
+    upsert?: CampaignNPCUpsertWithWhereUniqueWithoutNpcInput | CampaignNPCUpsertWithWhereUniqueWithoutNpcInput[]
+    createMany?: CampaignNPCCreateManyNpcInputEnvelope
+    set?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    disconnect?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    delete?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    connect?: CampaignNPCWhereUniqueInput | CampaignNPCWhereUniqueInput[]
+    update?: CampaignNPCUpdateWithWhereUniqueWithoutNpcInput | CampaignNPCUpdateWithWhereUniqueWithoutNpcInput[]
+    updateMany?: CampaignNPCUpdateManyWithWhereWithoutNpcInput | CampaignNPCUpdateManyWithWhereWithoutNpcInput[]
+    deleteMany?: CampaignNPCScalarWhereInput | CampaignNPCScalarWhereInput[]
+  }
+
+  export type CampaignCityCreateNestedManyWithoutCityInput = {
+    create?: XOR<CampaignCityCreateWithoutCityInput, CampaignCityUncheckedCreateWithoutCityInput> | CampaignCityCreateWithoutCityInput[] | CampaignCityUncheckedCreateWithoutCityInput[]
+    connectOrCreate?: CampaignCityCreateOrConnectWithoutCityInput | CampaignCityCreateOrConnectWithoutCityInput[]
+    createMany?: CampaignCityCreateManyCityInputEnvelope
+    connect?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+  }
+
+  export type CampaignCityUncheckedCreateNestedManyWithoutCityInput = {
+    create?: XOR<CampaignCityCreateWithoutCityInput, CampaignCityUncheckedCreateWithoutCityInput> | CampaignCityCreateWithoutCityInput[] | CampaignCityUncheckedCreateWithoutCityInput[]
+    connectOrCreate?: CampaignCityCreateOrConnectWithoutCityInput | CampaignCityCreateOrConnectWithoutCityInput[]
+    createMany?: CampaignCityCreateManyCityInputEnvelope
+    connect?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+  }
+
+  export type CampaignCityUpdateManyWithoutCityNestedInput = {
+    create?: XOR<CampaignCityCreateWithoutCityInput, CampaignCityUncheckedCreateWithoutCityInput> | CampaignCityCreateWithoutCityInput[] | CampaignCityUncheckedCreateWithoutCityInput[]
+    connectOrCreate?: CampaignCityCreateOrConnectWithoutCityInput | CampaignCityCreateOrConnectWithoutCityInput[]
+    upsert?: CampaignCityUpsertWithWhereUniqueWithoutCityInput | CampaignCityUpsertWithWhereUniqueWithoutCityInput[]
+    createMany?: CampaignCityCreateManyCityInputEnvelope
+    set?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    disconnect?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    delete?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    connect?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    update?: CampaignCityUpdateWithWhereUniqueWithoutCityInput | CampaignCityUpdateWithWhereUniqueWithoutCityInput[]
+    updateMany?: CampaignCityUpdateManyWithWhereWithoutCityInput | CampaignCityUpdateManyWithWhereWithoutCityInput[]
+    deleteMany?: CampaignCityScalarWhereInput | CampaignCityScalarWhereInput[]
+  }
+
+  export type CampaignCityUncheckedUpdateManyWithoutCityNestedInput = {
+    create?: XOR<CampaignCityCreateWithoutCityInput, CampaignCityUncheckedCreateWithoutCityInput> | CampaignCityCreateWithoutCityInput[] | CampaignCityUncheckedCreateWithoutCityInput[]
+    connectOrCreate?: CampaignCityCreateOrConnectWithoutCityInput | CampaignCityCreateOrConnectWithoutCityInput[]
+    upsert?: CampaignCityUpsertWithWhereUniqueWithoutCityInput | CampaignCityUpsertWithWhereUniqueWithoutCityInput[]
+    createMany?: CampaignCityCreateManyCityInputEnvelope
+    set?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    disconnect?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    delete?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    connect?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
+    update?: CampaignCityUpdateWithWhereUniqueWithoutCityInput | CampaignCityUpdateWithWhereUniqueWithoutCityInput[]
+    updateMany?: CampaignCityUpdateManyWithWhereWithoutCityInput | CampaignCityUpdateManyWithWhereWithoutCityInput[]
+    deleteMany?: CampaignCityScalarWhereInput | CampaignCityScalarWhereInput[]
+  }
+
+  export type CampaignItemCreateNestedManyWithoutItemInput = {
+    create?: XOR<CampaignItemCreateWithoutItemInput, CampaignItemUncheckedCreateWithoutItemInput> | CampaignItemCreateWithoutItemInput[] | CampaignItemUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: CampaignItemCreateOrConnectWithoutItemInput | CampaignItemCreateOrConnectWithoutItemInput[]
+    createMany?: CampaignItemCreateManyItemInputEnvelope
+    connect?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+  }
+
+  export type CampaignItemUncheckedCreateNestedManyWithoutItemInput = {
+    create?: XOR<CampaignItemCreateWithoutItemInput, CampaignItemUncheckedCreateWithoutItemInput> | CampaignItemCreateWithoutItemInput[] | CampaignItemUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: CampaignItemCreateOrConnectWithoutItemInput | CampaignItemCreateOrConnectWithoutItemInput[]
+    createMany?: CampaignItemCreateManyItemInputEnvelope
+    connect?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+  }
+
+  export type CampaignItemUpdateManyWithoutItemNestedInput = {
+    create?: XOR<CampaignItemCreateWithoutItemInput, CampaignItemUncheckedCreateWithoutItemInput> | CampaignItemCreateWithoutItemInput[] | CampaignItemUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: CampaignItemCreateOrConnectWithoutItemInput | CampaignItemCreateOrConnectWithoutItemInput[]
+    upsert?: CampaignItemUpsertWithWhereUniqueWithoutItemInput | CampaignItemUpsertWithWhereUniqueWithoutItemInput[]
+    createMany?: CampaignItemCreateManyItemInputEnvelope
+    set?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    disconnect?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    delete?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    connect?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    update?: CampaignItemUpdateWithWhereUniqueWithoutItemInput | CampaignItemUpdateWithWhereUniqueWithoutItemInput[]
+    updateMany?: CampaignItemUpdateManyWithWhereWithoutItemInput | CampaignItemUpdateManyWithWhereWithoutItemInput[]
+    deleteMany?: CampaignItemScalarWhereInput | CampaignItemScalarWhereInput[]
+  }
+
+  export type CampaignItemUncheckedUpdateManyWithoutItemNestedInput = {
+    create?: XOR<CampaignItemCreateWithoutItemInput, CampaignItemUncheckedCreateWithoutItemInput> | CampaignItemCreateWithoutItemInput[] | CampaignItemUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: CampaignItemCreateOrConnectWithoutItemInput | CampaignItemCreateOrConnectWithoutItemInput[]
+    upsert?: CampaignItemUpsertWithWhereUniqueWithoutItemInput | CampaignItemUpsertWithWhereUniqueWithoutItemInput[]
+    createMany?: CampaignItemCreateManyItemInputEnvelope
+    set?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    disconnect?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    delete?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    connect?: CampaignItemWhereUniqueInput | CampaignItemWhereUniqueInput[]
+    update?: CampaignItemUpdateWithWhereUniqueWithoutItemInput | CampaignItemUpdateWithWhereUniqueWithoutItemInput[]
+    updateMany?: CampaignItemUpdateManyWithWhereWithoutItemInput | CampaignItemUpdateManyWithWhereWithoutItemInput[]
+    deleteMany?: CampaignItemScalarWhereInput | CampaignItemScalarWhereInput[]
   }
 
   export type CampaignCreateNestedOneWithoutCitiesInput = {
@@ -7439,14 +11494,54 @@ export namespace Prisma {
     connect?: CampaignWhereUniqueInput
   }
 
-  export type CampaignUpdateOneWithoutCitiesNestedInput = {
+  export type CityCreateNestedOneWithoutCampaignsInput = {
+    create?: XOR<CityCreateWithoutCampaignsInput, CityUncheckedCreateWithoutCampaignsInput>
+    connectOrCreate?: CityCreateOrConnectWithoutCampaignsInput
+    connect?: CityWhereUniqueInput
+  }
+
+  export type CampaignUpdateOneRequiredWithoutCitiesNestedInput = {
     create?: XOR<CampaignCreateWithoutCitiesInput, CampaignUncheckedCreateWithoutCitiesInput>
     connectOrCreate?: CampaignCreateOrConnectWithoutCitiesInput
     upsert?: CampaignUpsertWithoutCitiesInput
-    disconnect?: CampaignWhereInput | boolean
-    delete?: CampaignWhereInput | boolean
     connect?: CampaignWhereUniqueInput
     update?: XOR<XOR<CampaignUpdateToOneWithWhereWithoutCitiesInput, CampaignUpdateWithoutCitiesInput>, CampaignUncheckedUpdateWithoutCitiesInput>
+  }
+
+  export type CityUpdateOneRequiredWithoutCampaignsNestedInput = {
+    create?: XOR<CityCreateWithoutCampaignsInput, CityUncheckedCreateWithoutCampaignsInput>
+    connectOrCreate?: CityCreateOrConnectWithoutCampaignsInput
+    upsert?: CityUpsertWithoutCampaignsInput
+    connect?: CityWhereUniqueInput
+    update?: XOR<XOR<CityUpdateToOneWithWhereWithoutCampaignsInput, CityUpdateWithoutCampaignsInput>, CityUncheckedUpdateWithoutCampaignsInput>
+  }
+
+  export type CampaignCreateNestedOneWithoutNpcsInput = {
+    create?: XOR<CampaignCreateWithoutNpcsInput, CampaignUncheckedCreateWithoutNpcsInput>
+    connectOrCreate?: CampaignCreateOrConnectWithoutNpcsInput
+    connect?: CampaignWhereUniqueInput
+  }
+
+  export type NPCCreateNestedOneWithoutCampaignsInput = {
+    create?: XOR<NPCCreateWithoutCampaignsInput, NPCUncheckedCreateWithoutCampaignsInput>
+    connectOrCreate?: NPCCreateOrConnectWithoutCampaignsInput
+    connect?: NPCWhereUniqueInput
+  }
+
+  export type CampaignUpdateOneRequiredWithoutNpcsNestedInput = {
+    create?: XOR<CampaignCreateWithoutNpcsInput, CampaignUncheckedCreateWithoutNpcsInput>
+    connectOrCreate?: CampaignCreateOrConnectWithoutNpcsInput
+    upsert?: CampaignUpsertWithoutNpcsInput
+    connect?: CampaignWhereUniqueInput
+    update?: XOR<XOR<CampaignUpdateToOneWithWhereWithoutNpcsInput, CampaignUpdateWithoutNpcsInput>, CampaignUncheckedUpdateWithoutNpcsInput>
+  }
+
+  export type NPCUpdateOneRequiredWithoutCampaignsNestedInput = {
+    create?: XOR<NPCCreateWithoutCampaignsInput, NPCUncheckedCreateWithoutCampaignsInput>
+    connectOrCreate?: NPCCreateOrConnectWithoutCampaignsInput
+    upsert?: NPCUpsertWithoutCampaignsInput
+    connect?: NPCWhereUniqueInput
+    update?: XOR<XOR<NPCUpdateToOneWithWhereWithoutCampaignsInput, NPCUpdateWithoutCampaignsInput>, NPCUncheckedUpdateWithoutCampaignsInput>
   }
 
   export type CampaignCreateNestedOneWithoutItemsInput = {
@@ -7455,14 +11550,26 @@ export namespace Prisma {
     connect?: CampaignWhereUniqueInput
   }
 
-  export type CampaignUpdateOneWithoutItemsNestedInput = {
+  export type ItemCreateNestedOneWithoutCampaignsInput = {
+    create?: XOR<ItemCreateWithoutCampaignsInput, ItemUncheckedCreateWithoutCampaignsInput>
+    connectOrCreate?: ItemCreateOrConnectWithoutCampaignsInput
+    connect?: ItemWhereUniqueInput
+  }
+
+  export type CampaignUpdateOneRequiredWithoutItemsNestedInput = {
     create?: XOR<CampaignCreateWithoutItemsInput, CampaignUncheckedCreateWithoutItemsInput>
     connectOrCreate?: CampaignCreateOrConnectWithoutItemsInput
     upsert?: CampaignUpsertWithoutItemsInput
-    disconnect?: CampaignWhereInput | boolean
-    delete?: CampaignWhereInput | boolean
     connect?: CampaignWhereUniqueInput
     update?: XOR<XOR<CampaignUpdateToOneWithWhereWithoutItemsInput, CampaignUpdateWithoutItemsInput>, CampaignUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type ItemUpdateOneRequiredWithoutCampaignsNestedInput = {
+    create?: XOR<ItemCreateWithoutCampaignsInput, ItemUncheckedCreateWithoutCampaignsInput>
+    connectOrCreate?: ItemCreateOrConnectWithoutCampaignsInput
+    upsert?: ItemUpsertWithoutCampaignsInput
+    connect?: ItemWhereUniqueInput
+    update?: XOR<XOR<ItemUpdateToOneWithWhereWithoutCampaignsInput, ItemUpdateWithoutCampaignsInput>, ItemUncheckedUpdateWithoutCampaignsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7610,310 +11717,277 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NPCCreateWithoutCampaignInput = {
+  export type CampaignCityCreateWithoutCampaignInput = {
     id?: string
-    name: string
-    race: string
-    class?: string | null
-    alignment: string
-    description: string
-    background: string
-    personality: string
-    goals: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    city: CityCreateNestedOneWithoutCampaignsInput
+  }
+
+  export type CampaignCityUncheckedCreateWithoutCampaignInput = {
+    id?: string
+    cityId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type NPCUncheckedCreateWithoutCampaignInput = {
-    id?: string
-    name: string
-    race: string
-    class?: string | null
-    alignment: string
-    description: string
-    background: string
-    personality: string
-    goals: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type CampaignCityCreateOrConnectWithoutCampaignInput = {
+    where: CampaignCityWhereUniqueInput
+    create: XOR<CampaignCityCreateWithoutCampaignInput, CampaignCityUncheckedCreateWithoutCampaignInput>
   }
 
-  export type NPCCreateOrConnectWithoutCampaignInput = {
-    where: NPCWhereUniqueInput
-    create: XOR<NPCCreateWithoutCampaignInput, NPCUncheckedCreateWithoutCampaignInput>
-  }
-
-  export type NPCCreateManyCampaignInputEnvelope = {
-    data: NPCCreateManyCampaignInput | NPCCreateManyCampaignInput[]
+  export type CampaignCityCreateManyCampaignInputEnvelope = {
+    data: CampaignCityCreateManyCampaignInput | CampaignCityCreateManyCampaignInput[]
     skipDuplicates?: boolean
   }
 
-  export type CityCreateWithoutCampaignInput = {
+  export type CampaignNPCCreateWithoutCampaignInput = {
     id?: string
-    name: string
-    size: string
-    population: string
-    government: string
-    economy: string
-    notableLocations: JsonNullValueInput | InputJsonValue
-    description: string
-    history: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    npc: NPCCreateNestedOneWithoutCampaignsInput
+  }
+
+  export type CampaignNPCUncheckedCreateWithoutCampaignInput = {
+    id?: string
+    npcId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type CityUncheckedCreateWithoutCampaignInput = {
-    id?: string
-    name: string
-    size: string
-    population: string
-    government: string
-    economy: string
-    notableLocations: JsonNullValueInput | InputJsonValue
-    description: string
-    history: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type CampaignNPCCreateOrConnectWithoutCampaignInput = {
+    where: CampaignNPCWhereUniqueInput
+    create: XOR<CampaignNPCCreateWithoutCampaignInput, CampaignNPCUncheckedCreateWithoutCampaignInput>
   }
 
-  export type CityCreateOrConnectWithoutCampaignInput = {
-    where: CityWhereUniqueInput
-    create: XOR<CityCreateWithoutCampaignInput, CityUncheckedCreateWithoutCampaignInput>
-  }
-
-  export type CityCreateManyCampaignInputEnvelope = {
-    data: CityCreateManyCampaignInput | CityCreateManyCampaignInput[]
+  export type CampaignNPCCreateManyCampaignInputEnvelope = {
+    data: CampaignNPCCreateManyCampaignInput | CampaignNPCCreateManyCampaignInput[]
     skipDuplicates?: boolean
   }
 
-  export type ItemCreateWithoutCampaignInput = {
+  export type CampaignItemCreateWithoutCampaignInput = {
     id?: string
-    name: string
-    type: string
-    rarity: string
-    description: string
-    properties: JsonNullValueInput | InputJsonValue
-    history?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    item: ItemCreateNestedOneWithoutCampaignsInput
+  }
+
+  export type CampaignItemUncheckedCreateWithoutCampaignInput = {
+    id?: string
+    itemId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type ItemUncheckedCreateWithoutCampaignInput = {
-    id?: string
-    name: string
-    type: string
-    rarity: string
-    description: string
-    properties: JsonNullValueInput | InputJsonValue
-    history?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type CampaignItemCreateOrConnectWithoutCampaignInput = {
+    where: CampaignItemWhereUniqueInput
+    create: XOR<CampaignItemCreateWithoutCampaignInput, CampaignItemUncheckedCreateWithoutCampaignInput>
   }
 
-  export type ItemCreateOrConnectWithoutCampaignInput = {
-    where: ItemWhereUniqueInput
-    create: XOR<ItemCreateWithoutCampaignInput, ItemUncheckedCreateWithoutCampaignInput>
-  }
-
-  export type ItemCreateManyCampaignInputEnvelope = {
-    data: ItemCreateManyCampaignInput | ItemCreateManyCampaignInput[]
+  export type CampaignItemCreateManyCampaignInputEnvelope = {
+    data: CampaignItemCreateManyCampaignInput | CampaignItemCreateManyCampaignInput[]
     skipDuplicates?: boolean
   }
 
-  export type NPCUpsertWithWhereUniqueWithoutCampaignInput = {
-    where: NPCWhereUniqueInput
-    update: XOR<NPCUpdateWithoutCampaignInput, NPCUncheckedUpdateWithoutCampaignInput>
-    create: XOR<NPCCreateWithoutCampaignInput, NPCUncheckedCreateWithoutCampaignInput>
+  export type CampaignCityUpsertWithWhereUniqueWithoutCampaignInput = {
+    where: CampaignCityWhereUniqueInput
+    update: XOR<CampaignCityUpdateWithoutCampaignInput, CampaignCityUncheckedUpdateWithoutCampaignInput>
+    create: XOR<CampaignCityCreateWithoutCampaignInput, CampaignCityUncheckedCreateWithoutCampaignInput>
   }
 
-  export type NPCUpdateWithWhereUniqueWithoutCampaignInput = {
-    where: NPCWhereUniqueInput
-    data: XOR<NPCUpdateWithoutCampaignInput, NPCUncheckedUpdateWithoutCampaignInput>
+  export type CampaignCityUpdateWithWhereUniqueWithoutCampaignInput = {
+    where: CampaignCityWhereUniqueInput
+    data: XOR<CampaignCityUpdateWithoutCampaignInput, CampaignCityUncheckedUpdateWithoutCampaignInput>
   }
 
-  export type NPCUpdateManyWithWhereWithoutCampaignInput = {
-    where: NPCScalarWhereInput
-    data: XOR<NPCUpdateManyMutationInput, NPCUncheckedUpdateManyWithoutCampaignInput>
+  export type CampaignCityUpdateManyWithWhereWithoutCampaignInput = {
+    where: CampaignCityScalarWhereInput
+    data: XOR<CampaignCityUpdateManyMutationInput, CampaignCityUncheckedUpdateManyWithoutCampaignInput>
   }
 
-  export type NPCScalarWhereInput = {
-    AND?: NPCScalarWhereInput | NPCScalarWhereInput[]
-    OR?: NPCScalarWhereInput[]
-    NOT?: NPCScalarWhereInput | NPCScalarWhereInput[]
-    id?: StringFilter<"NPC"> | string
-    campaignId?: StringNullableFilter<"NPC"> | string | null
-    name?: StringFilter<"NPC"> | string
-    race?: StringFilter<"NPC"> | string
-    class?: StringNullableFilter<"NPC"> | string | null
-    alignment?: StringFilter<"NPC"> | string
-    description?: StringFilter<"NPC"> | string
-    background?: StringFilter<"NPC"> | string
-    personality?: StringFilter<"NPC"> | string
-    goals?: JsonFilter<"NPC">
-    createdAt?: DateTimeFilter<"NPC"> | Date | string
-    updatedAt?: DateTimeFilter<"NPC"> | Date | string
+  export type CampaignCityScalarWhereInput = {
+    AND?: CampaignCityScalarWhereInput | CampaignCityScalarWhereInput[]
+    OR?: CampaignCityScalarWhereInput[]
+    NOT?: CampaignCityScalarWhereInput | CampaignCityScalarWhereInput[]
+    id?: StringFilter<"CampaignCity"> | string
+    campaignId?: StringFilter<"CampaignCity"> | string
+    cityId?: StringFilter<"CampaignCity"> | string
+    createdAt?: DateTimeFilter<"CampaignCity"> | Date | string
+    updatedAt?: DateTimeFilter<"CampaignCity"> | Date | string
   }
 
-  export type CityUpsertWithWhereUniqueWithoutCampaignInput = {
-    where: CityWhereUniqueInput
-    update: XOR<CityUpdateWithoutCampaignInput, CityUncheckedUpdateWithoutCampaignInput>
-    create: XOR<CityCreateWithoutCampaignInput, CityUncheckedCreateWithoutCampaignInput>
+  export type CampaignNPCUpsertWithWhereUniqueWithoutCampaignInput = {
+    where: CampaignNPCWhereUniqueInput
+    update: XOR<CampaignNPCUpdateWithoutCampaignInput, CampaignNPCUncheckedUpdateWithoutCampaignInput>
+    create: XOR<CampaignNPCCreateWithoutCampaignInput, CampaignNPCUncheckedCreateWithoutCampaignInput>
   }
 
-  export type CityUpdateWithWhereUniqueWithoutCampaignInput = {
-    where: CityWhereUniqueInput
-    data: XOR<CityUpdateWithoutCampaignInput, CityUncheckedUpdateWithoutCampaignInput>
+  export type CampaignNPCUpdateWithWhereUniqueWithoutCampaignInput = {
+    where: CampaignNPCWhereUniqueInput
+    data: XOR<CampaignNPCUpdateWithoutCampaignInput, CampaignNPCUncheckedUpdateWithoutCampaignInput>
   }
 
-  export type CityUpdateManyWithWhereWithoutCampaignInput = {
-    where: CityScalarWhereInput
-    data: XOR<CityUpdateManyMutationInput, CityUncheckedUpdateManyWithoutCampaignInput>
+  export type CampaignNPCUpdateManyWithWhereWithoutCampaignInput = {
+    where: CampaignNPCScalarWhereInput
+    data: XOR<CampaignNPCUpdateManyMutationInput, CampaignNPCUncheckedUpdateManyWithoutCampaignInput>
   }
 
-  export type CityScalarWhereInput = {
-    AND?: CityScalarWhereInput | CityScalarWhereInput[]
-    OR?: CityScalarWhereInput[]
-    NOT?: CityScalarWhereInput | CityScalarWhereInput[]
-    id?: StringFilter<"City"> | string
-    campaignId?: StringNullableFilter<"City"> | string | null
-    name?: StringFilter<"City"> | string
-    size?: StringFilter<"City"> | string
-    population?: StringFilter<"City"> | string
-    government?: StringFilter<"City"> | string
-    economy?: StringFilter<"City"> | string
-    notableLocations?: JsonFilter<"City">
-    description?: StringFilter<"City"> | string
-    history?: StringFilter<"City"> | string
-    createdAt?: DateTimeFilter<"City"> | Date | string
-    updatedAt?: DateTimeFilter<"City"> | Date | string
+  export type CampaignNPCScalarWhereInput = {
+    AND?: CampaignNPCScalarWhereInput | CampaignNPCScalarWhereInput[]
+    OR?: CampaignNPCScalarWhereInput[]
+    NOT?: CampaignNPCScalarWhereInput | CampaignNPCScalarWhereInput[]
+    id?: StringFilter<"CampaignNPC"> | string
+    campaignId?: StringFilter<"CampaignNPC"> | string
+    npcId?: StringFilter<"CampaignNPC"> | string
+    createdAt?: DateTimeFilter<"CampaignNPC"> | Date | string
+    updatedAt?: DateTimeFilter<"CampaignNPC"> | Date | string
   }
 
-  export type ItemUpsertWithWhereUniqueWithoutCampaignInput = {
-    where: ItemWhereUniqueInput
-    update: XOR<ItemUpdateWithoutCampaignInput, ItemUncheckedUpdateWithoutCampaignInput>
-    create: XOR<ItemCreateWithoutCampaignInput, ItemUncheckedCreateWithoutCampaignInput>
+  export type CampaignItemUpsertWithWhereUniqueWithoutCampaignInput = {
+    where: CampaignItemWhereUniqueInput
+    update: XOR<CampaignItemUpdateWithoutCampaignInput, CampaignItemUncheckedUpdateWithoutCampaignInput>
+    create: XOR<CampaignItemCreateWithoutCampaignInput, CampaignItemUncheckedCreateWithoutCampaignInput>
   }
 
-  export type ItemUpdateWithWhereUniqueWithoutCampaignInput = {
-    where: ItemWhereUniqueInput
-    data: XOR<ItemUpdateWithoutCampaignInput, ItemUncheckedUpdateWithoutCampaignInput>
+  export type CampaignItemUpdateWithWhereUniqueWithoutCampaignInput = {
+    where: CampaignItemWhereUniqueInput
+    data: XOR<CampaignItemUpdateWithoutCampaignInput, CampaignItemUncheckedUpdateWithoutCampaignInput>
   }
 
-  export type ItemUpdateManyWithWhereWithoutCampaignInput = {
-    where: ItemScalarWhereInput
-    data: XOR<ItemUpdateManyMutationInput, ItemUncheckedUpdateManyWithoutCampaignInput>
+  export type CampaignItemUpdateManyWithWhereWithoutCampaignInput = {
+    where: CampaignItemScalarWhereInput
+    data: XOR<CampaignItemUpdateManyMutationInput, CampaignItemUncheckedUpdateManyWithoutCampaignInput>
   }
 
-  export type ItemScalarWhereInput = {
-    AND?: ItemScalarWhereInput | ItemScalarWhereInput[]
-    OR?: ItemScalarWhereInput[]
-    NOT?: ItemScalarWhereInput | ItemScalarWhereInput[]
-    id?: StringFilter<"Item"> | string
-    campaignId?: StringNullableFilter<"Item"> | string | null
-    name?: StringFilter<"Item"> | string
-    type?: StringFilter<"Item"> | string
-    rarity?: StringFilter<"Item"> | string
-    description?: StringFilter<"Item"> | string
-    properties?: JsonFilter<"Item">
-    history?: StringNullableFilter<"Item"> | string | null
-    createdAt?: DateTimeFilter<"Item"> | Date | string
-    updatedAt?: DateTimeFilter<"Item"> | Date | string
+  export type CampaignItemScalarWhereInput = {
+    AND?: CampaignItemScalarWhereInput | CampaignItemScalarWhereInput[]
+    OR?: CampaignItemScalarWhereInput[]
+    NOT?: CampaignItemScalarWhereInput | CampaignItemScalarWhereInput[]
+    id?: StringFilter<"CampaignItem"> | string
+    campaignId?: StringFilter<"CampaignItem"> | string
+    itemId?: StringFilter<"CampaignItem"> | string
+    createdAt?: DateTimeFilter<"CampaignItem"> | Date | string
+    updatedAt?: DateTimeFilter<"CampaignItem"> | Date | string
   }
 
-  export type CampaignCreateWithoutNpcsInput = {
+  export type CampaignNPCCreateWithoutNpcInput = {
     id?: string
-    name: string
-    theme: string
-    tone: JsonNullValueInput | InputJsonValue
-    homebrewAllowed: boolean
-    magicCommonality?: string | null
-    geographicalScale?: string | null
-    civilizationState?: string | null
-    commonLandscapes: JsonNullValueInput | InputJsonValue
-    technologyLevel?: string | null
-    roleOfReligion?: string | null
-    religiousFiguresPerception?: string | null
-    majorConflictsThreats?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    cities?: CityCreateNestedManyWithoutCampaignInput
-    items?: ItemCreateNestedManyWithoutCampaignInput
+    campaign: CampaignCreateNestedOneWithoutNpcsInput
   }
 
-  export type CampaignUncheckedCreateWithoutNpcsInput = {
+  export type CampaignNPCUncheckedCreateWithoutNpcInput = {
     id?: string
-    name: string
-    theme: string
-    tone: JsonNullValueInput | InputJsonValue
-    homebrewAllowed: boolean
-    magicCommonality?: string | null
-    geographicalScale?: string | null
-    civilizationState?: string | null
-    commonLandscapes: JsonNullValueInput | InputJsonValue
-    technologyLevel?: string | null
-    roleOfReligion?: string | null
-    religiousFiguresPerception?: string | null
-    majorConflictsThreats?: string | null
+    campaignId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    cities?: CityUncheckedCreateNestedManyWithoutCampaignInput
-    items?: ItemUncheckedCreateNestedManyWithoutCampaignInput
   }
 
-  export type CampaignCreateOrConnectWithoutNpcsInput = {
-    where: CampaignWhereUniqueInput
-    create: XOR<CampaignCreateWithoutNpcsInput, CampaignUncheckedCreateWithoutNpcsInput>
+  export type CampaignNPCCreateOrConnectWithoutNpcInput = {
+    where: CampaignNPCWhereUniqueInput
+    create: XOR<CampaignNPCCreateWithoutNpcInput, CampaignNPCUncheckedCreateWithoutNpcInput>
   }
 
-  export type CampaignUpsertWithoutNpcsInput = {
-    update: XOR<CampaignUpdateWithoutNpcsInput, CampaignUncheckedUpdateWithoutNpcsInput>
-    create: XOR<CampaignCreateWithoutNpcsInput, CampaignUncheckedCreateWithoutNpcsInput>
-    where?: CampaignWhereInput
+  export type CampaignNPCCreateManyNpcInputEnvelope = {
+    data: CampaignNPCCreateManyNpcInput | CampaignNPCCreateManyNpcInput[]
+    skipDuplicates?: boolean
   }
 
-  export type CampaignUpdateToOneWithWhereWithoutNpcsInput = {
-    where?: CampaignWhereInput
-    data: XOR<CampaignUpdateWithoutNpcsInput, CampaignUncheckedUpdateWithoutNpcsInput>
+  export type CampaignNPCUpsertWithWhereUniqueWithoutNpcInput = {
+    where: CampaignNPCWhereUniqueInput
+    update: XOR<CampaignNPCUpdateWithoutNpcInput, CampaignNPCUncheckedUpdateWithoutNpcInput>
+    create: XOR<CampaignNPCCreateWithoutNpcInput, CampaignNPCUncheckedCreateWithoutNpcInput>
   }
 
-  export type CampaignUpdateWithoutNpcsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    theme?: StringFieldUpdateOperationsInput | string
-    tone?: JsonNullValueInput | InputJsonValue
-    homebrewAllowed?: BoolFieldUpdateOperationsInput | boolean
-    magicCommonality?: NullableStringFieldUpdateOperationsInput | string | null
-    geographicalScale?: NullableStringFieldUpdateOperationsInput | string | null
-    civilizationState?: NullableStringFieldUpdateOperationsInput | string | null
-    commonLandscapes?: JsonNullValueInput | InputJsonValue
-    technologyLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    roleOfReligion?: NullableStringFieldUpdateOperationsInput | string | null
-    religiousFiguresPerception?: NullableStringFieldUpdateOperationsInput | string | null
-    majorConflictsThreats?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cities?: CityUpdateManyWithoutCampaignNestedInput
-    items?: ItemUpdateManyWithoutCampaignNestedInput
+  export type CampaignNPCUpdateWithWhereUniqueWithoutNpcInput = {
+    where: CampaignNPCWhereUniqueInput
+    data: XOR<CampaignNPCUpdateWithoutNpcInput, CampaignNPCUncheckedUpdateWithoutNpcInput>
   }
 
-  export type CampaignUncheckedUpdateWithoutNpcsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    theme?: StringFieldUpdateOperationsInput | string
-    tone?: JsonNullValueInput | InputJsonValue
-    homebrewAllowed?: BoolFieldUpdateOperationsInput | boolean
-    magicCommonality?: NullableStringFieldUpdateOperationsInput | string | null
-    geographicalScale?: NullableStringFieldUpdateOperationsInput | string | null
-    civilizationState?: NullableStringFieldUpdateOperationsInput | string | null
-    commonLandscapes?: JsonNullValueInput | InputJsonValue
-    technologyLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    roleOfReligion?: NullableStringFieldUpdateOperationsInput | string | null
-    religiousFiguresPerception?: NullableStringFieldUpdateOperationsInput | string | null
-    majorConflictsThreats?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cities?: CityUncheckedUpdateManyWithoutCampaignNestedInput
-    items?: ItemUncheckedUpdateManyWithoutCampaignNestedInput
+  export type CampaignNPCUpdateManyWithWhereWithoutNpcInput = {
+    where: CampaignNPCScalarWhereInput
+    data: XOR<CampaignNPCUpdateManyMutationInput, CampaignNPCUncheckedUpdateManyWithoutNpcInput>
+  }
+
+  export type CampaignCityCreateWithoutCityInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    campaign: CampaignCreateNestedOneWithoutCitiesInput
+  }
+
+  export type CampaignCityUncheckedCreateWithoutCityInput = {
+    id?: string
+    campaignId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignCityCreateOrConnectWithoutCityInput = {
+    where: CampaignCityWhereUniqueInput
+    create: XOR<CampaignCityCreateWithoutCityInput, CampaignCityUncheckedCreateWithoutCityInput>
+  }
+
+  export type CampaignCityCreateManyCityInputEnvelope = {
+    data: CampaignCityCreateManyCityInput | CampaignCityCreateManyCityInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CampaignCityUpsertWithWhereUniqueWithoutCityInput = {
+    where: CampaignCityWhereUniqueInput
+    update: XOR<CampaignCityUpdateWithoutCityInput, CampaignCityUncheckedUpdateWithoutCityInput>
+    create: XOR<CampaignCityCreateWithoutCityInput, CampaignCityUncheckedCreateWithoutCityInput>
+  }
+
+  export type CampaignCityUpdateWithWhereUniqueWithoutCityInput = {
+    where: CampaignCityWhereUniqueInput
+    data: XOR<CampaignCityUpdateWithoutCityInput, CampaignCityUncheckedUpdateWithoutCityInput>
+  }
+
+  export type CampaignCityUpdateManyWithWhereWithoutCityInput = {
+    where: CampaignCityScalarWhereInput
+    data: XOR<CampaignCityUpdateManyMutationInput, CampaignCityUncheckedUpdateManyWithoutCityInput>
+  }
+
+  export type CampaignItemCreateWithoutItemInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    campaign: CampaignCreateNestedOneWithoutItemsInput
+  }
+
+  export type CampaignItemUncheckedCreateWithoutItemInput = {
+    id?: string
+    campaignId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignItemCreateOrConnectWithoutItemInput = {
+    where: CampaignItemWhereUniqueInput
+    create: XOR<CampaignItemCreateWithoutItemInput, CampaignItemUncheckedCreateWithoutItemInput>
+  }
+
+  export type CampaignItemCreateManyItemInputEnvelope = {
+    data: CampaignItemCreateManyItemInput | CampaignItemCreateManyItemInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CampaignItemUpsertWithWhereUniqueWithoutItemInput = {
+    where: CampaignItemWhereUniqueInput
+    update: XOR<CampaignItemUpdateWithoutItemInput, CampaignItemUncheckedUpdateWithoutItemInput>
+    create: XOR<CampaignItemCreateWithoutItemInput, CampaignItemUncheckedCreateWithoutItemInput>
+  }
+
+  export type CampaignItemUpdateWithWhereUniqueWithoutItemInput = {
+    where: CampaignItemWhereUniqueInput
+    data: XOR<CampaignItemUpdateWithoutItemInput, CampaignItemUncheckedUpdateWithoutItemInput>
+  }
+
+  export type CampaignItemUpdateManyWithWhereWithoutItemInput = {
+    where: CampaignItemScalarWhereInput
+    data: XOR<CampaignItemUpdateManyMutationInput, CampaignItemUncheckedUpdateManyWithoutItemInput>
   }
 
   export type CampaignCreateWithoutCitiesInput = {
@@ -7932,8 +12006,8 @@ export namespace Prisma {
     majorConflictsThreats?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    npcs?: NPCCreateNestedManyWithoutCampaignInput
-    items?: ItemCreateNestedManyWithoutCampaignInput
+    npcs?: CampaignNPCCreateNestedManyWithoutCampaignInput
+    items?: CampaignItemCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignUncheckedCreateWithoutCitiesInput = {
@@ -7952,13 +12026,46 @@ export namespace Prisma {
     majorConflictsThreats?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    npcs?: NPCUncheckedCreateNestedManyWithoutCampaignInput
-    items?: ItemUncheckedCreateNestedManyWithoutCampaignInput
+    npcs?: CampaignNPCUncheckedCreateNestedManyWithoutCampaignInput
+    items?: CampaignItemUncheckedCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignCreateOrConnectWithoutCitiesInput = {
     where: CampaignWhereUniqueInput
     create: XOR<CampaignCreateWithoutCitiesInput, CampaignUncheckedCreateWithoutCitiesInput>
+  }
+
+  export type CityCreateWithoutCampaignsInput = {
+    id?: string
+    name: string
+    size: string
+    population: string
+    government: string
+    economy: string
+    notableLocations: JsonNullValueInput | InputJsonValue
+    description: string
+    history: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CityUncheckedCreateWithoutCampaignsInput = {
+    id?: string
+    name: string
+    size: string
+    population: string
+    government: string
+    economy: string
+    notableLocations: JsonNullValueInput | InputJsonValue
+    description: string
+    history: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CityCreateOrConnectWithoutCampaignsInput = {
+    where: CityWhereUniqueInput
+    create: XOR<CityCreateWithoutCampaignsInput, CityUncheckedCreateWithoutCampaignsInput>
   }
 
   export type CampaignUpsertWithoutCitiesInput = {
@@ -7988,8 +12095,8 @@ export namespace Prisma {
     majorConflictsThreats?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    npcs?: NPCUpdateManyWithoutCampaignNestedInput
-    items?: ItemUpdateManyWithoutCampaignNestedInput
+    npcs?: CampaignNPCUpdateManyWithoutCampaignNestedInput
+    items?: CampaignItemUpdateManyWithoutCampaignNestedInput
   }
 
   export type CampaignUncheckedUpdateWithoutCitiesInput = {
@@ -8008,8 +12115,215 @@ export namespace Prisma {
     majorConflictsThreats?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    npcs?: NPCUncheckedUpdateManyWithoutCampaignNestedInput
-    items?: ItemUncheckedUpdateManyWithoutCampaignNestedInput
+    npcs?: CampaignNPCUncheckedUpdateManyWithoutCampaignNestedInput
+    items?: CampaignItemUncheckedUpdateManyWithoutCampaignNestedInput
+  }
+
+  export type CityUpsertWithoutCampaignsInput = {
+    update: XOR<CityUpdateWithoutCampaignsInput, CityUncheckedUpdateWithoutCampaignsInput>
+    create: XOR<CityCreateWithoutCampaignsInput, CityUncheckedCreateWithoutCampaignsInput>
+    where?: CityWhereInput
+  }
+
+  export type CityUpdateToOneWithWhereWithoutCampaignsInput = {
+    where?: CityWhereInput
+    data: XOR<CityUpdateWithoutCampaignsInput, CityUncheckedUpdateWithoutCampaignsInput>
+  }
+
+  export type CityUpdateWithoutCampaignsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    size?: StringFieldUpdateOperationsInput | string
+    population?: StringFieldUpdateOperationsInput | string
+    government?: StringFieldUpdateOperationsInput | string
+    economy?: StringFieldUpdateOperationsInput | string
+    notableLocations?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
+    history?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CityUncheckedUpdateWithoutCampaignsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    size?: StringFieldUpdateOperationsInput | string
+    population?: StringFieldUpdateOperationsInput | string
+    government?: StringFieldUpdateOperationsInput | string
+    economy?: StringFieldUpdateOperationsInput | string
+    notableLocations?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
+    history?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignCreateWithoutNpcsInput = {
+    id?: string
+    name: string
+    theme: string
+    tone: JsonNullValueInput | InputJsonValue
+    homebrewAllowed: boolean
+    magicCommonality?: string | null
+    geographicalScale?: string | null
+    civilizationState?: string | null
+    commonLandscapes: JsonNullValueInput | InputJsonValue
+    technologyLevel?: string | null
+    roleOfReligion?: string | null
+    religiousFiguresPerception?: string | null
+    majorConflictsThreats?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cities?: CampaignCityCreateNestedManyWithoutCampaignInput
+    items?: CampaignItemCreateNestedManyWithoutCampaignInput
+  }
+
+  export type CampaignUncheckedCreateWithoutNpcsInput = {
+    id?: string
+    name: string
+    theme: string
+    tone: JsonNullValueInput | InputJsonValue
+    homebrewAllowed: boolean
+    magicCommonality?: string | null
+    geographicalScale?: string | null
+    civilizationState?: string | null
+    commonLandscapes: JsonNullValueInput | InputJsonValue
+    technologyLevel?: string | null
+    roleOfReligion?: string | null
+    religiousFiguresPerception?: string | null
+    majorConflictsThreats?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cities?: CampaignCityUncheckedCreateNestedManyWithoutCampaignInput
+    items?: CampaignItemUncheckedCreateNestedManyWithoutCampaignInput
+  }
+
+  export type CampaignCreateOrConnectWithoutNpcsInput = {
+    where: CampaignWhereUniqueInput
+    create: XOR<CampaignCreateWithoutNpcsInput, CampaignUncheckedCreateWithoutNpcsInput>
+  }
+
+  export type NPCCreateWithoutCampaignsInput = {
+    id?: string
+    name: string
+    race: string
+    class?: string | null
+    alignment: string
+    description: string
+    background: string
+    personality: string
+    goals: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type NPCUncheckedCreateWithoutCampaignsInput = {
+    id?: string
+    name: string
+    race: string
+    class?: string | null
+    alignment: string
+    description: string
+    background: string
+    personality: string
+    goals: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type NPCCreateOrConnectWithoutCampaignsInput = {
+    where: NPCWhereUniqueInput
+    create: XOR<NPCCreateWithoutCampaignsInput, NPCUncheckedCreateWithoutCampaignsInput>
+  }
+
+  export type CampaignUpsertWithoutNpcsInput = {
+    update: XOR<CampaignUpdateWithoutNpcsInput, CampaignUncheckedUpdateWithoutNpcsInput>
+    create: XOR<CampaignCreateWithoutNpcsInput, CampaignUncheckedCreateWithoutNpcsInput>
+    where?: CampaignWhereInput
+  }
+
+  export type CampaignUpdateToOneWithWhereWithoutNpcsInput = {
+    where?: CampaignWhereInput
+    data: XOR<CampaignUpdateWithoutNpcsInput, CampaignUncheckedUpdateWithoutNpcsInput>
+  }
+
+  export type CampaignUpdateWithoutNpcsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    theme?: StringFieldUpdateOperationsInput | string
+    tone?: JsonNullValueInput | InputJsonValue
+    homebrewAllowed?: BoolFieldUpdateOperationsInput | boolean
+    magicCommonality?: NullableStringFieldUpdateOperationsInput | string | null
+    geographicalScale?: NullableStringFieldUpdateOperationsInput | string | null
+    civilizationState?: NullableStringFieldUpdateOperationsInput | string | null
+    commonLandscapes?: JsonNullValueInput | InputJsonValue
+    technologyLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    roleOfReligion?: NullableStringFieldUpdateOperationsInput | string | null
+    religiousFiguresPerception?: NullableStringFieldUpdateOperationsInput | string | null
+    majorConflictsThreats?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cities?: CampaignCityUpdateManyWithoutCampaignNestedInput
+    items?: CampaignItemUpdateManyWithoutCampaignNestedInput
+  }
+
+  export type CampaignUncheckedUpdateWithoutNpcsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    theme?: StringFieldUpdateOperationsInput | string
+    tone?: JsonNullValueInput | InputJsonValue
+    homebrewAllowed?: BoolFieldUpdateOperationsInput | boolean
+    magicCommonality?: NullableStringFieldUpdateOperationsInput | string | null
+    geographicalScale?: NullableStringFieldUpdateOperationsInput | string | null
+    civilizationState?: NullableStringFieldUpdateOperationsInput | string | null
+    commonLandscapes?: JsonNullValueInput | InputJsonValue
+    technologyLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    roleOfReligion?: NullableStringFieldUpdateOperationsInput | string | null
+    religiousFiguresPerception?: NullableStringFieldUpdateOperationsInput | string | null
+    majorConflictsThreats?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cities?: CampaignCityUncheckedUpdateManyWithoutCampaignNestedInput
+    items?: CampaignItemUncheckedUpdateManyWithoutCampaignNestedInput
+  }
+
+  export type NPCUpsertWithoutCampaignsInput = {
+    update: XOR<NPCUpdateWithoutCampaignsInput, NPCUncheckedUpdateWithoutCampaignsInput>
+    create: XOR<NPCCreateWithoutCampaignsInput, NPCUncheckedCreateWithoutCampaignsInput>
+    where?: NPCWhereInput
+  }
+
+  export type NPCUpdateToOneWithWhereWithoutCampaignsInput = {
+    where?: NPCWhereInput
+    data: XOR<NPCUpdateWithoutCampaignsInput, NPCUncheckedUpdateWithoutCampaignsInput>
+  }
+
+  export type NPCUpdateWithoutCampaignsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    race?: StringFieldUpdateOperationsInput | string
+    class?: NullableStringFieldUpdateOperationsInput | string | null
+    alignment?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    background?: StringFieldUpdateOperationsInput | string
+    personality?: StringFieldUpdateOperationsInput | string
+    goals?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NPCUncheckedUpdateWithoutCampaignsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    race?: StringFieldUpdateOperationsInput | string
+    class?: NullableStringFieldUpdateOperationsInput | string | null
+    alignment?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    background?: StringFieldUpdateOperationsInput | string
+    personality?: StringFieldUpdateOperationsInput | string
+    goals?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CampaignCreateWithoutItemsInput = {
@@ -8028,8 +12342,8 @@ export namespace Prisma {
     majorConflictsThreats?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    npcs?: NPCCreateNestedManyWithoutCampaignInput
-    cities?: CityCreateNestedManyWithoutCampaignInput
+    cities?: CampaignCityCreateNestedManyWithoutCampaignInput
+    npcs?: CampaignNPCCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignUncheckedCreateWithoutItemsInput = {
@@ -8048,13 +12362,42 @@ export namespace Prisma {
     majorConflictsThreats?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    npcs?: NPCUncheckedCreateNestedManyWithoutCampaignInput
-    cities?: CityUncheckedCreateNestedManyWithoutCampaignInput
+    cities?: CampaignCityUncheckedCreateNestedManyWithoutCampaignInput
+    npcs?: CampaignNPCUncheckedCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignCreateOrConnectWithoutItemsInput = {
     where: CampaignWhereUniqueInput
     create: XOR<CampaignCreateWithoutItemsInput, CampaignUncheckedCreateWithoutItemsInput>
+  }
+
+  export type ItemCreateWithoutCampaignsInput = {
+    id?: string
+    name: string
+    type: string
+    rarity: string
+    description: string
+    properties: JsonNullValueInput | InputJsonValue
+    history?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ItemUncheckedCreateWithoutCampaignsInput = {
+    id?: string
+    name: string
+    type: string
+    rarity: string
+    description: string
+    properties: JsonNullValueInput | InputJsonValue
+    history?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ItemCreateOrConnectWithoutCampaignsInput = {
+    where: ItemWhereUniqueInput
+    create: XOR<ItemCreateWithoutCampaignsInput, ItemUncheckedCreateWithoutCampaignsInput>
   }
 
   export type CampaignUpsertWithoutItemsInput = {
@@ -8084,8 +12427,8 @@ export namespace Prisma {
     majorConflictsThreats?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    npcs?: NPCUpdateManyWithoutCampaignNestedInput
-    cities?: CityUpdateManyWithoutCampaignNestedInput
+    cities?: CampaignCityUpdateManyWithoutCampaignNestedInput
+    npcs?: CampaignNPCUpdateManyWithoutCampaignNestedInput
   }
 
   export type CampaignUncheckedUpdateWithoutItemsInput = {
@@ -8104,135 +12447,22 @@ export namespace Prisma {
     majorConflictsThreats?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    npcs?: NPCUncheckedUpdateManyWithoutCampaignNestedInput
-    cities?: CityUncheckedUpdateManyWithoutCampaignNestedInput
+    cities?: CampaignCityUncheckedUpdateManyWithoutCampaignNestedInput
+    npcs?: CampaignNPCUncheckedUpdateManyWithoutCampaignNestedInput
   }
 
-  export type NPCCreateManyCampaignInput = {
-    id?: string
-    name: string
-    race: string
-    class?: string | null
-    alignment: string
-    description: string
-    background: string
-    personality: string
-    goals: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type ItemUpsertWithoutCampaignsInput = {
+    update: XOR<ItemUpdateWithoutCampaignsInput, ItemUncheckedUpdateWithoutCampaignsInput>
+    create: XOR<ItemCreateWithoutCampaignsInput, ItemUncheckedCreateWithoutCampaignsInput>
+    where?: ItemWhereInput
   }
 
-  export type CityCreateManyCampaignInput = {
-    id?: string
-    name: string
-    size: string
-    population: string
-    government: string
-    economy: string
-    notableLocations: JsonNullValueInput | InputJsonValue
-    description: string
-    history: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type ItemUpdateToOneWithWhereWithoutCampaignsInput = {
+    where?: ItemWhereInput
+    data: XOR<ItemUpdateWithoutCampaignsInput, ItemUncheckedUpdateWithoutCampaignsInput>
   }
 
-  export type ItemCreateManyCampaignInput = {
-    id?: string
-    name: string
-    type: string
-    rarity: string
-    description: string
-    properties: JsonNullValueInput | InputJsonValue
-    history?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type NPCUpdateWithoutCampaignInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    race?: StringFieldUpdateOperationsInput | string
-    class?: NullableStringFieldUpdateOperationsInput | string | null
-    alignment?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    background?: StringFieldUpdateOperationsInput | string
-    personality?: StringFieldUpdateOperationsInput | string
-    goals?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NPCUncheckedUpdateWithoutCampaignInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    race?: StringFieldUpdateOperationsInput | string
-    class?: NullableStringFieldUpdateOperationsInput | string | null
-    alignment?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    background?: StringFieldUpdateOperationsInput | string
-    personality?: StringFieldUpdateOperationsInput | string
-    goals?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NPCUncheckedUpdateManyWithoutCampaignInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    race?: StringFieldUpdateOperationsInput | string
-    class?: NullableStringFieldUpdateOperationsInput | string | null
-    alignment?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    background?: StringFieldUpdateOperationsInput | string
-    personality?: StringFieldUpdateOperationsInput | string
-    goals?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CityUpdateWithoutCampaignInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    size?: StringFieldUpdateOperationsInput | string
-    population?: StringFieldUpdateOperationsInput | string
-    government?: StringFieldUpdateOperationsInput | string
-    economy?: StringFieldUpdateOperationsInput | string
-    notableLocations?: JsonNullValueInput | InputJsonValue
-    description?: StringFieldUpdateOperationsInput | string
-    history?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CityUncheckedUpdateWithoutCampaignInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    size?: StringFieldUpdateOperationsInput | string
-    population?: StringFieldUpdateOperationsInput | string
-    government?: StringFieldUpdateOperationsInput | string
-    economy?: StringFieldUpdateOperationsInput | string
-    notableLocations?: JsonNullValueInput | InputJsonValue
-    description?: StringFieldUpdateOperationsInput | string
-    history?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CityUncheckedUpdateManyWithoutCampaignInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    size?: StringFieldUpdateOperationsInput | string
-    population?: StringFieldUpdateOperationsInput | string
-    government?: StringFieldUpdateOperationsInput | string
-    economy?: StringFieldUpdateOperationsInput | string
-    notableLocations?: JsonNullValueInput | InputJsonValue
-    description?: StringFieldUpdateOperationsInput | string
-    history?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ItemUpdateWithoutCampaignInput = {
+  export type ItemUpdateWithoutCampaignsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
@@ -8244,7 +12474,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ItemUncheckedUpdateWithoutCampaignInput = {
+  export type ItemUncheckedUpdateWithoutCampaignsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
@@ -8256,14 +12486,170 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ItemUncheckedUpdateManyWithoutCampaignInput = {
+  export type CampaignCityCreateManyCampaignInput = {
+    id?: string
+    cityId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignNPCCreateManyCampaignInput = {
+    id?: string
+    npcId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignItemCreateManyCampaignInput = {
+    id?: string
+    itemId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignCityUpdateWithoutCampaignInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    rarity?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    properties?: JsonNullValueInput | InputJsonValue
-    history?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    city?: CityUpdateOneRequiredWithoutCampaignsNestedInput
+  }
+
+  export type CampaignCityUncheckedUpdateWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cityId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignCityUncheckedUpdateManyWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cityId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignNPCUpdateWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    npc?: NPCUpdateOneRequiredWithoutCampaignsNestedInput
+  }
+
+  export type CampaignNPCUncheckedUpdateWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    npcId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignNPCUncheckedUpdateManyWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    npcId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignItemUpdateWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    item?: ItemUpdateOneRequiredWithoutCampaignsNestedInput
+  }
+
+  export type CampaignItemUncheckedUpdateWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignItemUncheckedUpdateManyWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignNPCCreateManyNpcInput = {
+    id?: string
+    campaignId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignNPCUpdateWithoutNpcInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaign?: CampaignUpdateOneRequiredWithoutNpcsNestedInput
+  }
+
+  export type CampaignNPCUncheckedUpdateWithoutNpcInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campaignId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignNPCUncheckedUpdateManyWithoutNpcInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campaignId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignCityCreateManyCityInput = {
+    id?: string
+    campaignId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignCityUpdateWithoutCityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaign?: CampaignUpdateOneRequiredWithoutCitiesNestedInput
+  }
+
+  export type CampaignCityUncheckedUpdateWithoutCityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campaignId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignCityUncheckedUpdateManyWithoutCityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campaignId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignItemCreateManyItemInput = {
+    id?: string
+    campaignId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CampaignItemUpdateWithoutItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaign?: CampaignUpdateOneRequiredWithoutItemsNestedInput
+  }
+
+  export type CampaignItemUncheckedUpdateWithoutItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campaignId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignItemUncheckedUpdateManyWithoutItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campaignId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
