@@ -41,35 +41,27 @@ export async function GET(
   }
 }
 
-export async function POST(
+export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
 ) {
   try {
-    const { campaignId } = await request.json();
-    console.log('Updating city campaign:', { cityId: params.id, campaignId });
+    const { campaignIds } = await request.json();
+    console.log('Updating city campaigns:', { cityId: params.id, campaignIds });
 
-    // First, remove any existing campaign relationships
+    // First, remove all existing campaign relationships
     await prisma.campaignCity.deleteMany({
       where: { cityId: params.id }
     });
 
-    // If a new campaign is selected, create the relationship
-    if (campaignId) {
-      try {
-        await prisma.campaignCity.create({
-          data: {
-            cityId: params.id,
-            campaignId
-          }
-        });
-      } catch (createError) {
-        console.error('Error creating campaign relationship:', createError);
-        return NextResponse.json(
-          { error: 'Failed to create campaign relationship', details: createError },
-          { status: 500 }
-        );
-      }
+    // Create new relationships for all selected campaigns
+    if (campaignIds && campaignIds.length > 0) {
+      await prisma.campaignCity.createMany({
+        data: campaignIds.map((campaignId: string) => ({
+          cityId: params.id,
+          campaignId
+        }))
+      });
     }
 
     // Fetch the updated city with its campaigns
@@ -78,7 +70,12 @@ export async function POST(
       include: {
         campaigns: {
           include: {
-            campaign: true
+            campaign: {
+              select: {
+                id: true,
+                name: true
+              }
+            }
           }
         }
       }
@@ -88,18 +85,70 @@ export async function POST(
       return NextResponse.json({ error: 'City not found' }, { status: 404 });
     }
 
-    // Transform the response to match the expected format
+    // Transform the response
     const transformedCity = {
       ...city,
-      campaignId: city.campaigns[0]?.campaignId || null,
-      campaigns: city.campaigns.map(c => c.campaign)
+      campaigns: city.campaigns.map(cc => cc.campaign)
     };
 
     return NextResponse.json(transformedCity);
   } catch (error) {
-    console.error('Error updating city campaign:', error);
+    console.error('Error updating city campaigns:', error);
     return NextResponse.json(
-      { error: 'Failed to update city campaign', details: error },
+      { error: 'Failed to update city campaigns', details: error },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const { campaignId } = await request.json();
+    console.log('Adding city to campaign:', { cityId: params.id, campaignId });
+
+    // Create the new relationship
+    await prisma.campaignCity.create({
+      data: {
+        cityId: params.id,
+        campaignId
+      }
+    });
+
+    // Fetch the updated city with its campaigns
+    const city = await prisma.city.findUnique({
+      where: { id: params.id },
+      include: {
+        campaigns: {
+          include: {
+            campaign: {
+              select: {
+                id: true,
+                name: true
+              }
+            }
+          }
+        }
+      }
+    });
+
+    if (!city) {
+      return NextResponse.json({ error: 'City not found' }, { status: 404 });
+    }
+
+    // Transform the response
+    const transformedCity = {
+      ...city,
+      campaigns: city.campaigns.map(cc => cc.campaign)
+    };
+
+    return NextResponse.json(transformedCity);
+  } catch (error) {
+    console.error('Error adding city to campaign:', error);
+    return NextResponse.json(
+      { error: 'Failed to add city to campaign', details: error },
       { status: 500 }
     );
   }

@@ -5,12 +5,14 @@ const prisma = new PrismaClient();
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
+    const { id } = await context.params;
+
     // Fetch the original item
     const originalItem = await prisma.item.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         campaigns: true
       }
@@ -27,7 +29,7 @@ export async function POST(
         type: originalItem.type,
         rarity: originalItem.rarity,
         description: originalItem.description,
-        properties: originalItem.properties,
+        properties: JSON.stringify(originalItem.properties),
         // Copy all campaign relationships
         campaigns: {
           create: originalItem.campaigns.map(campaign => ({
@@ -47,7 +49,7 @@ export async function POST(
     // Transform the response to match the expected format
     const transformedItem = {
       ...newItem,
-      campaigns: newItem.campaigns.map((c: { campaign: any }) => c.campaign)
+      campaigns: (newItem as any).campaigns?.map((c: { campaign: any }) => c.campaign) || []
     };
 
     return NextResponse.json(transformedItem);

@@ -25,57 +25,48 @@ export type CampaignSetting = {
   majorConflictsThreats?: string;
 };
 
-export type NPC = {
+export interface Campaign {
   id: string;
   name: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface BaseContent {
+  id: string;
+  name: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+  campaigns?: Campaign[];
+}
+
+export interface City extends BaseContent {
+  size: string;
+  population: string;
+  government?: string;
+  economy?: string;
+  notableLocations?: string[];
+  history?: string;
+}
+
+export interface NPC extends BaseContent {
   race: string;
   class: string;
   alignment: string;
-  description: string;
-  background: string;
-  personality: string;
-  goals: string;
-  relationships?: any; // This can be any type since it's parsed from JSON
-  campaignId?: string | null;
-  campaigns?: Campaign[];
-  updatedAt: string;
-};
+  personality?: string;
+  background?: string;
+  goals?: string[];
+}
 
-export type City = {
-  id: string;
-  name: string;
-  size: string;
-  population: number;
-  government: string;
-  economy: string;
-  notableLocations: string;
-  description: string;
-  history: string;
-  campaignId?: string | null;
-  campaigns?: Campaign[];
-  updatedAt: string;
-};
-
-export type Campaign = {
-  id: string;
-  name: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type Item = {
-  id: string;
-  name: string;
+export interface Item extends BaseContent {
   type: string;
   rarity: string;
-  description: string;
-  properties: string[];
+  attunement: boolean;
+  properties?: string[];
   history?: string;
-  campaignId?: string | null;
-  campaigns?: Campaign[];
-  updatedAt: string;
-};
+}
 
 export type GeneratedContent = {
   npcs: NPC[];

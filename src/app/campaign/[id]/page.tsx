@@ -5,6 +5,10 @@ import { useRouter, useParams } from 'next/navigation';
 import Layout from '@/components/Layout';
 import type { CampaignSetting, City, NPC, Item } from '@/types/campaign';
 import React from 'react';
+import SlideOutPanel from '@/components/SlideOutPanel';
+import ContentList from '@/components/ContentList';
+import ContentDetails from '@/components/ContentDetails';
+import useContentOperations from '@/hooks/useContentOperations';
 
 export default function GenerateContent() {
   const router = useRouter();
@@ -21,6 +25,9 @@ export default function GenerateContent() {
   const [collapsedItems, setCollapsedItems] = useState<{ [id: string]: boolean }>({});
   const [deleteModal, setDeleteModal] = useState<null | { type: 'city' | 'npc' | 'item'; id: string }>(null);
   const [deleting, setDeleting] = useState(false);
+  const [activeTab, setActiveTab] = useState<'cities' | 'npcs' | 'items'>('cities');
+  const [settingsCollapsed, setSettingsCollapsed] = useState(true);
+  const [selectedItem, setSelectedItem] = useState<{ type: 'city' | 'npc' | 'item'; data: any } | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem('campaignSettings');
@@ -118,7 +125,7 @@ export default function GenerateContent() {
       let saveResponse;
       if (type === 'city') {
         // First create the city
-        const cityResponse = await fetch('/api/cities', {
+        const cityResponse = await fetch('/api/content/cities', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -133,7 +140,7 @@ export default function GenerateContent() {
         const cityData = await cityResponse.json();
 
         // Then associate it with the campaign
-        saveResponse = await fetch(`/api/cities/${cityData.id}/campaigns`, {
+        saveResponse = await fetch(`/api/content/cities/${cityData.id}/campaigns`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -142,7 +149,7 @@ export default function GenerateContent() {
         });
       } else if (type === 'npc') {
         // First create the NPC
-        const npcResponse = await fetch('/api/npcs', {
+        const npcResponse = await fetch('/api/content/npcs', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -157,7 +164,7 @@ export default function GenerateContent() {
         const npcData = await npcResponse.json();
 
         // Then associate it with the campaign
-        saveResponse = await fetch(`/api/npcs/${npcData.id}/campaigns`, {
+        saveResponse = await fetch(`/api/content/npcs/${npcData.id}/campaigns`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -166,7 +173,7 @@ export default function GenerateContent() {
         });
       } else if (type === 'item') {
         // First create the item
-        const itemResponse = await fetch('/api/items', {
+        const itemResponse = await fetch('/api/content/items', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -181,7 +188,7 @@ export default function GenerateContent() {
         const itemData = await itemResponse.json();
 
         // Then associate it with the campaign
-        saveResponse = await fetch(`/api/items/${itemData.id}/campaigns`, {
+        saveResponse = await fetch(`/api/content/items/${itemData.id}/campaigns`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -221,25 +228,40 @@ export default function GenerateContent() {
   const handleDelete = async (type: 'city' | 'npc' | 'item', id: string) => {
     setDeleting(true);
     try {
-      const res = await fetch(`/api/${type}s/${id}`, { method: 'DELETE' });
-      if (res.ok) {
-        switch (type) {
-          case 'city':
-            setCities(cities => cities.filter(c => c.id !== id));
-            break;
-          case 'npc':
-            setNPCs(npcs => npcs.filter(n => n.id !== id));
-            break;
-          case 'item':
-            setItems(items => items.filter(i => i.id !== id));
-            break;
-        }
-      } else {
-        alert('Failed to delete');
+      // First remove the campaign association
+      const plural = type === 'city' ? 'cities' : `${type}s`;
+      const disassociateRes = await fetch(`/api/content/${plural}/${id}/campaigns/${campaignId}`, {
+        method: 'DELETE',
+      });
+
+      if (!disassociateRes.ok) {
+        throw new Error('Failed to remove campaign association');
+      }
+
+      // Then delete the item itself
+      const deleteRes = await fetch(`/api/content/${plural}/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!deleteRes.ok) {
+        throw new Error(`Failed to delete ${type}`);
+      }
+
+      // Update the local state
+      switch (type) {
+        case 'city':
+          setCities(cities => cities.filter(c => c.id !== id));
+          break;
+        case 'npc':
+          setNPCs(npcs => npcs.filter(n => n.id !== id));
+          break;
+        case 'item':
+          setItems(items => items.filter(i => i.id !== id));
+          break;
       }
     } catch (error) {
       console.error('Error deleting:', error);
-      alert('Failed to delete');
+      alert(`Failed to delete ${type}. Please try again.`);
     } finally {
       setDeleting(false);
       setDeleteModal(null);
@@ -248,310 +270,188 @@ export default function GenerateContent() {
 
   const handleDuplicate = async (type: 'city' | 'npc' | 'item', id: string) => {
     try {
-      // Fix the route for cities
-      const endpoint = type === 'city' ? 'cities' : `${type}s`;
-      const res = await fetch(`/api/${endpoint}/${id}/duplicate`, { method: 'POST' });
-      if (res.ok) {
-        const duplicated = await res.json();
-        switch (type) {
-          case 'city':
-            setCities(cities => [duplicated, ...cities]);
-            break;
-          case 'npc':
-            setNPCs(npcs => [duplicated, ...npcs]);
-            break;
-          case 'item':
-            setItems(items => [duplicated, ...items]);
-            break;
-        }
-      } else {
-        alert('Failed to duplicate');
+      const plural = type === 'city' ? 'cities' : `${type}s`;
+      const response = await fetch(`/api/content/${plural}/${id}/duplicate`, {
+        method: 'POST',
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to duplicate ${type}`);
       }
+
+      const duplicatedItem = await response.json();
+
+      // Update the local state
+      switch (type) {
+        case 'city':
+          setCities(prev => [...prev, duplicatedItem]);
+          break;
+        case 'npc':
+          setNPCs(prev => [...prev, duplicatedItem]);
+          break;
+        case 'item':
+          setItems(prev => [...prev, duplicatedItem]);
+          break;
+      }
+
+      // Close the details panel
+      setSelectedItem(null);
     } catch (error) {
       console.error('Error duplicating:', error);
-      alert('Failed to duplicate');
+      alert(`Failed to duplicate ${type}. Please try again.`);
     }
   };
 
   if (!settings) return null;
 
+  const handleShowDetails = (type: 'city' | 'npc' | 'item', data: any) => {
+    setSelectedItem({ type, data });
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedItem(null);
+  };
+
   return (
     <Layout>
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">Generate Content</h1>
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {error}
+      <div className="max-w-6xl mx-auto flex">
+        {/* Main Content */}
+        <div className={`flex-1 transition-all duration-200 ${selectedItem ? 'mr-[380px]' : ''}`}>
+          {/* Campaign Settings Section */}
+          <section className="mb-2 bg-white rounded-lg shadow">
+            <div
+              className="flex justify-between items-center cursor-pointer p-4"
+              onClick={() => setSettingsCollapsed(!settingsCollapsed)}
+            >
+              <h2 className="text-xl font-semibold text-gray-800">Campaign Settings</h2>
+              <button
+                className="text-blue-600 hover:underline text-sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  router.push(`/campaign/edit/${campaignId}`);
+                }}
+              >
+                Edit
+              </button>
+            </div>
+            {!settingsCollapsed && (
+              <div className="mt-2 px-4 pb-4 grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                <div className="text-gray-900"><strong>Name:</strong> {settings.name || 'N/A'}</div>
+                <div className="text-gray-900"><strong>Theme:</strong> {settings.theme || 'N/A'}</div>
+                <div className="text-gray-900"><strong>Tone:</strong> {Array.isArray(settings.tone) && settings.tone.length > 0 ? settings.tone.join(', ') : 'N/A'}</div>
+                <div className="text-gray-900"><strong>Homebrew:</strong> {settings.homebrewAllowed ? 'Yes' : 'No'}</div>
+                <div className="text-gray-900"><strong>Magic:</strong> {settings.magicCommonality || 'N/A'}</div>
+                <div className="text-gray-900"><strong>Scale:</strong> {settings.geographicalScale || 'N/A'}</div>
+                <div className="text-gray-900"><strong>Civilization:</strong> {settings.civilizationState || 'N/A'}</div>
+                <div className="text-gray-900"><strong>Landscapes:</strong> {Array.isArray(settings.commonLandscapes) && settings.commonLandscapes.length > 0 ? settings.commonLandscapes.join(', ') : 'N/A'}</div>
+                <div className="text-gray-900"><strong>Technology:</strong> {settings.technologyLevel || 'N/A'}</div>
+                <div className="text-gray-900"><strong>Religion:</strong> {settings.roleOfReligion || 'N/A'}</div>
+                <div className="text-gray-900"><strong>Religious Figures:</strong> {settings.religiousFiguresPerception || 'N/A'}</div>
+                <div className="text-gray-900"><strong>Conflicts:</strong> {settings.majorConflictsThreats || 'N/A'}</div>
+              </div>
+            )}
+          </section>
+
+          {/* Content Tabs */}
+          <div className="bg-white rounded-lg shadow">
+            <div className="border-b border-gray-200">
+              <nav className="flex -mb-px">
+                <button
+                  className={`py-4 px-6 text-sm font-medium ${
+                    activeTab === 'cities'
+                      ? 'border-b-2 border-blue-500 text-blue-600'
+                      : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                  onClick={() => setActiveTab('cities')}
+                >
+                  Cities
+                </button>
+                <button
+                  className={`py-4 px-6 text-sm font-medium ${
+                    activeTab === 'npcs'
+                      ? 'border-b-2 border-green-500 text-green-600'
+                      : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                  onClick={() => setActiveTab('npcs')}
+                >
+                  NPCs
+                </button>
+                <button
+                  className={`py-4 px-6 text-sm font-medium ${
+                    activeTab === 'items'
+                      ? 'border-b-2 border-purple-500 text-purple-600'
+                      : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                  onClick={() => setActiveTab('items')}
+                >
+                  Items
+                </button>
+              </nav>
+            </div>
+
+            {/* Tab Content */}
+            <div className="p-2">
+              {activeTab === 'cities' && (
+                <ContentList
+                  type="city"
+                  items={cities}
+                  onShowDetails={(city) => handleShowDetails('city', city)}
+                  isGenerating={isGenerating === 'city'}
+                  onGenerate={() => generateContent('city')}
+                />
+              )}
+
+              {activeTab === 'npcs' && (
+                <ContentList
+                  type="npc"
+                  items={npcs}
+                  onShowDetails={(npc) => handleShowDetails('npc', npc)}
+                  isGenerating={isGenerating === 'npc'}
+                  onGenerate={() => generateContent('npc')}
+                />
+              )}
+
+              {activeTab === 'items' && (
+                <ContentList
+                  type="item"
+                  items={items}
+                  onShowDetails={(item) => handleShowDetails('item', item)}
+                  isGenerating={isGenerating === 'item'}
+                  onGenerate={() => generateContent('item')}
+                />
+              )}
+            </div>
           </div>
+        </div>
+
+        {/* Details Drawer */}
+        {selectedItem && (
+          <SlideOutPanel
+            isOpen={!!selectedItem}
+            onClose={handleCloseDetails}
+            title={selectedItem.data.name}
+          >
+            <ContentDetails
+              type={selectedItem.type}
+              data={selectedItem.data}
+              onEdit={() => {
+                const plural = selectedItem.type === 'city' ? 'cities' : `${selectedItem.type}s`;
+                router.push(`/${plural}/${selectedItem.data.id}/edit`);
+                handleCloseDetails();
+              }}
+              onDuplicate={() => {
+                handleDuplicate(selectedItem.type, selectedItem.data.id);
+                handleCloseDetails();
+              }}
+              onDelete={() => {
+                setDeleteModal({ type: selectedItem.type, id: selectedItem.data.id });
+                handleCloseDetails();
+              }}
+            />
+          </SlideOutPanel>
         )}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Campaign Settings</h2>
-          <div className="flex justify-end mb-2 gap-2">
-            <button
-              className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
-              onClick={() => router.push(`/campaign/edit/${campaignId}`)}
-            >
-              Edit
-            </button>
-          </div>
-          <div className="bg-white rounded shadow p-4 text-gray-900">
-            <div><strong>Campaign Name:</strong> {settings.name || 'N/A'}</div>
-            <div><strong>Theme:</strong> {settings.theme || 'N/A'}</div>
-            <div><strong>Tone:</strong> {Array.isArray(settings.tone) && settings.tone.length > 0 ? settings.tone.join(', ') : 'N/A'}</div>
-            <div><strong>Homebrew Allowed:</strong> {settings.homebrewAllowed ? 'Yes' : 'No'}</div>
-            <div><strong>Magic Commonality:</strong> {settings.magicCommonality || 'N/A'}</div>
-            <div><strong>Geographical Scale:</strong> {settings.geographicalScale || 'N/A'}</div>
-            <div><strong>Civilization State:</strong> {settings.civilizationState || 'N/A'}</div>
-            <div><strong>Common Landscapes:</strong> {Array.isArray(settings.commonLandscapes) && settings.commonLandscapes.length > 0 ? settings.commonLandscapes.join(', ') : 'N/A'}</div>
-            <div><strong>Technology Level:</strong> {settings.technologyLevel || 'N/A'}</div>
-            <div><strong>Role of Religion:</strong> {settings.roleOfReligion || 'N/A'}</div>
-            <div><strong>Religious Figures Perception:</strong> {settings.religiousFiguresPerception || 'N/A'}</div>
-            <div><strong>Major Conflicts or Threats:</strong> {settings.majorConflictsThreats || 'N/A'}</div>
-          </div>
-        </section>
-        <section className="mb-8">
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-xl font-semibold text-gray-800">Cities</h2>
-            <button
-              className={`bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ${isGenerating === 'city' ? 'opacity-50 cursor-not-allowed' : ''}`}
-              onClick={() => generateContent('city')}
-              disabled={isGenerating === 'city'}
-            >
-              {isGenerating === 'city' ? 'Generating...' : 'Generate City'}
-            </button>
-          </div>
-          {cities.length === 0 ? <div className="text-gray-900">No cities generated yet.</div> : (
-            <ul className="space-y-4">
-              {cities.map(city => {
-                const isCollapsed = collapsedCities[city.id] ?? false;
-                return (
-                  <li key={city.id} className="bg-white rounded shadow p-4 text-gray-900">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-bold text-lg">{city.name} ({city.size})</span>
-                      <button
-                        className="text-blue-600 hover:underline text-sm"
-                        onClick={() => setCollapsedCities(prev => ({ ...prev, [city.id]: !isCollapsed }))}
-                      >
-                        {isCollapsed ? 'Show details' : 'Show less'}
-                      </button>
-                    </div>
-                    {!isCollapsed && <>
-                      <div><strong>Population:</strong> {city.population}</div>
-                      <div><strong>Government:</strong> {city.government}</div>
-                      <div><strong>Economy:</strong> {city.economy}</div>
-                      <div><strong>Notable Locations:</strong> {Array.isArray(city.notableLocations) ? city.notableLocations.join(', ') : city.notableLocations}</div>
-                      <div><strong>Description:</strong> {city.description}</div>
-                      <div><strong>History:</strong> {city.history}</div>
-                      <div className="mt-4 flex justify-end gap-2">
-                        <button
-                          className="text-blue-600 hover:underline text-sm"
-                          onClick={() => router.push(`/cities/${city.id}/edit`)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="text-green-600 hover:underline text-sm"
-                          onClick={() => handleDuplicate('city', city.id)}
-                        >
-                          Duplicate
-                        </button>
-                        <button
-                          className="text-red-500 hover:underline text-sm"
-                          onClick={() => setDeleteModal({ type: 'city', id: city.id })}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </>}
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </section>
-        <section className="mb-8">
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-xl font-semibold text-gray-800">NPCs</h2>
-            <button
-              className={`bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 ${isGenerating === 'npc' ? 'opacity-50 cursor-not-allowed' : ''}`}
-              onClick={() => generateContent('npc')}
-              disabled={isGenerating === 'npc'}
-            >
-              {isGenerating === 'npc' ? 'Generating...' : 'Generate NPC'}
-            </button>
-          </div>
-          {npcs.length === 0 ? <div className="text-gray-900">No NPCs generated yet.</div> : (
-            <ul className="space-y-4">
-              {npcs.map(npc => {
-                const isCollapsed = collapsedNPCs[npc.id] ?? false;
-                // Normalize fields from AI response
-                const description = npc.description || (npc as any).physical_description || 'N/A';
-                const background = npc.background || (npc as any).background_story || 'N/A';
-                const personality = npc.personality || (npc as any).personality_description || 'N/A';
-                const goals = Array.isArray(npc.goals) ? npc.goals.join(', ') : npc.goals || 'N/A';
-                // Robustly normalize relationships
-                function flattenAndParseRelationships(input: any): any[] {
-                  if (!input) return [];
-                  let arr = Array.isArray(input) ? input : [input];
-                  // Flatten one level if nested arrays
-                  arr = arr.flat();
-                  // Parse JSON strings if present
-                  return arr.map((rel) => {
-                    if (typeof rel === 'string') {
-                      try {
-                        const parsed = JSON.parse(rel);
-                        return parsed;
-                      } catch {
-                        return rel;
-                      }
-                    }
-                    return rel;
-                  });
-                }
-                let relationships: React.ReactNode;
-                const rels = flattenAndParseRelationships(npc.relationships);
-                if (rels.length === 1 && typeof rels[0] === 'object' && !Array.isArray(rels[0]) && rels[0] !== null) {
-                  // Handle grouped relationships (e.g., { Allies: [...], Enemies: [...] })
-                  const relObj = rels[0];
-                  relationships = Object.entries(relObj).map(([group, arr], groupIdx) => (
-                    <div key={groupIdx} className="ml-6 mb-2">
-                      <strong>{group}:</strong>
-                      <ul className="ml-8 list-disc">
-                        {Array.isArray(arr) && arr.map((rel: any, idx: number) => (
-                          <li key={idx}>
-                            {rel.name}
-                            {rel.faction ? ` (${rel.faction})` : ''}
-                            {': '}{rel.relationship}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ));
-                } else if (rels.length > 0 && rels.some(r => typeof r === 'object')) {
-                  relationships = rels.map((rel: any, idx: number) => {
-                    if (typeof rel === 'string') return <span key={idx}>{rel}</span>;
-                    if (rel.name && rel.relationship) {
-                      return (
-                        <span key={rel.name + idx}>
-                          {rel.name}
-                          {rel.faction ? ` (${rel.faction})` : ''}
-                          {': '}{rel.relationship}
-                        </span>
-                      );
-                    }
-                    if (rel.name && rel.description) return <span key={idx}>{rel.name}: {rel.description}</span>;
-                    if (rel.character_name && rel.relationship) return <span key={idx}>{rel.character_name}: {rel.relationship}</span>;
-                    if (rel.faction && rel.relationship) return <span key={idx}>{rel.faction}: {rel.relationship}</span>;
-                    return <span key={idx}>{JSON.stringify(rel)}</span>;
-                  }).reduce((prev: React.ReactNode[], curr: React.ReactNode, idx: number) =>
-                    prev.length === 0 ? [curr] : [...prev, <br key={idx} />, curr], [] as React.ReactNode[]);
-                } else if (rels.length > 0) {
-                  relationships = rels.join(', ');
-                } else {
-                  relationships = 'N/A';
-                }
-                return (
-                  <li key={npc.id} className="bg-white rounded shadow p-4 text-gray-900">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-bold text-lg">{npc.name} ({npc.race}{npc.class ? `, ${npc.class}` : ''})</span>
-                      <button
-                        className="text-blue-600 hover:underline text-sm"
-                        onClick={() => setCollapsedNPCs(prev => ({ ...prev, [npc.id]: !isCollapsed }))}
-                      >
-                        {isCollapsed ? 'Show details' : 'Show less'}
-                      </button>
-                    </div>
-                    {!isCollapsed && <>
-                      <div><strong>Alignment:</strong> {npc.alignment}</div>
-                      <div><strong>Description:</strong> {description}</div>
-                      <div><strong>Background:</strong> {background}</div>
-                      <div><strong>Personality:</strong> {personality}</div>
-                      <div><strong>Goals:</strong> {goals}</div>
-                      <div className="mt-4 flex justify-end gap-2">
-                        <button
-                          className="text-blue-600 hover:underline text-sm"
-                          onClick={() => router.push(`/npcs/${npc.id}/edit`)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="text-green-600 hover:underline text-sm"
-                          onClick={() => handleDuplicate('npc', npc.id)}
-                        >
-                          Duplicate
-                        </button>
-                        <button
-                          className="text-red-500 hover:underline text-sm"
-                          onClick={() => setDeleteModal({ type: 'npc', id: npc.id })}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </>}
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </section>
-        <section className="mb-8">
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-xl font-semibold text-gray-800">Items</h2>
-            <button
-              className={`bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 ${isGenerating === 'item' ? 'opacity-50 cursor-not-allowed' : ''}`}
-              onClick={() => generateContent('item')}
-              disabled={isGenerating === 'item'}
-            >
-              {isGenerating === 'item' ? 'Generating...' : 'Generate Item'}
-            </button>
-          </div>
-          {items.length === 0 ? <div className="text-gray-900">No items generated yet.</div> : (
-            <ul className="space-y-4">
-              {items.map(item => {
-                const isCollapsed = collapsedItems[item.id] ?? false;
-                return (
-                  <li key={item.id} className="bg-white rounded shadow p-4 text-gray-900">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-bold text-lg">{item.name} ({item.type}, {item.rarity})</span>
-                      <button
-                        className="text-blue-600 hover:underline text-sm"
-                        onClick={() => setCollapsedItems(prev => ({ ...prev, [item.id]: !isCollapsed }))}
-                      >
-                        {isCollapsed ? 'Show details' : 'Show less'}
-                      </button>
-                    </div>
-                    {!isCollapsed && <>
-                      <div><strong>Description:</strong> {item.description}</div>
-                      <div><strong>Properties:</strong> {Array.isArray(item.properties) ? item.properties.join(', ') : item.properties}</div>
-                      {item.history && <div><strong>History:</strong> {item.history}</div>}
-                      <div className="mt-4 flex justify-end gap-2">
-                        <button
-                          className="text-blue-600 hover:underline text-sm"
-                          onClick={() => router.push(`/items/${item.id}/edit`)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="text-green-600 hover:underline text-sm"
-                          onClick={() => handleDuplicate('item', item.id)}
-                        >
-                          Duplicate
-                        </button>
-                        <button
-                          className="text-red-500 hover:underline text-sm"
-                          onClick={() => setDeleteModal({ type: 'item', id: item.id })}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </>}
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </section>
-        {/* Confirmation Modal */}
+
+        {/* Delete Modal */}
         {deleteModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800/50">
             <div className="bg-white rounded shadow-lg p-6 max-w-sm w-full text-gray-900">

@@ -85,3 +85,28 @@ export async function PUT(
     return NextResponse.json({ error: 'Failed to update NPC' }, { status: 500 });
   }
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    // Delete all campaign associations first
+    await prisma.campaignNPC.deleteMany({
+      where: { npcId: params.id }
+    });
+
+    // Then delete the NPC
+    const deletedNPC = await prisma.nPC.delete({
+      where: { id: params.id }
+    });
+
+    return NextResponse.json(deletedNPC);
+  } catch (error) {
+    console.error('Error deleting NPC:', error);
+    return NextResponse.json(
+      { error: 'Failed to delete NPC' },
+      { status: 500 }
+    );
+  }
+}

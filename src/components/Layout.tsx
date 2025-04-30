@@ -17,28 +17,18 @@ export default function Layout({ children }: LayoutProps) {
             <nav>
               <ul className="flex space-x-4">
                 <li>
+                  <Link href="/content" className="text-gray-600 hover:text-gray-900">
+                    All Content
+                  </Link>
+                </li>
+                <li>
                   <Link href="/campaign/new" className="text-gray-600 hover:text-gray-900">
                     New Campaign
                   </Link>
                 </li>
                 <li>
                   <Link href="/campaign/list" className="text-gray-600 hover:text-gray-900">
-                    Your Campaigns
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/cities" className="text-gray-600 hover:text-gray-900">
-                    Cities
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/npcs" className="text-gray-600 hover:text-gray-900">
-                    NPCs
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/items" className="text-gray-600 hover:text-gray-900">
-                    Items
+                    Campaigns
                   </Link>
                 </li>
                 <li>

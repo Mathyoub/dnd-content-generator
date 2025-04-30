@@ -82,3 +82,28 @@ export async function PUT(
     return NextResponse.json({ error: 'Failed to update item' }, { status: 500 });
   }
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    // Delete all campaign associations first
+    await prisma.campaignItem.deleteMany({
+      where: { itemId: params.id }
+    });
+
+    // Then delete the item
+    const deletedItem = await prisma.item.delete({
+      where: { id: params.id }
+    });
+
+    return NextResponse.json(deletedItem);
+  } catch (error) {
+    console.error('Error deleting item:', error);
+    return NextResponse.json(
+      { error: 'Failed to delete item' },
+      { status: 500 }
+    );
+  }
+}

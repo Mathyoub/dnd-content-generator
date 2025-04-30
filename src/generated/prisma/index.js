@@ -249,11 +249,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://dnd_app:dnd_password@localhost:5432/dnd_content_generator"
+        "value": null
       }
     }
   },

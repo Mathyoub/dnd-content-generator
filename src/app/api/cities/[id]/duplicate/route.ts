@@ -5,12 +5,14 @@ const prisma = new PrismaClient();
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
+    const { id } = await context.params;
+
     // Fetch the original city
     const originalCity = await prisma.city.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         campaigns: true
       }
@@ -28,8 +30,8 @@ export async function POST(
         population: originalCity.population,
         government: originalCity.government,
         economy: originalCity.economy,
-        notableLocations: originalCity.notableLocations as string,
         description: originalCity.description,
+        notableLocations: JSON.stringify(originalCity.notableLocations),
         history: originalCity.history,
         // Copy all campaign relationships
         campaigns: {
@@ -50,7 +52,7 @@ export async function POST(
     // Transform the response to match the expected format
     const transformedCity = {
       ...newCity,
-      campaigns: newCity.campaigns.map((c: { campaign: any }) => c.campaign)
+      campaigns: (newCity as any).campaigns?.map((c: { campaign: any }) => c.campaign) || []
     };
 
     return NextResponse.json(transformedCity);

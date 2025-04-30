@@ -5,12 +5,14 @@ const prisma = new PrismaClient();
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
+    const { id } = await context.params;
+
     // Fetch the original NPC
     const originalNPC = await prisma.nPC.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         campaigns: true
       }
@@ -30,7 +32,7 @@ export async function POST(
         description: originalNPC.description,
         background: originalNPC.background,
         personality: originalNPC.personality,
-        goals: originalNPC.goals,
+        goals: JSON.stringify(originalNPC.goals),
         // Copy all campaign relationships
         campaigns: {
           create: originalNPC.campaigns.map(campaign => ({
@@ -50,7 +52,7 @@ export async function POST(
     // Transform the response to match the expected format
     const transformedNPC = {
       ...newNPC,
-      campaigns: newNPC.campaigns.map((c: { campaign: any }) => c.campaign)
+      campaigns: (newNPC as any).campaigns?.map((c: { campaign: any }) => c.campaign) || []
     };
 
     return NextResponse.json(transformedNPC);

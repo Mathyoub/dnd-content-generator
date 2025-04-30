@@ -84,3 +84,28 @@ export async function PUT(
     );
   }
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    // Delete all campaign associations first
+    await prisma.campaignCity.deleteMany({
+      where: { cityId: params.id }
+    });
+
+    // Then delete the city
+    const deletedCity = await prisma.city.delete({
+      where: { id: params.id }
+    });
+
+    return NextResponse.json(deletedCity);
+  } catch (error) {
+    console.error('Error deleting city:', error);
+    return NextResponse.json(
+      { error: 'Failed to delete city' },
+      { status: 500 }
+    );
+  }
+}
