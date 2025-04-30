@@ -87,6 +87,9 @@ Prisma.NullTypes = {
  * Enums
  */
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 });
 
@@ -160,15 +163,15 @@ exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
-};
-
-exports.Prisma.QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
 };
 
 exports.Prisma.NullsOrder = {
@@ -221,17 +224,17 @@ const config = {
   "datasourceNames": [
     "db"
   ],
-  "activeProvider": "sqlite",
+  "activeProvider": "postgresql",
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "file:./dev.db"
+        "value": "postgresql://dnd_app:dnd_password@localhost:5432/dnd_content_generator"
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Campaign {\n  id                         String   @id @default(uuid())\n  name                       String\n  theme                      String\n  tone                       Json\n  homebrewAllowed            Boolean\n  magicCommonality           String?\n  geographicalScale          String?\n  civilizationState          String?\n  commonLandscapes           Json\n  technologyLevel            String?\n  roleOfReligion             String?\n  religiousFiguresPerception String?\n  majorConflictsThreats      String?\n  createdAt                  DateTime @default(now())\n  updatedAt                  DateTime @updatedAt\n  npcs                       NPC[]\n  cities                     City[]\n  items                      Item[]\n}\n\nmodel NPC {\n  id          String    @id @default(uuid())\n  campaign    Campaign? @relation(fields: [campaignId], references: [id])\n  campaignId  String?\n  name        String\n  race        String\n  class       String?\n  alignment   String\n  description String\n  background  String\n  personality String\n  goals       Json\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n}\n\nmodel City {\n  id               String    @id @default(uuid())\n  campaign         Campaign? @relation(fields: [campaignId], references: [id])\n  campaignId       String?\n  name             String\n  size             String\n  population       String\n  government       String\n  economy          String\n  notableLocations Json\n  description      String\n  history          String\n  createdAt        DateTime  @default(now())\n  updatedAt        DateTime  @updatedAt\n}\n\nmodel Item {\n  id          String    @id @default(uuid())\n  campaign    Campaign? @relation(fields: [campaignId], references: [id])\n  campaignId  String?\n  name        String\n  type        String\n  rarity      String\n  description String\n  properties  Json\n  history     String?\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n}\n",
-  "inlineSchemaHash": "3cce33a7b4e0bb6d7f8b9df7b4a6dcf0b8009f554cb9ba794c8a68091d270821",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Campaign {\n  id                         String   @id @default(uuid())\n  name                       String\n  theme                      String\n  tone                       Json\n  homebrewAllowed            Boolean\n  magicCommonality           String?\n  geographicalScale          String?\n  civilizationState          String?\n  commonLandscapes           Json\n  technologyLevel            String?\n  roleOfReligion             String?\n  religiousFiguresPerception String?\n  majorConflictsThreats      String?\n  createdAt                  DateTime @default(now())\n  updatedAt                  DateTime @updatedAt\n  npcs                       NPC[]\n  cities                     City[]\n  items                      Item[]\n}\n\nmodel NPC {\n  id          String    @id @default(uuid())\n  campaign    Campaign? @relation(fields: [campaignId], references: [id])\n  campaignId  String?\n  name        String\n  race        String\n  class       String?\n  alignment   String\n  description String\n  background  String\n  personality String\n  goals       Json\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n}\n\nmodel City {\n  id               String    @id @default(uuid())\n  campaign         Campaign? @relation(fields: [campaignId], references: [id])\n  campaignId       String?\n  name             String\n  size             String\n  population       String\n  government       String\n  economy          String\n  notableLocations Json\n  description      String\n  history          String\n  createdAt        DateTime  @default(now())\n  updatedAt        DateTime  @updatedAt\n}\n\nmodel Item {\n  id          String    @id @default(uuid())\n  campaign    Campaign? @relation(fields: [campaignId], references: [id])\n  campaignId  String?\n  name        String\n  type        String\n  rarity      String\n  description String\n  properties  Json\n  history     String?\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n}\n",
+  "inlineSchemaHash": "6836aa172892973b70fc3631877fb70a22c4476c2fff714d908369c011235308",
   "copyEngine": true
 }
 
