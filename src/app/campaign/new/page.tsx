@@ -122,7 +122,7 @@ export default function NewCampaign() {
       }
       const campaign = await response.json();
       localStorage.setItem('campaignSettings', JSON.stringify(campaign));
-      router.push('/campaign/generate');
+      router.push(`/campaign/${campaign.id}`);
     } catch (err) {
       setApiError('Failed to save campaign');
       setSaving(false);
