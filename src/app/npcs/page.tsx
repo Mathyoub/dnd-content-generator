@@ -12,6 +12,8 @@ export default function NPCsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [collapsedNPCs, setCollapsedNPCs] = useState<{ [id: string]: boolean }>({});
+  const [deleteModal, setDeleteModal] = useState<{ type: 'npc'; id: string } | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
     const fetchNPCs = async () => {
@@ -36,6 +38,60 @@ export default function NPCsPage() {
 
     fetchNPCs();
   }, []);
+
+  const handleGenerateNPC = async () => {
+    setIsGenerating(true);
+    try {
+      // Generate the NPC using AI
+      const generateResponse = await fetch('/api/generate/npc', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          theme: 'Fantasy',
+          tone: 'Adventurous',
+          setting: 'Medieval',
+          genre: 'Fantasy'
+        }),
+      });
+
+      if (!generateResponse.ok) throw new Error('Failed to generate NPC');
+      const generatedNPC = await generateResponse.json();
+
+      // Save the generated NPC
+      const saveResponse = await fetch('/api/npcs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(generatedNPC),
+      });
+
+      if (!saveResponse.ok) throw new Error('Failed to save NPC');
+      const savedNPC = await saveResponse.json();
+
+      // Add the new NPC to the beginning of the list
+      setNPCs([savedNPC, ...npcs]);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to generate NPC');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleDuplicate = async (id: string) => {
+    try {
+      const response = await fetch(`/api/npcs/${id}/duplicate`, {
+        method: 'POST',
+      });
+      if (!response.ok) throw new Error('Failed to duplicate NPC');
+      const newNPC = await response.json();
+      setNPCs([...npcs, newNPC]);
+    } catch (error) {
+      console.error('Error duplicating NPC:', error);
+    }
+  };
 
   if (loading) {
     return (
@@ -63,10 +119,11 @@ export default function NPCsPage() {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">NPCs</h1>
           <button
-            onClick={() => router.push('/npcs/new')}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            onClick={handleGenerateNPC}
+            disabled={isGenerating}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
           >
-            Create New NPC
+            {isGenerating ? 'Generating...' : 'Generate New NPC'}
           </button>
         </div>
 
@@ -104,7 +161,7 @@ export default function NPCsPage() {
                     </div>
                     <button
                       onClick={() => setCollapsedNPCs(prev => ({ ...prev, [npc.id]: !isCollapsed }))}
-                      className="text-blue-600 hover:text-blue-800"
+                      className="text-blue-600 hover:text-blue-800 text-sm"
                     >
                       {isCollapsed ? 'Show Details' : 'Hide Details'}
                     </button>
@@ -128,12 +185,25 @@ export default function NPCsPage() {
                         <h3 className="text-sm font-medium text-gray-500">Goals</h3>
                         <p className="mt-1 text-gray-900">{npc.goals}</p>
                       </div>
-                      <div className="flex justify-end space-x-4">
+                      <div className="flex justify-end gap-2">
                         <button
+                          className="text-blue-600 hover:underline text-sm"
                           onClick={() => router.push(`/npcs/${npc.id}/edit`)}
-                          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         >
                           Edit
+                        </button>
+                        <button
+                          className="text-green-600 hover:underline text-sm"
+                          onClick={() => handleDuplicate(npc.id)}
+                        >
+                          Duplicate
+                        </button>
+                        <button
+                          className="text-red-500 hover:underline text-sm"
+                          onClick={() => setDeleteModal({ type: 'npc', id: npc.id })}
+                          aria-label="Delete NPC"
+                        >
+                          Delete
                         </button>
                       </div>
                     </div>

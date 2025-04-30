@@ -22,6 +22,9 @@ export async function GET(request: Request) {
             campaign: true
           }
         }
+      },
+      orderBy: {
+        updatedAt: 'desc'
       }
     });
 

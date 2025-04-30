@@ -2,11 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { use } from 'react';
 import Layout from '@/components/Layout';
 import { City, Campaign } from '@/types/campaign';
 
-export default function EditCity({ params }: { params: { id: string } }) {
+type PageParams = {
+  id: string;
+};
+
+export default function EditCity({ params }: { params: PageParams }) {
   const router = useRouter();
+  const resolvedParams = use(Promise.resolve(params)) as PageParams;
   const [city, setCity] = useState<City | null>(null);
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +22,7 @@ export default function EditCity({ params }: { params: { id: string } }) {
     const fetchData = async () => {
       try {
         // Fetch city data
-        const cityResponse = await fetch(`/api/cities/${params.id}`);
+        const cityResponse = await fetch(`/api/cities/${resolvedParams.id}`);
         if (!cityResponse.ok) throw new Error('Failed to fetch city');
         const cityData = await cityResponse.json();
         setCity(cityData);
@@ -34,7 +40,7 @@ export default function EditCity({ params }: { params: { id: string } }) {
     };
 
     fetchData();
-  }, [params.id]);
+  }, [resolvedParams.id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,7 +48,7 @@ export default function EditCity({ params }: { params: { id: string } }) {
 
     try {
       // First update the city
-      const cityResponse = await fetch(`/api/cities/${params.id}`, {
+      const cityResponse = await fetch(`/api/cities/${resolvedParams.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +60,7 @@ export default function EditCity({ params }: { params: { id: string } }) {
 
       // Then update the campaign relationship
       if (city.campaignId) {
-        const campaignResponse = await fetch(`/api/cities/${params.id}/campaigns`, {
+        const campaignResponse = await fetch(`/api/cities/${resolvedParams.id}/campaigns`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -152,11 +158,12 @@ export default function EditCity({ params }: { params: { id: string } }) {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Population</label>
               <input
-                type="text"
+                type="number"
                 value={city.population}
-                onChange={(e) => setCity({ ...city, population: e.target.value })}
+                onChange={(e) => setCity({ ...city, population: parseInt(e.target.value) || 0 })}
                 className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                 required
+                min="0"
               />
             </div>
 

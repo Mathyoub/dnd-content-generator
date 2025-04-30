@@ -3,29 +3,41 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Layout from '@/components/Layout';
-import { Item } from '@/types/campaign';
+import { Item, Campaign } from '@/types/campaign';
 
 export default function EditItem({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [item, setItem] = useState<Item | null>(null);
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchItem = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`/api/items/${params.id}`);
-        if (!response.ok) throw new Error('Failed to fetch item');
-        const data = await response.json();
-        setItem(data);
+        // Fetch item data
+        const itemResponse = await fetch(`/api/items/${params.id}`);
+        if (!itemResponse.ok) throw new Error('Failed to fetch item');
+        const itemData = await itemResponse.json();
+        // Set campaignId from the first campaign if it exists
+        setItem({
+          ...itemData,
+          campaignId: itemData.campaigns?.[0]?.id || null
+        });
+
+        // Fetch campaigns
+        const campaignsResponse = await fetch('/api/campaigns');
+        if (!campaignsResponse.ok) throw new Error('Failed to fetch campaigns');
+        const campaignsData = await campaignsResponse.json();
+        setCampaigns(campaignsData);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch item');
+        setError(err instanceof Error ? err.message : 'Failed to fetch data');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchItem();
+    fetchData();
   }, [params.id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,7 +45,8 @@ export default function EditItem({ params }: { params: { id: string } }) {
     if (!item) return;
 
     try {
-      const response = await fetch(`/api/items/${params.id}`, {
+      // First update the item
+      const itemResponse = await fetch(`/api/items/${params.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +54,21 @@ export default function EditItem({ params }: { params: { id: string } }) {
         body: JSON.stringify(item),
       });
 
-      if (!response.ok) throw new Error('Failed to update item');
+      if (!itemResponse.ok) throw new Error('Failed to update item');
+
+      // Then update the campaign relationship
+      if (item.campaignId) {
+        const campaignResponse = await fetch(`/api/items/${params.id}/campaigns`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ campaignId: item.campaignId }),
+        });
+
+        if (!campaignResponse.ok) throw new Error('Failed to update campaign relationship');
+      }
+
       router.push('/items');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update item');
@@ -96,6 +123,22 @@ export default function EditItem({ params }: { params: { id: string } }) {
             </div>
 
             <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Campaign</label>
+              <select
+                value={item.campaignId || ''}
+                onChange={(e) => setItem({ ...item, campaignId: e.target.value || null })}
+                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+              >
+                <option value="">No Campaign</option>
+                {campaigns.map((campaign) => (
+                  <option key={campaign.id} value={campaign.id}>
+                    {campaign.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Type</label>
               <input
                 type="text"
@@ -122,41 +165,51 @@ export default function EditItem({ params }: { params: { id: string } }) {
                 <option value="Artifact">Artifact</option>
               </select>
             </div>
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
-            <textarea
-              value={item.description}
-              onChange={(e) => setItem({ ...item, description: e.target.value })}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
-              rows={4}
-              required
-            />
-          </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+              <textarea
+                value={item.description}
+                onChange={(e) => setItem({ ...item, description: e.target.value })}
+                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                rows={3}
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Properties</label>
-            <textarea
-              value={item.properties}
-              onChange={(e) => setItem({ ...item, properties: e.target.value })}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
-              rows={4}
-              required
-            />
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Properties</label>
+              <textarea
+                value={Array.isArray(item.properties) ? item.properties.join('\n') : JSON.stringify(item.properties)}
+                onChange={(e) => setItem({ ...item, properties: e.target.value.split('\n') })}
+                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                rows={3}
+                required
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">History</label>
+              <textarea
+                value={item.history || ''}
+                onChange={(e) => setItem({ ...item, history: e.target.value })}
+                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                rows={3}
+              />
+            </div>
           </div>
 
           <div className="flex justify-end space-x-4">
             <button
               type="button"
               onClick={() => router.push('/items')}
-              className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
             >
               Save Changes
             </button>

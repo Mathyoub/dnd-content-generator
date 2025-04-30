@@ -47,28 +47,30 @@ export async function POST(
 ) {
   try {
     const { campaignId } = await request.json();
+    console.log('Updating NPC campaign:', { npcId: params.id, campaignId });
 
-    // Check if the relationship already exists
-    const existing = await prisma.campaignNPC.findUnique({
-      where: {
-        campaignId_npcId: {
-          campaignId,
-          npcId: params.id
-        }
-      }
+    // First, remove any existing campaign relationships
+    await prisma.campaignNPC.deleteMany({
+      where: { npcId: params.id }
     });
 
-    if (existing) {
-      return NextResponse.json({ error: 'Relationship already exists' }, { status: 400 });
+    // If a new campaign is selected, create the relationship
+    if (campaignId) {
+      try {
+        await prisma.campaignNPC.create({
+          data: {
+            npcId: params.id,
+            campaignId
+          }
+        });
+      } catch (createError) {
+        console.error('Error creating campaign relationship:', createError);
+        return NextResponse.json(
+          { error: 'Failed to create campaign relationship', details: createError },
+          { status: 500 }
+        );
+      }
     }
-
-    // Create the relationship
-    await prisma.campaignNPC.create({
-      data: {
-        campaignId,
-        npcId: params.id
-      }
-    });
 
     // Fetch the updated NPC with its campaigns
     const npc = await prisma.nPC.findUnique({
@@ -76,27 +78,30 @@ export async function POST(
       include: {
         campaigns: {
           include: {
-            campaign: {
-              select: {
-                id: true,
-                name: true
-              }
-            }
+            campaign: true
           }
         }
       }
     });
 
-    // Transform the response
+    if (!npc) {
+      return NextResponse.json({ error: 'NPC not found' }, { status: 404 });
+    }
+
+    // Transform the response to match the expected format
     const transformedNPC = {
       ...npc,
-      campaigns: npc?.campaigns.map(cc => cc.campaign) || []
+      campaignId: npc.campaigns[0]?.campaignId || null,
+      campaigns: npc.campaigns.map(c => c.campaign)
     };
 
     return NextResponse.json(transformedNPC);
   } catch (error) {
-    console.error('Error adding NPC to campaign:', error);
-    return NextResponse.json({ error: 'Failed to add NPC to campaign' }, { status: 500 });
+    console.error('Error updating NPC campaign:', error);
+    return NextResponse.json(
+      { error: 'Failed to update NPC campaign', details: error },
+      { status: 500 }
+    );
   }
 }
 

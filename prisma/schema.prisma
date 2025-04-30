@@ -51,7 +51,7 @@ model City {
   id               String    @id @default(uuid())
   name             String
   size             String
-  population       String
+  population       Int
   government       String
   economy          String
   notableLocations Json

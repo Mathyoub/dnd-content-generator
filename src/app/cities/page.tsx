@@ -12,6 +12,8 @@ export default function CitiesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [collapsedCities, setCollapsedCities] = useState<{ [id: string]: boolean }>({});
+  const [deleteModal, setDeleteModal] = useState<{ type: 'city'; id: string } | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -36,6 +38,37 @@ export default function CitiesPage() {
 
     fetchCities();
   }, []);
+
+  const handleGenerateCity = async () => {
+    setIsGenerating(true);
+    try {
+      // Generate a new city using AI
+      const generateResponse = await fetch('/api/generate/city', {
+        method: 'POST',
+      });
+      if (!generateResponse.ok) throw new Error('Failed to generate city');
+      const generatedCity = await generateResponse.json();
+
+      // Save the generated city
+      const saveResponse = await fetch('/api/cities', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(generatedCity),
+      });
+      if (!saveResponse.ok) throw new Error('Failed to save city');
+      const savedCity = await saveResponse.json();
+
+      // Add the new city to the beginning of the list
+      setCities([savedCity, ...cities]);
+      setCollapsedCities(prev => ({ ...prev, [savedCity.id]: true }));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to generate city');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -63,10 +96,11 @@ export default function CitiesPage() {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Cities</h1>
           <button
-            onClick={() => router.push('/cities/new')}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            onClick={handleGenerateCity}
+            disabled={isGenerating}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Create New City
+            {isGenerating ? 'Generating...' : 'Generate New City'}
           </button>
         </div>
 
@@ -128,12 +162,36 @@ export default function CitiesPage() {
                         <h3 className="text-sm font-medium text-gray-500">Description</h3>
                         <p className="mt-1 text-gray-900">{city.description}</p>
                       </div>
-                      <div className="flex justify-end space-x-4">
+                      <div className="mt-4 flex justify-end gap-2">
                         <button
+                          className="text-blue-600 hover:underline text-sm"
                           onClick={() => router.push(`/cities/${city.id}/edit`)}
-                          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         >
                           Edit
+                        </button>
+                        <button
+                          className="text-green-600 hover:underline text-sm"
+                          onClick={async () => {
+                            try {
+                              const response = await fetch(`/api/cities/${city.id}/duplicate`, {
+                                method: 'POST',
+                              });
+                              if (!response.ok) throw new Error('Failed to duplicate city');
+                              const newCity = await response.json();
+                              setCities([newCity, ...cities]);
+                            } catch (error) {
+                              console.error('Error duplicating city:', error);
+                            }
+                          }}
+                        >
+                          Duplicate
+                        </button>
+                        <button
+                          className="text-red-500 hover:underline text-sm"
+                          onClick={() => setDeleteModal({ type: 'city', id: city.id })}
+                          aria-label="Delete city"
+                        >
+                          Delete
                         </button>
                       </div>
                     </div>

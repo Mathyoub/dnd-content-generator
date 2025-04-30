@@ -29,24 +29,23 @@ export type NPC = {
   id: string;
   name: string;
   race: string;
-  class?: string;
+  class: string;
   alignment: string;
   description: string;
   background: string;
   personality: string;
-  goals: string[];
-  relationships: string[];
-  campaigns: {
-    id: string;
-    name: string;
-  }[];
+  goals: string;
+  relationships?: any; // This can be any type since it's parsed from JSON
+  campaignId?: string | null;
+  campaigns?: Campaign[];
+  updatedAt: string;
 };
 
 export type City = {
   id: string;
   name: string;
   size: string;
-  population: string;
+  population: number;
   government: string;
   economy: string;
   notableLocations: string;
@@ -54,6 +53,7 @@ export type City = {
   history: string;
   campaignId?: string | null;
   campaigns?: Campaign[];
+  updatedAt: string;
 };
 
 export type Campaign = {
@@ -64,21 +64,18 @@ export type Campaign = {
   updatedAt: string;
 };
 
-export interface Item {
+export type Item = {
   id: string;
   name: string;
   type: string;
   rarity: string;
   description: string;
-  properties: any;
+  properties: string[];
   history?: string;
-  createdAt: string;
+  campaignId?: string | null;
+  campaigns?: Campaign[];
   updatedAt: string;
-  campaigns: {
-    id: string;
-    name: string;
-  }[];
-}
+};
 
 export type GeneratedContent = {
   npcs: NPC[];

@@ -12,6 +12,8 @@ export default function Items() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [collapsedItems, setCollapsedItems] = useState<{ [id: string]: boolean }>({});
+  const [deleteModal, setDeleteModal] = useState<{ type: 'item'; id: string } | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -34,6 +36,60 @@ export default function Items() {
 
     fetchItems();
   }, []);
+
+  const handleGenerateItem = async () => {
+    setIsGenerating(true);
+    try {
+      // Generate the item using AI
+      const generateResponse = await fetch('/api/generate/item', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          theme: 'Fantasy',
+          tone: 'Adventurous',
+          setting: 'Medieval',
+          genre: 'Fantasy'
+        }),
+      });
+
+      if (!generateResponse.ok) throw new Error('Failed to generate item');
+      const generatedItem = await generateResponse.json();
+
+      // Save the generated item
+      const saveResponse = await fetch('/api/items', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(generatedItem),
+      });
+
+      if (!saveResponse.ok) throw new Error('Failed to save item');
+      const savedItem = await saveResponse.json();
+
+      // Add the new item to the beginning of the list
+      setItems([savedItem, ...items]);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to generate item');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleDuplicate = async (id: string) => {
+    try {
+      const response = await fetch(`/api/items/${id}/duplicate`, {
+        method: 'POST',
+      });
+      if (!response.ok) throw new Error('Failed to duplicate item');
+      const newItem = await response.json();
+      setItems([...items, newItem]);
+    } catch (error) {
+      console.error('Error duplicating item:', error);
+    }
+  };
 
   if (loading) {
     return (
@@ -61,10 +117,11 @@ export default function Items() {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Items</h1>
           <button
-            onClick={() => router.push('/items/new')}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            onClick={handleGenerateItem}
+            disabled={isGenerating}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
           >
-            Create New Item
+            {isGenerating ? 'Generating...' : 'Generate New Item'}
           </button>
         </div>
 
@@ -102,7 +159,7 @@ export default function Items() {
                     </div>
                     <button
                       onClick={() => setCollapsedItems(prev => ({ ...prev, [item.id]: !isCollapsed }))}
-                      className="text-blue-600 hover:text-blue-800"
+                      className="text-blue-600 hover:text-blue-800 text-sm"
                     >
                       {isCollapsed ? 'Show Details' : 'Hide Details'}
                     </button>
@@ -118,12 +175,25 @@ export default function Items() {
                         <h3 className="text-sm font-medium text-gray-500">Properties</h3>
                         <p className="mt-1 text-gray-900">{item.properties}</p>
                       </div>
-                      <div className="flex justify-end space-x-4">
+                      <div className="flex justify-end gap-2">
                         <button
+                          className="text-blue-600 hover:underline text-sm"
                           onClick={() => router.push(`/items/${item.id}/edit`)}
-                          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         >
                           Edit
+                        </button>
+                        <button
+                          className="text-green-600 hover:underline text-sm"
+                          onClick={() => handleDuplicate(item.id)}
+                        >
+                          Duplicate
+                        </button>
+                        <button
+                          className="text-red-500 hover:underline text-sm"
+                          onClick={() => setDeleteModal({ type: 'item', id: item.id })}
+                          aria-label="Delete Item"
+                        >
+                          Delete
                         </button>
                       </div>
                     </div>

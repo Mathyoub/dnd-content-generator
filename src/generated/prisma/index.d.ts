@@ -3954,15 +3954,25 @@ export namespace Prisma {
 
   export type AggregateCity = {
     _count: CityCountAggregateOutputType | null
+    _avg: CityAvgAggregateOutputType | null
+    _sum: CitySumAggregateOutputType | null
     _min: CityMinAggregateOutputType | null
     _max: CityMaxAggregateOutputType | null
+  }
+
+  export type CityAvgAggregateOutputType = {
+    population: number | null
+  }
+
+  export type CitySumAggregateOutputType = {
+    population: number | null
   }
 
   export type CityMinAggregateOutputType = {
     id: string | null
     name: string | null
     size: string | null
-    population: string | null
+    population: number | null
     government: string | null
     economy: string | null
     description: string | null
@@ -3975,7 +3985,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     size: string | null
-    population: string | null
+    population: number | null
     government: string | null
     economy: string | null
     description: string | null
@@ -3999,6 +4009,14 @@ export namespace Prisma {
     _all: number
   }
 
+
+  export type CityAvgAggregateInputType = {
+    population?: true
+  }
+
+  export type CitySumAggregateInputType = {
+    population?: true
+  }
 
   export type CityMinAggregateInputType = {
     id?: true
@@ -4079,6 +4097,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: CityAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CitySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: CityMinAggregateInputType
@@ -4109,6 +4139,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: CityCountAggregateInputType | true
+    _avg?: CityAvgAggregateInputType
+    _sum?: CitySumAggregateInputType
     _min?: CityMinAggregateInputType
     _max?: CityMaxAggregateInputType
   }
@@ -4117,7 +4149,7 @@ export namespace Prisma {
     id: string
     name: string
     size: string
-    population: string
+    population: number
     government: string
     economy: string
     notableLocations: JsonValue
@@ -4126,6 +4158,8 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     _count: CityCountAggregateOutputType | null
+    _avg: CityAvgAggregateOutputType | null
+    _sum: CitySumAggregateOutputType | null
     _min: CityMinAggregateOutputType | null
     _max: CityMaxAggregateOutputType | null
   }
@@ -4219,7 +4253,7 @@ export namespace Prisma {
       id: string
       name: string
       size: string
-      population: string
+      population: number
       government: string
       economy: string
       notableLocations: Prisma.JsonValue
@@ -4654,7 +4688,7 @@ export namespace Prisma {
     readonly id: FieldRef<"City", 'String'>
     readonly name: FieldRef<"City", 'String'>
     readonly size: FieldRef<"City", 'String'>
-    readonly population: FieldRef<"City", 'String'>
+    readonly population: FieldRef<"City", 'Int'>
     readonly government: FieldRef<"City", 'String'>
     readonly economy: FieldRef<"City", 'String'>
     readonly notableLocations: FieldRef<"City", 'Json'>
@@ -9631,6 +9665,20 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
   /**
    * Deep Input Types
    */
@@ -9839,7 +9887,7 @@ export namespace Prisma {
     id?: StringFilter<"City"> | string
     name?: StringFilter<"City"> | string
     size?: StringFilter<"City"> | string
-    population?: StringFilter<"City"> | string
+    population?: IntFilter<"City"> | number
     government?: StringFilter<"City"> | string
     economy?: StringFilter<"City"> | string
     notableLocations?: JsonFilter<"City">
@@ -9872,7 +9920,7 @@ export namespace Prisma {
     NOT?: CityWhereInput | CityWhereInput[]
     name?: StringFilter<"City"> | string
     size?: StringFilter<"City"> | string
-    population?: StringFilter<"City"> | string
+    population?: IntFilter<"City"> | number
     government?: StringFilter<"City"> | string
     economy?: StringFilter<"City"> | string
     notableLocations?: JsonFilter<"City">
@@ -9896,8 +9944,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CityCountOrderByAggregateInput
+    _avg?: CityAvgOrderByAggregateInput
     _max?: CityMaxOrderByAggregateInput
     _min?: CityMinOrderByAggregateInput
+    _sum?: CitySumOrderByAggregateInput
   }
 
   export type CityScalarWhereWithAggregatesInput = {
@@ -9907,7 +9957,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"City"> | string
     name?: StringWithAggregatesFilter<"City"> | string
     size?: StringWithAggregatesFilter<"City"> | string
-    population?: StringWithAggregatesFilter<"City"> | string
+    population?: IntWithAggregatesFilter<"City"> | number
     government?: StringWithAggregatesFilter<"City"> | string
     economy?: StringWithAggregatesFilter<"City"> | string
     notableLocations?: JsonWithAggregatesFilter<"City">
@@ -10413,7 +10463,7 @@ export namespace Prisma {
     id?: string
     name: string
     size: string
-    population: string
+    population: number
     government: string
     economy: string
     notableLocations: JsonNullValueInput | InputJsonValue
@@ -10428,7 +10478,7 @@ export namespace Prisma {
     id?: string
     name: string
     size: string
-    population: string
+    population: number
     government: string
     economy: string
     notableLocations: JsonNullValueInput | InputJsonValue
@@ -10443,7 +10493,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
-    population?: StringFieldUpdateOperationsInput | string
+    population?: IntFieldUpdateOperationsInput | number
     government?: StringFieldUpdateOperationsInput | string
     economy?: StringFieldUpdateOperationsInput | string
     notableLocations?: JsonNullValueInput | InputJsonValue
@@ -10458,7 +10508,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
-    population?: StringFieldUpdateOperationsInput | string
+    population?: IntFieldUpdateOperationsInput | number
     government?: StringFieldUpdateOperationsInput | string
     economy?: StringFieldUpdateOperationsInput | string
     notableLocations?: JsonNullValueInput | InputJsonValue
@@ -10473,7 +10523,7 @@ export namespace Prisma {
     id?: string
     name: string
     size: string
-    population: string
+    population: number
     government: string
     economy: string
     notableLocations: JsonNullValueInput | InputJsonValue
@@ -10487,7 +10537,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
-    population?: StringFieldUpdateOperationsInput | string
+    population?: IntFieldUpdateOperationsInput | number
     government?: StringFieldUpdateOperationsInput | string
     economy?: StringFieldUpdateOperationsInput | string
     notableLocations?: JsonNullValueInput | InputJsonValue
@@ -10501,7 +10551,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
-    population?: StringFieldUpdateOperationsInput | string
+    population?: IntFieldUpdateOperationsInput | number
     government?: StringFieldUpdateOperationsInput | string
     economy?: StringFieldUpdateOperationsInput | string
     notableLocations?: JsonNullValueInput | InputJsonValue
@@ -11039,6 +11089,17 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type CityCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -11051,6 +11112,10 @@ export namespace Prisma {
     history?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type CityAvgOrderByAggregateInput = {
+    population?: SortOrder
   }
 
   export type CityMaxOrderByAggregateInput = {
@@ -11077,6 +11142,26 @@ export namespace Prisma {
     history?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type CitySumOrderByAggregateInput = {
+    population?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type ItemCountOrderByAggregateInput = {
@@ -11418,6 +11503,14 @@ export namespace Prisma {
     connect?: CampaignCityWhereUniqueInput | CampaignCityWhereUniqueInput[]
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type CampaignCityUpdateManyWithoutCityNestedInput = {
     create?: XOR<CampaignCityCreateWithoutCityInput, CampaignCityUncheckedCreateWithoutCityInput> | CampaignCityCreateWithoutCityInput[] | CampaignCityUncheckedCreateWithoutCityInput[]
     connectOrCreate?: CampaignCityCreateOrConnectWithoutCityInput | CampaignCityCreateOrConnectWithoutCityInput[]
@@ -11715,6 +11808,33 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type CampaignCityCreateWithoutCampaignInput = {
@@ -12039,7 +12159,7 @@ export namespace Prisma {
     id?: string
     name: string
     size: string
-    population: string
+    population: number
     government: string
     economy: string
     notableLocations: JsonNullValueInput | InputJsonValue
@@ -12053,7 +12173,7 @@ export namespace Prisma {
     id?: string
     name: string
     size: string
-    population: string
+    population: number
     government: string
     economy: string
     notableLocations: JsonNullValueInput | InputJsonValue
@@ -12134,7 +12254,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
-    population?: StringFieldUpdateOperationsInput | string
+    population?: IntFieldUpdateOperationsInput | number
     government?: StringFieldUpdateOperationsInput | string
     economy?: StringFieldUpdateOperationsInput | string
     notableLocations?: JsonNullValueInput | InputJsonValue
@@ -12148,7 +12268,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
-    population?: StringFieldUpdateOperationsInput | string
+    population?: IntFieldUpdateOperationsInput | number
     government?: StringFieldUpdateOperationsInput | string
     economy?: StringFieldUpdateOperationsInput | string
     notableLocations?: JsonNullValueInput | InputJsonValue

@@ -47,28 +47,30 @@ export async function POST(
 ) {
   try {
     const { campaignId } = await request.json();
+    console.log('Updating item campaign:', { itemId: params.id, campaignId });
 
-    // Check if the relationship already exists
-    const existing = await prisma.campaignItem.findUnique({
-      where: {
-        campaignId_itemId: {
-          campaignId,
-          itemId: params.id
-        }
-      }
+    // First, remove any existing campaign relationships
+    await prisma.campaignItem.deleteMany({
+      where: { itemId: params.id }
     });
 
-    if (existing) {
-      return NextResponse.json({ error: 'Relationship already exists' }, { status: 400 });
+    // If a new campaign is selected, create the relationship
+    if (campaignId) {
+      try {
+        await prisma.campaignItem.create({
+          data: {
+            itemId: params.id,
+            campaignId
+          }
+        });
+      } catch (createError) {
+        console.error('Error creating campaign relationship:', createError);
+        return NextResponse.json(
+          { error: 'Failed to create campaign relationship', details: createError },
+          { status: 500 }
+        );
+      }
     }
-
-    // Create the relationship
-    await prisma.campaignItem.create({
-      data: {
-        campaignId,
-        itemId: params.id
-      }
-    });
 
     // Fetch the updated item with its campaigns
     const item = await prisma.item.findUnique({
@@ -76,27 +78,30 @@ export async function POST(
       include: {
         campaigns: {
           include: {
-            campaign: {
-              select: {
-                id: true,
-                name: true
-              }
-            }
+            campaign: true
           }
         }
       }
     });
 
-    // Transform the response
+    if (!item) {
+      return NextResponse.json({ error: 'Item not found' }, { status: 404 });
+    }
+
+    // Transform the response to match the expected format
     const transformedItem = {
       ...item,
-      campaigns: item?.campaigns.map(cc => cc.campaign) || []
+      campaignId: item.campaigns[0]?.campaignId || null,
+      campaigns: item.campaigns.map(c => c.campaign)
     };
 
     return NextResponse.json(transformedItem);
   } catch (error) {
-    console.error('Error adding item to campaign:', error);
-    return NextResponse.json({ error: 'Failed to add item to campaign' }, { status: 500 });
+    console.error('Error updating item campaign:', error);
+    return NextResponse.json(
+      { error: 'Failed to update item campaign', details: error },
+      { status: 500 }
+    );
   }
 }
 

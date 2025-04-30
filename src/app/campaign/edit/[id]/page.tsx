@@ -70,6 +70,8 @@ export default function EditCampaign() {
   const [saving, setSaving] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     if (!campaignId) return;
@@ -124,6 +126,23 @@ export default function EditCampaign() {
     }
   };
 
+  const handleDeleteCampaign = async () => {
+    if (!campaignId) return;
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/campaign/${campaignId}`, { method: 'DELETE' });
+      if (res.ok) {
+        router.push('/campaign/list');
+      } else {
+        setDeleting(false);
+        alert('Failed to delete campaign');
+      }
+    } catch {
+      setDeleting(false);
+      alert('Failed to delete campaign');
+    }
+  };
+
   // Add handlers for tone and commonLandscapes
   const handleToneChange = (tone: CampaignTone) => {
     if (!settings) return;
@@ -153,16 +172,49 @@ export default function EditCampaign() {
       <div className="max-w-2xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Edit Campaign</h1>
-          <button
-            type="submit"
-            form="campaign-form"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            disabled={saving}
-          >
-            {saving ? "Saving..." : "Save Changes"}
-          </button>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+              onClick={() => setShowDeleteModal(true)}
+            >
+              Delete Campaign
+            </button>
+            <button
+              type="submit"
+              form="campaign-form"
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              disabled={saving}
+            >
+              {saving ? "Saving..." : "Save Changes"}
+            </button>
+          </div>
         </div>
         {apiError && <div className="text-red-500 mb-4">{apiError}</div>}
+        {showDeleteModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800/50">
+            <div className="bg-white rounded shadow-lg p-6 max-w-sm w-full text-gray-900">
+              <h3 className="text-lg font-semibold mb-4">Delete Campaign</h3>
+              <p className="mb-6">Are you sure you want to delete this campaign? This action cannot be undone.</p>
+              <div className="flex justify-end gap-4">
+                <button
+                  className="px-4 py-2 rounded bg-gray-200 text-gray-900 hover:bg-gray-300"
+                  onClick={() => setShowDeleteModal(false)}
+                  disabled={deleting}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
+                  onClick={handleDeleteCampaign}
+                  disabled={deleting}
+                >
+                  {deleting ? 'Deleting...' : 'Delete'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         <form id="campaign-form" onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">

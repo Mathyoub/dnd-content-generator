@@ -75,7 +75,7 @@ const parseResponse = (type: 'city' | 'npc' | 'item', response: string): City | 
 
 export async function generateCity(settings?: CampaignSetting) {
   const prompt = settings
-    ? `Generate a city for a ${settings.theme} campaign with a ${settings.tone.join(', ')} tone. The city should be consistent with the following settings:
+    ? `Generate a unique and creative city for a ${settings.theme} campaign with a ${settings.tone.join(', ')} tone. The city should be consistent with the following settings:
       - Magic is ${settings.magicCommonality || 'common'}
       - Technology level is ${settings.technologyLevel || 'medieval'}
       - The world is ${settings.civilizationState || 'thriving'}
@@ -83,27 +83,44 @@ export async function generateCity(settings?: CampaignSetting) {
       - Religion is ${settings.roleOfReligion || 'important'} and religious figures are ${settings.religiousFiguresPerception || 'respected'}
       - Major conflicts: ${settings.majorConflictsThreats || 'none specified'}
 
+      Create a city with a unique name that reflects its culture, history, or environment. Avoid common fantasy city names like "Eldoria", "Rivendell", "Stormwind", or "Neverwinter". Instead, use creative combinations of:
+      - Cultural influences (e.g., "Zhar'khan" for a desert city, "Vael'thora" for an elven city)
+      - Geographic features (e.g., "Stormpeak" for a mountain city, "Misthaven" for a coastal city)
+      - Historical events (e.g., "Lastlight" for a city that survived a great darkness, "Dawnspire" for a city built at sunrise)
+      - Local language elements (e.g., "Kor'vash" for a dwarven city, "Syl'varen" for a forest city)
+      - Unique naming patterns (e.g., "The Shattered Spire", "The Glass Gardens", "The Whispering Hollows")
+      - Compound words with unique suffixes/prefixes (e.g., "Duskreach", "Frosthold", "Ironvein")
+      - Mythological references (e.g., "Titan's Rest", "Dragon's Maw", "Phoenix Rise")
+      - Natural phenomena (e.g., "Aurora's End", "Tide's Edge", "Storm's Eye")
+      - Cultural artifacts (e.g., "The Obsidian Throne", "The Crystal Spire", "The Iron Archive")
+
       Generate a detailed city with the following structure:
       {
-        "name": "string",
-        "size": "string",
-        "population": "string",
-        "government": "string",
-        "economy": "string",
-        "notableLocations": ["string"],
-        "description": "string",
-        "history": "string"
+        "name": "string (unique and creative name)",
+        "size": "string (Village, Town, City, or Metropolis)",
+        "population": number (exact population count as an integer, e.g., 12500),
+        "government": "string (unique form of government)",
+        "economy": "string (detailed economy description)",
+        "notableLocations": ["string (unique and interesting locations)"],
+        "description": "string (vivid description of the city's appearance and atmosphere)",
+        "history": "string (unique historical background)"
       }`
-    : `Generate a detailed fantasy city with the following structure:
+    : `Generate a unique and creative fantasy city. Create a city with a distinctive name that reflects its culture, history, or environment. Avoid common fantasy city names like "Eldoria" or "Rivendell". Instead, use creative combinations of:
+      - Cultural influences (e.g., "Zhar'khan" for a desert city)
+      - Geographic features (e.g., "Stormpeak" for a mountain city)
+      - Historical events (e.g., "Lastlight" for a city that survived a great darkness)
+      - Local language elements (e.g., "Vael'thora" for an elven city)
+
+      Generate a detailed city with the following structure:
       {
-        "name": "string",
-        "size": "string",
-        "population": "string",
-        "government": "string",
-        "economy": "string",
-        "notableLocations": ["string"],
-        "description": "string",
-        "history": "string"
+        "name": "string (unique and creative name)",
+        "size": "string (Village, Town, City, or Metropolis)",
+        "population": number (exact population count as an integer, e.g., 12500),
+        "government": "string (unique form of government)",
+        "economy": "string (detailed economy description)",
+        "notableLocations": ["string (unique and interesting locations)"],
+        "description": "string (vivid description of the city's appearance and atmosphere)",
+        "history": "string (unique historical background)"
       }`;
 
   const response = await openai.chat.completions.create({
@@ -111,14 +128,15 @@ export async function generateCity(settings?: CampaignSetting) {
     messages: [
       {
         role: "system",
-        content: "You are a creative assistant that generates detailed fantasy cities. Your responses should be in valid JSON format."
+        content: "You are a creative assistant that generates unique and detailed fantasy cities. Your responses should be in valid JSON format. Each city should have a distinctive name and character that sets it apart from other fantasy cities. The population field must be a number (integer), not a string."
       },
       {
         role: "user",
         content: prompt
       }
     ],
-    response_format: { type: "json_object" }
+    response_format: { type: "json_object" },
+    temperature: 0.9
   });
 
   console.log('Raw response:', response.choices[0].message.content);

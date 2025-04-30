@@ -20,7 +20,6 @@ export default function GenerateContent() {
   const [collapsedCities, setCollapsedCities] = useState<{ [id: string]: boolean }>({});
   const [collapsedItems, setCollapsedItems] = useState<{ [id: string]: boolean }>({});
   const [deleteModal, setDeleteModal] = useState<null | { type: 'city' | 'npc' | 'item'; id: string }>(null);
-  const [showDeleteCampaignModal, setShowDeleteCampaignModal] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
@@ -42,9 +41,13 @@ export default function GenerateContent() {
         const citiesResponse = await fetch(`/api/cities?campaignId=${campaignId}`);
         if (citiesResponse.ok) {
           const citiesData = await citiesResponse.json();
-          setCities(citiesData);
+          // Sort cities by updatedAt in descending order
+          const sortedCities = citiesData.sort((a: City, b: City) =>
+            new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+          );
+          setCities(sortedCities);
           // Initialize collapsed state for cities
-          setCollapsedCities(citiesData.reduce((acc: { [id: string]: boolean }, city: City) => {
+          setCollapsedCities(sortedCities.reduce((acc: { [id: string]: boolean }, city: City) => {
             acc[city.id] = true;
             return acc;
           }, {}));
@@ -54,9 +57,13 @@ export default function GenerateContent() {
         const npcsResponse = await fetch(`/api/npcs?campaignId=${campaignId}`);
         if (npcsResponse.ok) {
           const npcsData = await npcsResponse.json();
-          setNPCs(npcsData);
+          // Sort NPCs by updatedAt in descending order
+          const sortedNPCs = npcsData.sort((a: NPC, b: NPC) =>
+            new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+          );
+          setNPCs(sortedNPCs);
           // Initialize collapsed state for NPCs
-          setCollapsedNPCs(npcsData.reduce((acc: { [id: string]: boolean }, npc: NPC) => {
+          setCollapsedNPCs(sortedNPCs.reduce((acc: { [id: string]: boolean }, npc: NPC) => {
             acc[npc.id] = true;
             return acc;
           }, {}));
@@ -66,9 +73,13 @@ export default function GenerateContent() {
         const itemsResponse = await fetch(`/api/items?campaignId=${campaignId}`);
         if (itemsResponse.ok) {
           const itemsData = await itemsResponse.json();
-          setItems(itemsData);
+          // Sort items by updatedAt in descending order
+          const sortedItems = itemsData.sort((a: Item, b: Item) =>
+            new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+          );
+          setItems(sortedItems);
           // Initialize collapsed state for items
-          setCollapsedItems(itemsData.reduce((acc: { [id: string]: boolean }, item: Item) => {
+          setCollapsedItems(sortedItems.reduce((acc: { [id: string]: boolean }, item: Item) => {
             acc[item.id] = true;
             return acc;
           }, {}));
@@ -187,15 +198,16 @@ export default function GenerateContent() {
 
       const savedData = await saveResponse.json();
 
+      // Add new content at the top of the list
       switch (type) {
         case 'city':
-          setCities([...cities, savedData]);
+          setCities(cities => [savedData, ...cities]);
           break;
         case 'npc':
-          setNPCs([...npcs, savedData]);
+          setNPCs(npcs => [savedData, ...npcs]);
           break;
         case 'item':
-          setItems([...items, savedData]);
+          setItems(items => [savedData, ...items]);
           break;
       }
     } catch (err) {
@@ -206,20 +218,58 @@ export default function GenerateContent() {
     }
   };
 
-  const handleDeleteCampaign = async () => {
-    if (!campaignId) return;
+  const handleDelete = async (type: 'city' | 'npc' | 'item', id: string) => {
     setDeleting(true);
     try {
-      const res = await fetch(`/api/campaign/${campaignId}`, { method: 'DELETE' });
+      const res = await fetch(`/api/${type}s/${id}`, { method: 'DELETE' });
       if (res.ok) {
-        router.push('/campaign/list');
+        switch (type) {
+          case 'city':
+            setCities(cities => cities.filter(c => c.id !== id));
+            break;
+          case 'npc':
+            setNPCs(npcs => npcs.filter(n => n.id !== id));
+            break;
+          case 'item':
+            setItems(items => items.filter(i => i.id !== id));
+            break;
+        }
       } else {
-        setDeleting(false);
-        alert('Failed to delete campaign');
+        alert('Failed to delete');
       }
-    } catch {
+    } catch (error) {
+      console.error('Error deleting:', error);
+      alert('Failed to delete');
+    } finally {
       setDeleting(false);
-      alert('Failed to delete campaign');
+      setDeleteModal(null);
+    }
+  };
+
+  const handleDuplicate = async (type: 'city' | 'npc' | 'item', id: string) => {
+    try {
+      // Fix the route for cities
+      const endpoint = type === 'city' ? 'cities' : `${type}s`;
+      const res = await fetch(`/api/${endpoint}/${id}/duplicate`, { method: 'POST' });
+      if (res.ok) {
+        const duplicated = await res.json();
+        switch (type) {
+          case 'city':
+            setCities(cities => [duplicated, ...cities]);
+            break;
+          case 'npc':
+            setNPCs(npcs => [duplicated, ...npcs]);
+            break;
+          case 'item':
+            setItems(items => [duplicated, ...items]);
+            break;
+        }
+      } else {
+        alert('Failed to duplicate');
+      }
+    } catch (error) {
+      console.error('Error duplicating:', error);
+      alert('Failed to duplicate');
     }
   };
 
@@ -260,7 +310,16 @@ export default function GenerateContent() {
           </div>
         </section>
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Cities</h2>
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-xl font-semibold text-gray-800">Cities</h2>
+            <button
+              className={`bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ${isGenerating === 'city' ? 'opacity-50 cursor-not-allowed' : ''}`}
+              onClick={() => generateContent('city')}
+              disabled={isGenerating === 'city'}
+            >
+              {isGenerating === 'city' ? 'Generating...' : 'Generate City'}
+            </button>
+          </div>
           {cities.length === 0 ? <div className="text-gray-900">No cities generated yet.</div> : (
             <ul className="space-y-4">
               {cities.map(city => {
@@ -273,7 +332,7 @@ export default function GenerateContent() {
                         className="text-blue-600 hover:underline text-sm"
                         onClick={() => setCollapsedCities(prev => ({ ...prev, [city.id]: !isCollapsed }))}
                       >
-                        {isCollapsed ? 'Show more' : 'Show less'}
+                        {isCollapsed ? 'Show details' : 'Show less'}
                       </button>
                     </div>
                     {!isCollapsed && <>
@@ -283,11 +342,22 @@ export default function GenerateContent() {
                       <div><strong>Notable Locations:</strong> {Array.isArray(city.notableLocations) ? city.notableLocations.join(', ') : city.notableLocations}</div>
                       <div><strong>Description:</strong> {city.description}</div>
                       <div><strong>History:</strong> {city.history}</div>
-                      <div className="mt-4 flex justify-end">
+                      <div className="mt-4 flex justify-end gap-2">
+                        <button
+                          className="text-blue-600 hover:underline text-sm"
+                          onClick={() => router.push(`/cities/${city.id}/edit`)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="text-green-600 hover:underline text-sm"
+                          onClick={() => handleDuplicate('city', city.id)}
+                        >
+                          Duplicate
+                        </button>
                         <button
                           className="text-red-500 hover:underline text-sm"
                           onClick={() => setDeleteModal({ type: 'city', id: city.id })}
-                          aria-label="Delete city"
                         >
                           Delete
                         </button>
@@ -298,18 +368,18 @@ export default function GenerateContent() {
               })}
             </ul>
           )}
-          <div className="flex justify-start mt-4">
-            <button
-              className={`bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ${isGenerating === 'city' ? 'opacity-50 cursor-not-allowed' : ''}`}
-              onClick={() => generateContent('city')}
-              disabled={isGenerating === 'city'}
-            >
-              {isGenerating === 'city' ? 'Generating...' : 'Generate City'}
-            </button>
-          </div>
         </section>
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">NPCs</h2>
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-xl font-semibold text-gray-800">NPCs</h2>
+            <button
+              className={`bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 ${isGenerating === 'npc' ? 'opacity-50 cursor-not-allowed' : ''}`}
+              onClick={() => generateContent('npc')}
+              disabled={isGenerating === 'npc'}
+            >
+              {isGenerating === 'npc' ? 'Generating...' : 'Generate NPC'}
+            </button>
+          </div>
           {npcs.length === 0 ? <div className="text-gray-900">No NPCs generated yet.</div> : (
             <ul className="space-y-4">
               {npcs.map(npc => {
@@ -388,7 +458,7 @@ export default function GenerateContent() {
                         className="text-blue-600 hover:underline text-sm"
                         onClick={() => setCollapsedNPCs(prev => ({ ...prev, [npc.id]: !isCollapsed }))}
                       >
-                        {isCollapsed ? 'Show more' : 'Show less'}
+                        {isCollapsed ? 'Show details' : 'Show less'}
                       </button>
                     </div>
                     {!isCollapsed && <>
@@ -397,11 +467,22 @@ export default function GenerateContent() {
                       <div><strong>Background:</strong> {background}</div>
                       <div><strong>Personality:</strong> {personality}</div>
                       <div><strong>Goals:</strong> {goals}</div>
-                      <div className="mt-4 flex justify-end">
+                      <div className="mt-4 flex justify-end gap-2">
+                        <button
+                          className="text-blue-600 hover:underline text-sm"
+                          onClick={() => router.push(`/npcs/${npc.id}/edit`)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="text-green-600 hover:underline text-sm"
+                          onClick={() => handleDuplicate('npc', npc.id)}
+                        >
+                          Duplicate
+                        </button>
                         <button
                           className="text-red-500 hover:underline text-sm"
                           onClick={() => setDeleteModal({ type: 'npc', id: npc.id })}
-                          aria-label="Delete NPC"
                         >
                           Delete
                         </button>
@@ -412,18 +493,18 @@ export default function GenerateContent() {
               })}
             </ul>
           )}
-          <div className="flex justify-start mt-4">
-            <button
-              className={`bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 ${isGenerating === 'npc' ? 'opacity-50 cursor-not-allowed' : ''}`}
-              onClick={() => generateContent('npc')}
-              disabled={isGenerating === 'npc'}
-            >
-              {isGenerating === 'npc' ? 'Generating...' : 'Generate NPC'}
-            </button>
-          </div>
         </section>
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Items</h2>
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-xl font-semibold text-gray-800">Items</h2>
+            <button
+              className={`bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 ${isGenerating === 'item' ? 'opacity-50 cursor-not-allowed' : ''}`}
+              onClick={() => generateContent('item')}
+              disabled={isGenerating === 'item'}
+            >
+              {isGenerating === 'item' ? 'Generating...' : 'Generate Item'}
+            </button>
+          </div>
           {items.length === 0 ? <div className="text-gray-900">No items generated yet.</div> : (
             <ul className="space-y-4">
               {items.map(item => {
@@ -436,18 +517,29 @@ export default function GenerateContent() {
                         className="text-blue-600 hover:underline text-sm"
                         onClick={() => setCollapsedItems(prev => ({ ...prev, [item.id]: !isCollapsed }))}
                       >
-                        {isCollapsed ? 'Show more' : 'Show less'}
+                        {isCollapsed ? 'Show details' : 'Show less'}
                       </button>
                     </div>
                     {!isCollapsed && <>
                       <div><strong>Description:</strong> {item.description}</div>
                       <div><strong>Properties:</strong> {Array.isArray(item.properties) ? item.properties.join(', ') : item.properties}</div>
                       {item.history && <div><strong>History:</strong> {item.history}</div>}
-                      <div className="mt-4 flex justify-end">
+                      <div className="mt-4 flex justify-end gap-2">
+                        <button
+                          className="text-blue-600 hover:underline text-sm"
+                          onClick={() => router.push(`/items/${item.id}/edit`)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="text-green-600 hover:underline text-sm"
+                          onClick={() => handleDuplicate('item', item.id)}
+                        >
+                          Duplicate
+                        </button>
                         <button
                           className="text-red-500 hover:underline text-sm"
                           onClick={() => setDeleteModal({ type: 'item', id: item.id })}
-                          aria-label="Delete item"
                         >
                           Delete
                         </button>
@@ -458,15 +550,6 @@ export default function GenerateContent() {
               })}
             </ul>
           )}
-          <div className="flex justify-start mt-4">
-            <button
-              className={`bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 ${isGenerating === 'item' ? 'opacity-50 cursor-not-allowed' : ''}`}
-              onClick={() => generateContent('item')}
-              disabled={isGenerating === 'item'}
-            >
-              {isGenerating === 'item' ? 'Generating...' : 'Generate Item'}
-            </button>
-          </div>
         </section>
         {/* Confirmation Modal */}
         {deleteModal && (
@@ -478,40 +561,13 @@ export default function GenerateContent() {
                 <button
                   className="px-4 py-2 rounded bg-gray-200 text-gray-900 hover:bg-gray-300"
                   onClick={() => setDeleteModal(null)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
-                  onClick={() => {
-                    if (deleteModal.type === 'city') setCities(cities => cities.filter(c => c.id !== deleteModal.id));
-                    if (deleteModal.type === 'npc') setNPCs(npcs => npcs.filter(n => n.id !== deleteModal.id));
-                    if (deleteModal.type === 'item') setItems(items => items.filter(i => i.id !== deleteModal.id));
-                    setDeleteModal(null);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-        {showDeleteCampaignModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800/50">
-            <div className="bg-white rounded shadow-lg p-6 max-w-sm w-full text-gray-900">
-              <h3 className="text-lg font-semibold mb-4">Delete Campaign</h3>
-              <p className="mb-6">Are you sure you want to delete this campaign? This action cannot be undone.</p>
-              <div className="flex justify-end gap-4">
-                <button
-                  className="px-4 py-2 rounded bg-gray-200 text-gray-900 hover:bg-gray-300"
-                  onClick={() => setShowDeleteCampaignModal(false)}
                   disabled={deleting}
                 >
                   Cancel
                 </button>
                 <button
                   className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
-                  onClick={handleDeleteCampaign}
+                  onClick={() => handleDelete(deleteModal.type, deleteModal.id)}
                   disabled={deleting}
                 >
                   {deleting ? 'Deleting...' : 'Delete'}
@@ -520,14 +576,6 @@ export default function GenerateContent() {
             </div>
           </div>
         )}
-        <div className="flex justify-end mt-8">
-          <button
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-            onClick={() => setShowDeleteCampaignModal(true)}
-          >
-            Delete Campaign
-          </button>
-        </div>
       </div>
     </Layout>
   );

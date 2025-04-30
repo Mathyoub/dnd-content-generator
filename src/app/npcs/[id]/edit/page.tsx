@@ -3,29 +3,41 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Layout from '@/components/Layout';
-import { NPC } from '@/types/campaign';
+import { NPC, Campaign } from '@/types/campaign';
 
 export default function EditNPC({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [npc, setNPC] = useState<NPC | null>(null);
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchNPC = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`/api/npcs/${params.id}`);
-        if (!response.ok) throw new Error('Failed to fetch NPC');
-        const data = await response.json();
-        setNPC(data);
+        // Fetch NPC data
+        const npcResponse = await fetch(`/api/npcs/${params.id}`);
+        if (!npcResponse.ok) throw new Error('Failed to fetch NPC');
+        const npcData = await npcResponse.json();
+        // Set campaignId from the first campaign if it exists
+        setNPC({
+          ...npcData,
+          campaignId: npcData.campaigns?.[0]?.id || null
+        });
+
+        // Fetch campaigns
+        const campaignsResponse = await fetch('/api/campaigns');
+        if (!campaignsResponse.ok) throw new Error('Failed to fetch campaigns');
+        const campaignsData = await campaignsResponse.json();
+        setCampaigns(campaignsData);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch NPC');
+        setError(err instanceof Error ? err.message : 'Failed to fetch data');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchNPC();
+    fetchData();
   }, [params.id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,7 +45,8 @@ export default function EditNPC({ params }: { params: { id: string } }) {
     if (!npc) return;
 
     try {
-      const response = await fetch(`/api/npcs/${params.id}`, {
+      // First update the NPC
+      const npcResponse = await fetch(`/api/npcs/${params.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +54,21 @@ export default function EditNPC({ params }: { params: { id: string } }) {
         body: JSON.stringify(npc),
       });
 
-      if (!response.ok) throw new Error('Failed to update NPC');
+      if (!npcResponse.ok) throw new Error('Failed to update NPC');
+
+      // Then update the campaign relationship
+      if (npc.campaignId) {
+        const campaignResponse = await fetch(`/api/npcs/${params.id}/campaigns`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ campaignId: npc.campaignId }),
+        });
+
+        if (!campaignResponse.ok) throw new Error('Failed to update campaign relationship');
+      }
+
       router.push('/npcs');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update NPC');
@@ -96,6 +123,22 @@ export default function EditNPC({ params }: { params: { id: string } }) {
             </div>
 
             <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Campaign</label>
+              <select
+                value={npc.campaignId || ''}
+                onChange={(e) => setNPC({ ...npc, campaignId: e.target.value || null })}
+                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+              >
+                <option value="">No Campaign</option>
+                {campaigns.map((campaign) => (
+                  <option key={campaign.id} value={campaign.id}>
+                    {campaign.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Race</label>
               <input
                 type="text"
@@ -119,80 +162,71 @@ export default function EditNPC({ params }: { params: { id: string } }) {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Alignment</label>
-              <select
+              <input
+                type="text"
                 value={npc.alignment}
                 onChange={(e) => setNPC({ ...npc, alignment: e.target.value })}
                 className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                 required
-              >
-                <option value="Lawful Good">Lawful Good</option>
-                <option value="Neutral Good">Neutral Good</option>
-                <option value="Chaotic Good">Chaotic Good</option>
-                <option value="Lawful Neutral">Lawful Neutral</option>
-                <option value="True Neutral">True Neutral</option>
-                <option value="Chaotic Neutral">Chaotic Neutral</option>
-                <option value="Lawful Evil">Lawful Evil</option>
-                <option value="Neutral Evil">Neutral Evil</option>
-                <option value="Chaotic Evil">Chaotic Evil</option>
-              </select>
+              />
             </div>
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
-            <textarea
-              value={npc.description}
-              onChange={(e) => setNPC({ ...npc, description: e.target.value })}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
-              rows={4}
-              required
-            />
-          </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+              <textarea
+                value={npc.description}
+                onChange={(e) => setNPC({ ...npc, description: e.target.value })}
+                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                rows={3}
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Background</label>
-            <textarea
-              value={npc.background}
-              onChange={(e) => setNPC({ ...npc, background: e.target.value })}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
-              rows={4}
-              required
-            />
-          </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Background</label>
+              <textarea
+                value={npc.background}
+                onChange={(e) => setNPC({ ...npc, background: e.target.value })}
+                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                rows={3}
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Personality</label>
-            <textarea
-              value={npc.personality}
-              onChange={(e) => setNPC({ ...npc, personality: e.target.value })}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
-              rows={4}
-              required
-            />
-          </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Personality</label>
+              <textarea
+                value={npc.personality}
+                onChange={(e) => setNPC({ ...npc, personality: e.target.value })}
+                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                rows={3}
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Goals</label>
-            <textarea
-              value={npc.goals}
-              onChange={(e) => setNPC({ ...npc, goals: e.target.value })}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
-              rows={4}
-              required
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Goals</label>
+              <textarea
+                value={npc.goals}
+                onChange={(e) => setNPC({ ...npc, goals: e.target.value })}
+                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                rows={3}
+                required
+              />
+            </div>
           </div>
 
           <div className="flex justify-end space-x-4">
             <button
               type="button"
               onClick={() => router.push('/npcs')}
-              className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
             >
               Save Changes
             </button>
